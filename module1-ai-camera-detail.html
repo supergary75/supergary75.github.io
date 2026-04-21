@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Camera Detail</title>
+  <style>
+    :root { --text:#1f2430; --muted:#5d6472; --accent:#cc5a2f; --accent-deep:#8d3010; --surface:rgba(255,250,242,.92); --line:rgba(31,36,48,.1); --shadow:0 24px 60px rgba(64,43,26,.12); }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; color:var(--text); background:radial-gradient(circle at top left, rgba(204,90,47,.16), transparent 34%), linear-gradient(180deg, #f7f1e7 0%, #f2ece3 100%); }
+    .page { width:min(1080px, calc(100% - 32px)); margin:0 auto; padding:32px 0 48px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; }
+    .toolbar-right { display:flex; align-items:center; gap:12px; }
+    .language-select,.back-link { display:inline-flex; align-items:center; justify-content:center; padding:12px 18px; border-radius:14px; text-decoration:none; font-size:14px; font-weight:700; }
+    .language-select { border:1px solid rgba(31,36,48,.12); background:#fffdfa; color:var(--text); cursor:pointer; }
+    .back-link { color:var(--accent-deep); background:rgba(204,90,47,.1); }
+    .hero,.panel,.pdf-panel { padding:32px; border-radius:28px; background:var(--surface); border:1px solid rgba(255,255,255,.65); box-shadow:var(--shadow); margin-bottom:22px; }
+    .eyebrow { display:inline-flex; padding:8px 14px; border-radius:999px; background:rgba(204,90,47,.1); color:var(--accent-deep); font-size:14px; font-weight:700; }
+    h1 { margin:18px 0 12px; font-size:clamp(32px,4vw,52px); line-height:1.1; }
+    p { margin:0; color:var(--muted); line-height:1.8; font-size:16px; }
+    .subtitle { margin:0 0 18px; color:var(--accent-deep); font-size:18px; font-weight:700; }
+    .case-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+    .case-card { display:flex; flex-direction:column; gap:14px; padding:22px; border-radius:22px; background:rgba(255,255,255,.78); border:1px solid var(--line); }
+    .case-tag { display:inline-flex; align-items:center; width:fit-content; padding:8px 12px; border-radius:999px; background:rgba(204,90,47,.1); color:var(--accent-deep); font-size:13px; font-weight:800; }
+    .case-image { aspect-ratio:16/9; border-radius:18px; border:1px dashed rgba(141,48,16,.24); background:linear-gradient(180deg, rgba(255,255,255,.88), rgba(248,241,232,.92)); display:grid; place-items:center; color:var(--muted); font-size:14px; font-weight:700; text-align:center; padding:18px; }
+    .case-card ul { margin:0; padding-left:20px; color:var(--text); }
+    .case-card li { margin-bottom:10px; line-height:1.7; }
+    .pdf-head { display:flex; justify-content:space-between; align-items:center; gap:16px; padding-bottom:18px; border-bottom:1px solid var(--line); margin-bottom:18px; }
+    .pdf-head h2 { margin:0; font-size:26px; }
+    .pdf-head p { margin-top:6px; font-size:14px; }
+    .download-link { display:inline-flex; align-items:center; justify-content:center; padding:12px 18px; border-radius:14px; text-decoration:none; font-size:14px; font-weight:700; color:#fff; background:linear-gradient(135deg, var(--accent), var(--accent-deep)); }
+    .pdf-wrap { height:min(78vh, 1100px); background:#d8d3cc; border-radius:20px; overflow:hidden; }
+    .pdf-wrap iframe { width:100%; height:100%; border:0; background:#fff; }
+    @media (max-width:900px) { .topbar,.toolbar-right,.pdf-head { flex-direction:column; align-items:stretch; } .hero,.pdf-panel { padding:24px 20px; } .pdf-wrap { height:72vh; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back-link" id="backLink" href="module1-detail.html" data-i18n="backLink">返回第一模块</a>
+      <div class="toolbar-right">
+        <select class="language-select" id="languageSelect" aria-label="Language selector"><option value="zh">中文</option><option value="en">English</option></select>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">Part 1</div>
+      <h1 data-i18n="title">AI Camera 基础使用子页面</h1>
+      <p class="subtitle" data-i18n="subtitle">你可以继续往这里补充 AI Camera 的介绍、演示、案例和讲解内容</p>
+      <p data-i18n="description">这个子页面先把入口搭好，方便你后续补充具体内容。你可以把这一页继续整理成基础介绍、连接配置、识别功能、课堂案例或讲师备注。</p>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="caseTitle">案例卡片</h2>
+      <div class="case-grid">
+        <article class="case-card">
+          <div class="case-tag" data-i18n="case1Tag">案例一</div>
+          <h3 data-i18n="case1Title">基础识别示例</h3>
+          <p data-i18n="case1Desc">后续可在这里补充 AI Camera 的第一张示例图，以及这张图对应的操作步骤和讲解要点。</p>
+          <div class="case-image" data-i18n="case1Image">后续放图位置<br>16:9 图像占位</div>
+          <ul>
+            <li data-i18n="case1a">适合放基础演示截图</li>
+            <li data-i18n="case1b">适合补充讲解步骤</li>
+            <li data-i18n="case1c">适合保留课堂备注</li>
+          </ul>
+        </article>
+        <article class="case-card">
+          <div class="case-tag" data-i18n="case2Tag">案例二</div>
+          <h3 data-i18n="case2Title">进阶应用示例</h3>
+          <p data-i18n="case2Desc">后续可在这里补充第二张示例图，用来展示更完整的流程、参数设置或实际使用效果。</p>
+          <div class="case-image" data-i18n="case2Image">后续放图位置<br>16:9 图像占位</div>
+          <ul>
+            <li data-i18n="case2a">适合放进阶案例截图</li>
+            <li data-i18n="case2b">适合补充训练流程</li>
+            <li data-i18n="case2c">适合展示使用结果</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="pdf-panel">
+      <div class="pdf-head">
+        <div>
+          <h2 data-i18n="pdfTitle">内容预览</h2>
+          <p data-i18n="pdfDescription">这里保留一个预览区，方便你后续放入资料、截图或 PDF。</p>
+        </div>
+        <a class="download-link" href="module1-detail.html" data-i18n="backLink">返回第一模块</a>
+      </div>
+      <div class="pdf-wrap">
+        <iframe title="AI Camera Detail Preview" src="about:blank"></iframe>
+      </div>
+    </section>
+  </main>
+  <script>
+    const translations={
+      zh:{pageTitle:"AI Camera 子页面",backLink:"返回第一模块",eyebrow:"Part 1",title:"AI Camera 基础使用子页面",subtitle:"你可以继续往这里补充 AI Camera 的介绍、演示、案例和讲解内容",description:"这个子页面先把入口搭好，方便你后续补充具体内容。你可以把这一页继续整理成基础介绍、连接配置、识别功能、课堂案例或讲师备注。",caseTitle:"案例卡片",case1Tag:"案例一",case1Title:"基础识别示例",case1Desc:"后续可在这里补充 AI Camera 的第一张示例图，以及这张图对应的操作步骤和讲解要点。",case1Image:"后续放图位置\n16:9 图像占位",case1a:"适合放基础演示截图",case1b:"适合补充讲解步骤",case1c:"适合保留课堂备注",case2Tag:"案例二",case2Title:"进阶应用示例",case2Desc:"后续可在这里补充第二张示例图，用来展示更完整的流程、参数设置或实际使用效果。",case2Image:"后续放图位置\n16:9 图像占位",case2a:"适合放进阶案例截图",case2b:"适合补充训练流程",case2c:"适合展示使用结果",pdfTitle:"内容预览",pdfDescription:"这里保留一个预览区，方便你后续放入资料、截图或 PDF。"},
+      en:{pageTitle:"AI Camera Subpage",backLink:"Back to Module 1",eyebrow:"Part 1",title:"AI Camera Basic Use Subpage",subtitle:"You can continue adding AI Camera introduction, demos, examples, and speaker notes here",description:"This subpage is set up as an entry point so you can add more detailed content later. You can continue organizing it into basics, connection setup, recognition functions, classroom examples, or speaker notes.",caseTitle:"Case Cards",case1Tag:"Case 1",case1Title:"Basic Recognition Example",case1Desc:"You can add the first AI Camera screenshot here later, together with the steps and speaking points for that example.",case1Image:"Image placeholder for later\n16:9 layout",case1a:"Good for a basic demo screenshot",case1b:"Good for step-by-step explanation",case1c:"Good for classroom notes",case2Tag:"Case 2",case2Title:"Advanced Usage Example",case2Desc:"You can add a second example image here later to show a more complete flow, parameter setup, or real usage result.",case2Image:"Image placeholder for later\n16:9 layout",case2a:"Good for an advanced example screenshot",case2b:"Good for workflow notes",case2c:"Good for showing results",pdfTitle:"Content Preview",pdfDescription:"A preview area is kept here so you can add materials, screenshots, or a PDF later."}
+    };
+    
+    function buildBilingualContent() {
+      const escapeHtml = (value) => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+      const bilingual = {};
+      Object.keys(translations.zh).forEach((key) => {
+        const zhValue = translations.zh[key];
+        const enValue = translations.en[key];
+        if (key === "pageTitle" && typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = `${escapeHtml(zhValue)} / ${escapeHtml(enValue)}`;
+          return;
+        }
+        if (typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = key === "heroTitle"
+            ? `<span style="display:block;color:var(--muted);font-size:.62em;font-weight:500;opacity:.72;line-height:1.08">${escapeHtml(zhValue)}</span><span style="display:block;color:var(--text);font-size:1em;font-weight:900;line-height:1.05">${escapeHtml(enValue)}</span>`
+            : `<span style="color:var(--muted);font-weight:500;opacity:.65">${escapeHtml(zhValue)}</span><span style="opacity:.3"> / </span><span style="color:var(--text);font-weight:900">${escapeHtml(enValue)}</span>`;
+        } else {
+          bilingual[key] = escapeHtml(enValue ?? zhValue);
+        }
+      });
+      return bilingual;
+    }
+const languageSelect=document.getElementById("languageSelect");
+    const backLink=document.getElementById("backLink");
+    function applyLanguage(lang){const safeLang=["zh","en"].includes(lang)?lang:"zh";const c=safeLang==="en"?buildBilingualContent():translations.zh;document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module1-detail.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});}
+    languageSelect.addEventListener("change",e=>applyLanguage(e.target.value));
+    const params=new URLSearchParams(window.location.search);
+    applyLanguage(params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh");
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>
+
+
+
+

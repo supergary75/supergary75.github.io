@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 2 - Competition Planning</title>
+  <style>
+    :root { --text:#1f2430; --muted:#5d6472; --accent:#cc5a2f; --accent-deep:#8d3010; --surface:rgba(255,250,242,.92); --line:rgba(31,36,48,.1); --shadow:0 24px 60px rgba(64,43,26,.12); }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; color:var(--text); background:radial-gradient(circle at top left, rgba(204,90,47,.16), transparent 34%), linear-gradient(180deg, #f7f1e7 0%, #f2ece3 100%); }
+    .page { width:min(1080px, calc(100% - 32px)); margin:0 auto; padding:32px 0 48px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; }
+    .toolbar-right { display:flex; align-items:center; gap:12px; }
+    .language-select,.back-link { display:inline-flex; align-items:center; justify-content:center; padding:12px 18px; border-radius:14px; text-decoration:none; font-size:14px; font-weight:700; }
+    .language-select { border:1px solid rgba(31,36,48,.12); background:#fffdfa; color:var(--text); cursor:pointer; }
+    .back-link { color:var(--accent-deep); background:rgba(204,90,47,.1); }
+    .hero,.panel { padding:32px; border-radius:28px; background:var(--surface); border:1px solid rgba(255,255,255,.65); box-shadow:var(--shadow); margin-bottom:22px; }
+    .eyebrow { display:inline-flex; padding:8px 14px; border-radius:999px; background:rgba(204,90,47,.1); color:var(--accent-deep); font-size:14px; font-weight:700; }
+    h1 { margin:18px 0 12px; font-size:clamp(32px,4vw,52px); line-height:1.1; }
+    h2 { margin:0 0 12px; font-size:26px; }
+    p { margin:0; color:var(--muted); line-height:1.8; font-size:16px; }
+    .subtitle { margin:0 0 18px; color:var(--accent-deep); font-size:18px; font-weight:700; }
+    .selector-intro { margin-bottom:16px; font-size:15px; color:var(--muted); }
+    .method-grid,.checkbox-grid { display:grid; gap:18px; }
+    .method-grid { grid-template-columns:repeat(4,minmax(0,1fr)); margin-top:18px; }
+    .checkbox-grid { grid-template-columns:repeat(2, minmax(0,1fr)); margin-top:18px; }
+    .method-visual { margin-top:18px; border-radius:24px; overflow:hidden; border:1px solid rgba(31,36,48,.08); background:linear-gradient(180deg, rgba(255,255,255,.88), rgba(248,241,232,.92)); box-shadow:0 16px 30px rgba(64,43,26,.08); }
+    .method-visual img { display:block; width:100%; height:auto; }
+    .method-card{padding:20px;border-radius:20px;background:rgba(255,255,255,.78);border:1px solid var(--line)}
+    .method-card strong{display:inline-flex;width:38px;height:38px;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-deep));color:#fff;font-weight:800;margin-bottom:12px}
+    .bridge{margin-top:18px;padding:16px 18px;border-radius:18px;background:rgba(204,90,47,.08);color:var(--accent-deep);font-size:14px;font-weight:700;line-height:1.7}
+    .checkbox-card { position:relative; display:flex; flex-direction:column; gap:14px; min-height:220px; padding:18px; border-radius:22px; background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(248,241,232,.88)); border:1px solid rgba(31,36,48,.08); box-shadow:0 18px 36px rgba(64,43,26,.08); overflow:hidden; }
+    .checkbox-link { text-decoration:none; color:inherit; display:block; }
+    .checkbox-link:hover .checkbox-card { transform:translateY(-2px); box-shadow:0 22px 42px rgba(64,43,26,.12); }
+    .checkbox-card::after { content:""; position:absolute; inset:auto -30px -30px auto; width:120px; height:120px; border-radius:50%; background:radial-gradient(circle, rgba(204,90,47,.12), transparent 70%); pointer-events:none; }
+    .checkbox-head { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .check-mark { width:18px; height:18px; border-radius:5px; border:2px solid rgba(204,90,47,.5); background:rgba(255,255,255,.85); box-shadow:inset 0 0 0 4px rgba(255,255,255,.85); flex:0 0 auto; }
+    .event-title { font-size:22px; font-weight:800; line-height:1.2; color:var(--text); }
+    .event-note { font-size:14px; line-height:1.7; color:var(--muted); max-width:32ch; }
+    .event-badge { display:inline-flex; align-items:center; width:fit-content; padding:8px 12px; border-radius:999px; background:rgba(204,90,47,.1); color:var(--accent-deep); font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    .checkbox-thumb { margin-top:auto; width:100%; max-width:300px; border-radius:16px; border:1px solid var(--line); display:block; box-shadow:0 14px 28px rgba(14,24,48,.18); }
+    @media (max-width:900px) { .topbar,.toolbar-right{flex-direction:column;align-items:stretch;} .hero,.panel{padding:24px 20px;} .checkbox-grid,.method-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back-link" id="backLink" href="module2-overview.html" data-i18n="backLink">返回第二模块</a>
+      <div class="toolbar-right">
+        <select class="language-select" id="languageSelect" aria-label="Language selector">
+          <option value="zh">中文</option><option value="en">English</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">模块 02 - Part 03</div>
+      <h1 data-i18n="title">各赛项比赛规划</h1>
+      <p class="subtitle" data-i18n="subtitle">把前面的设计方法和参数判断，转化成赛项级规则拆解与策略规划</p>
+      <p data-i18n="description">这一页不只是不同赛项的入口，而是说明同一套规划方法如何适配 Inspire、Starter、Explorer、Challenge。先讲统一方法，再进入具体赛项，观众会更容易理解。</p>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="methodTitle">比赛规划的统一方法</h2>
+      <p class="selector-intro" data-i18n="methodIntro">不管是哪一个赛项，比赛规划都可以按同一套方法展开：先拆规则，再分阶段，再排优先级，最后准备 A/B 策略。</p>
+      <div class="method-visual">
+        <img src="assets/images/competition-planning-unified-method.png" alt="比赛规划统一方法" loading="lazy">
+      </div>
+      <div class="method-grid">
+        <article class="method-card"><strong>1</strong><h2 data-i18n="mt1">拆规则</h2><p data-i18n="mb1">明确得分项、约束条件、任务顺序和关键失分风险。</p></article>
+        <article class="method-card"><strong>2</strong><h2 data-i18n="mt2">分阶段</h2><p data-i18n="mb2">按比赛时间和任务节奏切分自动、手动、中后段或终局阶段。</p></article>
+        <article class="method-card"><strong>3</strong><h2 data-i18n="mt3">排优先级</h2><p data-i18n="mb3">判断哪些任务先做、哪些任务稳做、哪些任务只在条件允许时做。</p></article>
+        <article class="method-card"><strong>4</strong><h2 data-i18n="mt4">做预案</h2><p data-i18n="mb4">准备 A/B 策略和失误补救方案，让比赛不依赖单一路径。</p></article>
+      </div>
+      <div class="bridge" data-i18n="bridge">也就是说，前一页解决“机器人该怎么做”，这一页解决“比赛时该怎么用”。这是从设计走向比赛的最后一步。</div>
+    </section>
+
+    <section class="panel">
+      <p data-i18n="selectorTitle">赛项选择</p>
+      <p class="selector-intro" data-i18n="selectorIntro">点击对应赛项卡片即可进入子页面。每个赛项页都可以继续补充规则重点、策略节奏和讲解用图。</p>
+      <div class="checkbox-grid">
+        <a class="checkbox-link" id="inspireLink" href="module2-inspire-detail.html"><div class="checkbox-card"><div class="checkbox-head"><span class="event-title" data-i18n="event1">MakeX Inspire</span><span class="check-mark" aria-hidden="true"></span></div><span class="event-badge" data-i18n="badgeInspire">Inspire</span><span class="event-note" data-i18n="event1Note">适合补充启发式任务理解、基础规划逻辑与课堂引导思路。</span><img class="checkbox-thumb" src="assets/images/inspire-rule-analysis.png" alt="Inspire Rule Analysis"></div></a>
+        <a class="checkbox-link" id="starterLink" href="module2-starter-detail.html"><div class="checkbox-card"><div class="checkbox-head"><span class="event-title" data-i18n="event2">MakeX Starter</span><span class="check-mark" aria-hidden="true"></span></div><span class="event-badge" data-i18n="badgeStarter">Starter</span><span class="event-note" data-i18n="event2Note">适合补充入门队伍在节奏安排、基础得分和稳定执行上的规划方式。</span><img class="checkbox-thumb" src="assets/images/starter-rule-analysis.png" alt="Starter Rule Analysis"></div></a>
+        <a class="checkbox-link" id="explorerLink" href="module2-explorer-detail.html"><div class="checkbox-card"><div class="checkbox-head"><span class="event-title" data-i18n="event3">Maker Explorer</span><span class="check-mark" aria-hidden="true"></span></div><span class="event-badge" data-i18n="badgeExplorer">Explorer</span><span class="event-note" data-i18n="event3Note">更适合讲任务节奏、阶段切换和资源分配。</span><img class="checkbox-thumb" src="assets/images/explorer-rule-limit.png" alt="Explorer Rule Limit Overview"></div></a>
+        <a class="checkbox-link" id="challengeLink" href="module2-challenge-detail.html"><div class="checkbox-card"><div class="checkbox-head"><span class="event-title" data-i18n="event4">MakeX Challenge</span><span class="check-mark" aria-hidden="true"></span></div><span class="event-badge" data-i18n="badgeChallenge">Challenge</span><span class="event-note" data-i18n="event4Note">适合补充高对抗、高强度任务中的策略优先级与协作分工。</span><img class="checkbox-thumb" src="assets/images/challenge-rule-limit.png" alt="Challenge Rule Limit Overview"></div></a>
+      </div>
+    </section>
+
+  </main>
+  <script>
+    const translations = {
+      zh:{pageTitle:"第二模块 - 比赛规划",backLink:"返回第二模块",eyebrow:"模块 02 - Part 03",title:"各赛项比赛规划",subtitle:"把前面的设计方法和参数判断，转化成赛项级规则拆解与策略规划",description:"这一页不只是不同赛项的入口，而是说明同一套规划方法如何适配 Inspire、Starter、Explorer、Challenge。先讲统一方法，再进入具体赛项，观众会更容易理解。",methodTitle:"比赛规划的统一方法",methodIntro:"不管是哪一个赛项，比赛规划都可以按同一套方法展开：先拆规则，再分阶段，再排优先级，最后准备 A/B 策略。",mt1:"拆规则",mb1:"明确得分项、约束条件、任务顺序和关键失分风险。",mt2:"分阶段",mb2:"按比赛时间和任务节奏切分自动、手动、中后段或终局阶段。",mt3:"排优先级",mb3:"判断哪些任务先做、哪些任务稳做、哪些任务只在条件允许时做。",mt4:"做预案",mb4:"准备 A/B 策略和失误补救方案，让比赛不依赖单一路径。",bridge:"也就是说，前一页解决“机器人该怎么做”，这一页解决“比赛时该怎么用”。这是从设计走向比赛的最后一步。",selectorTitle:"赛项选择",selectorIntro:"点击对应赛项卡片即可进入子页面。每个赛项页都可以继续补充规则重点、策略节奏和讲解用图。",event1:"MakeX Inspire",event2:"MakeX Starter",event3:"Maker Explorer",event4:"MakeX Challenge",badgeInspire:"Inspire",badgeStarter:"Starter",badgeExplorer:"Explorer",badgeChallenge:"Challenge",event1Note:"适合补充启发式任务理解、基础规划逻辑与课堂引导思路。",event2Note:"适合补充入门队伍在节奏安排、基础得分和稳定执行上的规划方式。",event3Note:"更适合讲任务节奏、阶段切换和资源分配。",event4Note:"适合补充高对抗、高强度任务中的策略优先级与协作分工。"},
+      en:{pageTitle:"Module 2 - Competition Planning",backLink:"Back to Module 2",eyebrow:"Module 02 - Part 03",title:"Competition Planning by Event",subtitle:"Turn the earlier design method and parameter reasoning into rule breakdown and strategy planning by event",description:"This page is not only an entry to different events. It shows how one planning method can be applied to Inspire, Starter, Explorer, and Challenge. Present the common method first, then enter the event details.",methodTitle:"Unified Competition Planning Method",methodIntro:"A simple method for any competition: Rules Breakdown first, then Divide Into Phases, then Set Priorities, and finally Plan Ahead.",mt1:"Rules Breakdown",mb1:"List the tasks, conditions, and order of actions.",mt2:"Divide Into Phases",mb2:"Split tasks by time and stage: auto, manual, middle or final.",mt3:"Set Priorities",mb3:"Decide what to do first and in what order.",mt4:"Plan Ahead",mb4:"Prepare A/B plans and solutions in advance.",bridge:"In other words, the previous page answers how the robot should be built, while this page answers how it should be used in competition. This is the final step from design to match execution.",selectorTitle:"Event Selection",selectorIntro:"Click any event card to enter its subpage. Each event page can continue expanding rule highlights, strategy rhythm, and presentation visuals.",event1:"MakeX Inspire",event2:"MakeX Starter",event3:"Maker Explorer",event4:"MakeX Challenge",badgeInspire:"Inspire",badgeStarter:"Starter",badgeExplorer:"Explorer",badgeChallenge:"Challenge",event1Note:"Good for introductory task understanding, basic planning logic, and classroom guidance ideas.",event2Note:"Good for beginner-team planning around pacing, foundational scoring, and stable execution.",event3Note:"Better for explaining task rhythm, phase switching, and resource allocation.",event4Note:"Good for explaining strategic priorities and collaboration under more competitive and intense tasks."}
+    };
+    
+    function buildBilingualContent() {
+      const escapeHtml = (value) => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+      const bilingual = {};
+      Object.keys(translations.zh).forEach((key) => {
+        const zhValue = translations.zh[key];
+        const enValue = translations.en[key];
+        if (key === "pageTitle" && typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = `${escapeHtml(zhValue)} / ${escapeHtml(enValue)}`;
+          return;
+        }
+        if (typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = key === "heroTitle"
+            ? `<span style="display:block;color:var(--muted);font-size:.62em;font-weight:500;opacity:.72;line-height:1.08">${escapeHtml(zhValue)}</span><span style="display:block;color:var(--text);font-size:1em;font-weight:900;line-height:1.05">${escapeHtml(enValue)}</span>`
+            : `<span style="color:var(--muted);font-weight:500;opacity:.65">${escapeHtml(zhValue)}</span><span style="opacity:.3"> / </span><span style="color:var(--text);font-weight:900">${escapeHtml(enValue)}</span>`;
+        } else {
+          bilingual[key] = escapeHtml(enValue ?? zhValue);
+        }
+      });
+      return bilingual;
+    }
+const languageSelect=document.getElementById("languageSelect");
+    const backLink=document.getElementById("backLink");
+    const inspireLink=document.getElementById("inspireLink");
+    const starterLink=document.getElementById("starterLink");
+    const explorerLink=document.getElementById("explorerLink");
+    const challengeLink=document.getElementById("challengeLink");
+    function applyLanguage(lang){const safeLang=["zh","en"].includes(lang)?lang:"zh";const c=safeLang==="en"?buildBilingualContent():translations.zh;document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module2-overview.html?lang=${safeLang}`;inspireLink.href=`module2-inspire-detail.html?lang=${safeLang}`;starterLink.href=`module2-starter-detail.html?lang=${safeLang}`;explorerLink.href=`module2-explorer-detail.html?lang=${safeLang}`;challengeLink.href=`module2-challenge-detail.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});}
+    languageSelect.addEventListener("change",e=>applyLanguage(e.target.value));
+    const params=new URLSearchParams(window.location.search);const rawLang=params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh";applyLanguage(rawLang);
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>
+
+
+
+
+
+

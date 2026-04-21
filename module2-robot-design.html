@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 2 - Top-Down Robot Design</title>
+  <style>
+    :root {
+      --text: #1f2430;
+      --muted: #5d6472;
+      --accent: #cc5a2f;
+      --accent-deep: #8d3010;
+      --surface: rgba(255, 250, 242, 0.92);
+      --line: rgba(31, 36, 48, 0.1);
+      --shadow: 0 24px 60px rgba(64, 43, 26, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(204, 90, 47, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f1e7 0%, #f2ece3 100%);
+    }
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .language-select,
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .language-select {
+      border: 1px solid rgba(31, 36, 48, 0.12);
+      background: #fffdfa;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .back-link {
+      color: var(--accent-deep);
+      background: rgba(204, 90, 47, 0.1);
+    }
+    .hero,
+    .panel {
+      padding: 32px;
+      border-radius: 28px;
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    .focus-banner {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      padding: 18px;
+      margin-bottom: 22px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255, 248, 239, 0.98), rgba(250, 241, 230, 0.86));
+      border: 1px solid rgba(204, 90, 47, 0.16);
+      box-shadow: 0 18px 34px rgba(64, 43, 26, 0.1);
+    }
+    .focus-kicker {
+      grid-column: 1 / -1;
+      margin: 0 0 4px;
+      color: var(--accent-deep);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .focus-card {
+      position: relative;
+      padding: 18px 20px 18px 22px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 247, 238, 0.92));
+      border: 1px solid rgba(204, 90, 47, 0.14);
+      box-shadow: 0 14px 30px rgba(64, 43, 26, 0.08);
+      overflow: hidden;
+    }
+    .focus-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 6px;
+      border-radius: 22px 0 0 22px;
+      background: linear-gradient(180deg, rgba(204, 90, 47, 0.92), rgba(141, 48, 16, 0.92));
+    }
+    .focus-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(204, 90, 47, 0.12);
+      color: var(--accent-deep);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .focus-title {
+      display: block;
+      margin-top: 12px;
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 1.1;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .eyebrow {
+      display: inline-flex;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(204, 90, 47, 0.1);
+      color: var(--accent-deep);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.1;
+    }
+    .subtitle {
+      margin: 0 0 18px;
+      color: var(--accent-deep);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 26px;
+    }
+    h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+    .key-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 22px;
+      background: rgba(204, 90, 47, 0.08);
+      border: 1px solid rgba(204, 90, 47, 0.16);
+    }
+    .key-box strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent-deep);
+      font-size: 16px;
+    }
+    .points,
+    .compare-grid,
+    .makex-grid,
+    .mistake-grid {
+      display: grid;
+      gap: 18px;
+    }
+    .points,
+    .compare-grid,
+    .makex-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .mistake-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .point,
+    .compare-card,
+    .makex-card,
+    .mistake-card {
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+    }
+    .point strong,
+    .compare-card strong,
+    .makex-card strong,
+    .mistake-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+    .point span,
+    .compare-card span,
+    .makex-card span,
+    .mistake-card span {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+    .gallery-note {
+      margin-bottom: 18px;
+    }
+    .carousel {
+      margin-top: 18px;
+    }
+    .carousel-window {
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.35s ease;
+    }
+    .slide {
+      min-width: 100%;
+      padding: 16px;
+    }
+    .slide img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      background: #fff;
+    }
+    .slide-title {
+      margin-top: 14px;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .caption {
+      margin-top: 8px;
+      font-size: 15px;
+    }
+    .carousel-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .nav-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .nav-button {
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(204, 90, 47, 0.24);
+    }
+    .slide-indicator {
+      color: var(--accent-deep);
+      font-weight: 800;
+    }
+    .summary p + p {
+      margin-top: 10px;
+    }
+    .bridge {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(204, 90, 47, 0.08);
+      color: var(--accent-deep);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+    @media (max-width: 900px) {
+      .topbar,
+      .toolbar-right {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .focus-banner,
+      .points,
+      .compare-grid,
+      .makex-grid,
+      .mistake-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero,
+      .panel {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back-link" id="backLink" href="module2-overview.html" data-i18n="backLink">返回第二模块</a>
+      <div class="toolbar-right">
+        <select class="language-select" id="languageSelect" aria-label="Language selector">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="focus-banner">
+        <div class="focus-kicker" data-i18n="focusKicker">简单 · 稳定 · 高效</div>
+        <div class="focus-card">
+          <span class="focus-index" data-i18n="focus1Index">03</span>
+          <strong class="focus-title" data-i18n="focus1Title">高效</strong>
+        </div>
+        <div class="focus-card">
+          <span class="focus-index" data-i18n="focus2Index">01</span>
+          <strong class="focus-title" data-i18n="focus2Title">简单</strong>
+        </div>
+        <div class="focus-card">
+          <span class="focus-index" data-i18n="focus3Index">02</span>
+          <strong class="focus-title" data-i18n="focus3Title">稳定</strong>
+        </div>
+      </div>
+      <div class="eyebrow" data-i18n="eyebrow">Robot Design</div>
+      <h1 data-i18n="title">国际常见的 Top-Down 机器人设计</h1>
+      <p class="subtitle" data-i18n="subtitle">用 FRC 赛队主布局草图讲清 Top-Down 设计思路</p>
+      <p data-i18n="description">这一页不是单纯展示 FRC 图片，而是借助国际强队常见做法，帮助 MakeX 队伍理解为什么要先做整机约束，再做零件细化。</p>
+      <div class="key-box">
+        <strong data-i18n="keyTitle">本页核心结论</strong>
+        <p data-i18n="keyBody">Top-Down 设计的核心不是先做零件，而是先锁定整机任务、空间边界、机构关系和比赛动作路径。国际强队这样做，是为了更早发现冲突、统一团队理解，并让后续参数推导和策略规划都有依据。</p>
+      </div>
+      <div class="points">
+        <div class="point"><strong data-i18n="point1Title">先搭主布局</strong><span data-i18n="point1Body">先在主草图里确定底盘尺寸、机构行程和关键边界，再展开后续设计。</span></div>
+        <div class="point"><strong data-i18n="point2Title">围绕任务设计</strong><span data-i18n="point2Body">让机构路径、得分动作和场地约束在同一张主图里对齐，避免后期冲突。</span></div>
+        <div class="point"><strong data-i18n="point3Title">便于团队协作</strong><span data-i18n="point3Body">主草图明确以后，底盘、升降、投射和夹取等子系统更容易并行推进。</span></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="compareTitle">Top-Down 与 Bottom-Up 的区别</h2>
+      <div class="compare-grid">
+        <article class="compare-card"><strong data-i18n="c1t">Top-Down</strong><span data-i18n="c1b">先定义任务、边界、布局和动作路径，再细化各机构和零件。</span></article>
+        <article class="compare-card"><strong data-i18n="c2t">Bottom-Up</strong><span data-i18n="c2b">先做零件和机构，再回头拼整机，容易在后期发现空间和节奏冲突。</span></article>
+        <article class="compare-card"><strong data-i18n="c3t">为什么比赛机器人更适合 Top-Down</strong><span data-i18n="c3b">因为比赛机器人要围绕任务、时间和策略做整体优化，而不是只看某一个机构是否能动起来。</span></article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="galleryTitle">Top-Down 设计图示例</h2>
+      <p class="gallery-note" data-i18n="galleryDescription">保留一张最清晰、最适合讲解的 FRC 主布局草图作为核心案例，同时加入一张机构运动示意图，用来补充说明动作路径与空间包络。</p>
+      <div class="carousel">
+        <div class="carousel-window">
+          <div class="carousel-track" id="carouselTrack">
+            <article class="slide" data-image="assets/images/frc-1778-top-down.webp">
+              <img src="assets/images/frc-1778-top-down.webp" alt="1778 master sketch">
+              <div class="slide-title" data-i18n="slide1Title">1778 主布局草图</div>
+              <p class="caption" data-i18n="slide1Caption">典型的 Top-Down / Master Sketch，用于先确定底盘、机构范围和场地关系。用这一张图就足以说明“先做整机约束，再展开细化设计”的核心方法。</p>
+            </article>
+            <article class="slide" data-image="assets/images/frc-pivot-master-sketch.webp">
+              <img src="assets/images/frc-pivot-master-sketch.webp" alt="Pivot master sketch">
+              <div class="slide-title" data-i18n="slide2Title">Pivot Master Sketch</div>
+              <p class="caption" data-i18n="slide2Caption">适合说明旋转机构如何先定义关键角度、干涉区和安装关系。</p>
+            </article>
+            <article class="slide" data-image="assets/images/frc-elevator-master-sketch.webp">
+              <img src="assets/images/frc-elevator-master-sketch.webp" alt="Elevator master sketch">
+              <div class="slide-title" data-i18n="slide3Title">Elevator Master Sketch</div>
+              <p class="caption" data-i18n="slide3Caption">适合说明升降机构如何先锁定行程、极限位置和主结构关系。</p>
+            </article>
+            <article class="slide" data-image="assets/images/frc-elevator-front-sketch.webp">
+              <img src="assets/images/frc-elevator-front-sketch.webp" alt="Elevator front sketch">
+              <div class="slide-title" data-i18n="slide4Title">Elevator Front Sketch</div>
+              <p class="caption" data-i18n="slide4Caption">适合从正视图补充说明宽度、导向、支撑与对称关系。</p>
+            </article>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <div class="nav-group">
+            <button class="nav-button" type="button" id="prevButton" data-i18n="prevButton">上一张</button>
+            <button class="nav-button" type="button" id="nextButton" data-i18n="nextButton">下一张</button>
+          </div>
+          <div class="slide-indicator" id="slideIndicator">1 / 4</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="sourceTitle">来源与讲解提示</h2>
+      <p data-i18n="sourceBody1">来源页来自 FRCDesign.org 的 Layout Sketch Best Practices，展示了 1778 赛队在 2024 赛季的主布局草图。</p>
+      <p data-i18n="sourceBody2">你可以结合这个案例强调：国际成熟赛队往往先从整体任务和空间规划出发，再进入详细零件和结构设计，这正是 Top-Down 设计的核心价值。</p>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="makexTitle">在 MakeX 中如何应用 Top-Down</h2>
+      <div class="makex-grid">
+        <article class="makex-card"><strong data-i18n="m1t">先画任务点</strong><span data-i18n="m1b">先把取件点、移动路径、得分点和场地障碍画出来，再决定机器人要做哪些动作。</span></article>
+        <article class="makex-card"><strong data-i18n="m2t">再定边界</strong><span data-i18n="m2b">先确定机器人初始尺寸、展开状态和机构运动包络，避免后期互相抢空间。</span></article>
+        <article class="makex-card"><strong data-i18n="m3t">最后细化机构</strong><span data-i18n="m3b">当主布局稳定以后，再进入夹取、抬升、投射或翻转等具体机构设计，会更稳、更快。</span></article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="mistakeTitle">设计时最容易犯的错误</h2>
+      <div class="mistake-grid">
+        <article class="mistake-card"><strong data-i18n="e1t">先做机构，后看整机</strong><span data-i18n="e1b">最后才发现结构放不下、收不回或影响其他子系统。</span></article>
+        <article class="mistake-card"><strong data-i18n="e2t">只看单个动作</strong><span data-i18n="e2b">忽略整场节奏，导致机器人虽然能做动作，但比赛效率很低。</span></article>
+        <article class="mistake-card"><strong data-i18n="e3t">忽略展开与收纳状态</strong><span data-i18n="e3b">设计时没同时考虑最大展开边界和初始状态，导致合规和稳定性问题。</span></article>
+        <article class="mistake-card"><strong data-i18n="e4t">忽略调试与维修空间</strong><span data-i18n="e4b">机器人能装下不代表好维护，赛场上调试困难会明显拖慢节奏。</span></article>
+      </div>
+    </section>
+
+    <section class="panel summary">
+      <h2 data-i18n="summaryTitle">分享讲解重点</h2>
+      <p data-i18n="summary0">我们不是学 FRC 机器人长什么样，而是学他们如何先做整机约束，再展开细化设计。</p>
+      <p data-i18n="summary1">Top-Down 设计不是先做零件，而是先做整体约束。</p>
+      <p data-i18n="summary2">一张好的主布局图，能帮助团队尽早发现尺寸冲突、行程不足和策略路径问题。</p>
+      <p data-i18n="summary3">在示范机器人讲解中，可以把主草图和实体机构一一对应，帮助观众快速建立设计理解。</p>
+      <div class="bridge" data-i18n="bridge">当主布局被确定以后，下一步不是继续把图画得更复杂，而是把其中的关键动作转成具体参数。这也是第二部分“参数寻找演示”的重点。</div>
+    </section>
+  </main>
+
+  <script>
+    const translations = {
+      zh: {
+        pageTitle: "第二模块 - Top-Down 机器人设计",
+        backLink: "返回第二模块",
+        eyebrow: "Robot Design",
+        title: "国际常见的 Top-Down 机器人设计",
+        subtitle: "用 FRC 赛队主布局草图讲清 Top-Down 设计思路",
+        description: "这一页不是单纯展示 FRC 图片，而是借助国际强队常见做法，帮助 MakeX 队伍理解为什么要先做整机约束，再做零件细化。",
+        focusKicker: "简单 · 稳定 · 高效",
+        focus1Index: "03",
+        focus1Title: "高效",
+        focus2Index: "01",
+        focus2Title: "简单",
+        focus3Index: "02",
+        focus3Title: "稳定",
+        keyTitle: "本页核心结论",
+        keyBody: "Top-Down 设计的核心不是先做零件，而是先锁定整机任务、空间边界、机构关系和比赛动作路径。国际强队这样做，是为了更早发现冲突、统一团队理解，并让后续参数推导和策略规划都有依据。",
+        point1Title: "先搭主布局",
+        point1Body: "先在主草图里确定底盘尺寸、机构行程和关键边界，再展开后续设计。",
+        point2Title: "围绕任务设计",
+        point2Body: "让机构路径、得分动作和场地约束在同一张主图里对齐，避免后期冲突。",
+        point3Title: "便于团队协作",
+        point3Body: "主草图明确以后，底盘、升降、投射和夹取等子系统更容易并行推进。",
+        compareTitle: "Top-Down 与 Bottom-Up 的区别",
+        c1t: "Top-Down",
+        c1b: "先定义任务、边界、布局和动作路径，再细化各机构和零件。",
+        c2t: "Bottom-Up",
+        c2b: "先做零件和机构，再回头拼整机，容易在后期发现空间和节奏冲突。",
+        c3t: "为什么比赛机器人更适合 Top-Down",
+        c3b: "因为比赛机器人要围绕任务、时间和策略做整体优化，而不是只看某一个机构是否能动起来。",
+        galleryTitle: "Top-Down 设计图示例",
+        galleryDescription: "保留一张最清晰、最适合讲解的 FRC 主布局草图作为核心案例，同时加入一张机构运动示意图，用来补充说明动作路径与空间包络。",
+        slide1Title: "1778 主布局草图",
+        slide1Caption: "典型的 Top-Down / Master Sketch，用于先确定底盘、机构范围和场地关系。用这一张图就足以说明“先做整机约束，再展开细化设计”的核心方法。",
+        slide2Title: "Pivot Master Sketch",
+        slide2Caption: "适合说明旋转机构如何先定义关键角度、干涉区和安装关系。",
+        slide3Title: "Elevator Master Sketch",
+        slide3Caption: "适合说明升降机构如何先锁定行程、极限位置和主结构关系。",
+        slide4Title: "Elevator Front Sketch",
+        slide4Caption: "适合从正视图补充说明宽度、导向、支撑与对称关系。",
+        prevButton: "上一张",
+        nextButton: "下一张",
+        sourceTitle: "来源与讲解提示",
+        sourceBody1: "来源页来自 FRCDesign.org 的 Layout Sketch Best Practices，展示了 1778 赛队在 2024 赛季的主布局草图。",
+        sourceBody2: "你可以结合这个案例强调：国际成熟赛队往往先从整体任务和空间规划出发，再进入详细零件和结构设计，这正是 Top-Down 设计的核心价值。",
+        makexTitle: "在 MakeX 中如何应用 Top-Down",
+        m1t: "先画任务点",
+        m1b: "先把取件点、移动路径、得分点和场地障碍画出来，再决定机器人要做哪些动作。",
+        m2t: "再定边界",
+        m2b: "先确定机器人初始尺寸、展开状态和机构运动包络，避免后期互相抢空间。",
+        m3t: "最后细化机构",
+        m3b: "当主布局稳定以后，再进入夹取、抬升、投射或翻转等具体机构设计，会更稳、更快。",
+        mistakeTitle: "设计时最容易犯的错误",
+        e1t: "先做机构，后看整机",
+        e1b: "最后才发现结构放不下、收不回或影响其他子系统。",
+        e2t: "只看单个动作",
+        e2b: "忽略整场节奏，导致机器人虽然能做动作，但比赛效率很低。",
+        e3t: "忽略展开与收纳状态",
+        e3b: "设计时没同时考虑最大展开边界和初始状态，导致合规和稳定性问题。",
+        e4t: "忽略调试与维修空间",
+        e4b: "机器人能装下不代表好维护，赛场上调试困难会明显拖慢节奏。",
+        summaryTitle: "分享讲解重点",
+        summary0: "我们不是学 FRC 机器人长什么样，而是学他们如何先做整机约束，再展开细化设计。",
+        summary1: "Top-Down 设计不是先做零件，而是先做整体约束。",
+        summary2: "一张好的主布局图，能帮助团队尽早发现尺寸冲突、行程不足和策略路径问题。",
+        summary3: "在示范机器人讲解中，可以把主草图和实体机构一一对应，帮助观众快速建立设计理解。",
+        bridge: "当主布局被确定以后，下一步不是继续把图画得更复杂，而是把其中的关键动作转成具体参数。这也是第二部分“参数寻找演示”的重点。"
+      },
+      en: {
+        pageTitle: "Module 2 - Top-Down Robot Design",
+        backLink: "Back to Module 2",
+        eyebrow: "Robot Design",
+        title: "Popular International Top-Down Robot Design",
+        subtitle: "Use FRC master layout sketches to explain the Top-Down design method",
+        description: "This page is not just an FRC image gallery. It uses common international practice to help MakeX teams understand why whole-robot constraints should be defined before part detail.",
+        focusKicker: "Simple · Stable · Efficient",
+        focus1Index: "03",
+        focus1Title: "Efficient",
+        focus2Index: "01",
+        focus2Title: "Simple",
+        focus3Index: "02",
+        focus3Title: "Stable",
+        keyTitle: "Core Takeaway of This Page",
+        keyBody: "The core of Top-Down design is not starting with parts. It is locking the robot task, space boundaries, mechanism relationships, and action paths first. Strong teams work this way so they can discover conflicts earlier, align team understanding, and create a foundation for parameter reasoning and strategy planning.",
+        point1Title: "Build the Master Layout First",
+        point1Body: "Define chassis size, mechanism travel, and critical boundaries in the master sketch before detailed design.",
+        point2Title: "Design Around the Task",
+        point2Body: "Align mechanism paths, scoring actions, and field constraints in one main sketch to avoid late-stage conflicts.",
+        point3Title: "Better Team Collaboration",
+        point3Body: "Once the main sketch is clear, chassis, elevator, shooter, and intake subsystems can progress in parallel more easily.",
+        compareTitle: "Top-Down vs Bottom-Up",
+        c1t: "Top-Down",
+        c1b: "Define the task, boundaries, layout, and action path first, then refine mechanisms and parts.",
+        c2t: "Bottom-Up",
+        c2b: "Build parts and mechanisms first, then try to assemble the full robot later, which often reveals conflicts too late.",
+        c3t: "Why Top-Down Fits Competition Robots Better",
+        c3b: "Because competition robots need whole-system optimization around tasks, timing, and strategy, not just one mechanism moving correctly.",
+        galleryTitle: "Top-Down Design Example",
+        galleryDescription: "Keep one clear, high-quality FRC master layout sketch as the core case, while adding one motion-envelope diagram to explain action paths and spatial constraints more clearly.",
+        slide1Title: "1778 Master Layout Sketch",
+        slide1Caption: "A typical Top-Down / Master Sketch used to define the chassis, mechanism envelope, and field relationship first. This single image is enough to explain the method of setting whole-robot constraints before detail refinement.",
+        slide2Title: "Pivot Master Sketch",
+        slide2Caption: "Useful for showing how rotating mechanisms are planned by defining key angles, interference zones, and mounting relationships first.",
+        slide3Title: "Elevator Master Sketch",
+        slide3Caption: "Useful for explaining how travel, limit positions, main structure, and drive relationships are set in the top-level layout first.",
+        slide4Title: "Elevator Front Sketch",
+        slide4Caption: "Useful as a supplement for discussing width, guidance, support, and symmetry from the front view.",
+        prevButton: "Previous",
+        nextButton: "Next",
+        sourceTitle: "Source and presentation note",
+        sourceBody1: "The source comes from FRCDesign.org's Layout Sketch Best Practices and shows Team 1778's 2024 main layout sketch.",
+        sourceBody2: "You can use this example to emphasize that mature international teams often start with mission and space planning before moving into detailed part and structure design, which is the core value of Top-Down design.",
+        makexTitle: "How to Apply Top-Down in MakeX",
+        m1t: "Map the Task Points First",
+        m1b: "Draw pickup points, travel paths, scoring points, and field obstacles before deciding robot actions.",
+        m2t: "Set the Boundaries Next",
+        m2b: "Define starting size, deployed state, and motion envelope early to avoid later conflicts.",
+        m3t: "Refine Mechanisms Last",
+        m3b: "Once the main layout is stable, move into intake, lift, shooter, or flipping mechanisms with much more confidence.",
+        mistakeTitle: "Most Common Design Mistakes",
+        e1t: "Build the Mechanism Before the Full Robot",
+        e1b: "This often ends with a robot that does not fit, does not stow, or blocks other subsystems.",
+        e2t: "Focus on One Action Only",
+        e2b: "Ignoring full-match rhythm leads to a robot that can act, but cannot compete efficiently.",
+        e3t: "Ignore Deployed and Stowed States",
+        e3b: "Not checking both maximum envelope and starting state causes compliance and reliability problems.",
+        e4t: "Ignore Service and Debug Space",
+        e4b: "A robot that barely fits together is often hard to repair or tune under match pressure.",
+        summaryTitle: "Key Talking Points",
+        summary0: "We are not learning what an FRC robot looks like. We are learning how strong teams define whole-robot constraints before detailed design.",
+        summary1: "Top-Down design does not start with parts. It starts with system-level constraints.",
+        summary2: "A good master sketch helps teams discover size conflicts, insufficient travel, and strategy path issues early.",
+        summary3: "During a demo, matching the sketch to the real robot helps the audience quickly understand the design logic.",
+        bridge: "Once the main layout is fixed, the next step is not making the drawing more complex. It is turning those key actions into real parameters. That is exactly what Part 2 should demonstrate."
+      }
+    };
+
+    function buildBilingualContent() {
+      const content = {};
+      Object.keys(translations.zh).forEach((key) => {
+        const zhValue = translations.zh[key];
+        const enValue = translations.en[key];
+        if (key === "pageTitle" && typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = `${escapeHtml(zhValue)} / ${escapeHtml(enValue)}`;
+          return;
+        }
+        if (typeof zhValue === "string" && typeof enValue === "string") {
+          content[key] = `${zhValue} / ${enValue}`;
+        } else {
+          content[key] = enValue ?? zhValue;
+        }
+      });
+      return content;
+    }
+
+    const languageSelect = document.getElementById("languageSelect");
+    const backLink = document.getElementById("backLink");
+    const carouselTrack = document.getElementById("carouselTrack");
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const indicator = document.getElementById("slideIndicator");
+    const prevButton = document.getElementById("prevButton");
+    const nextButton = document.getElementById("nextButton");
+    let currentSlide = 0;
+
+    function renderSlide() {
+      carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+      indicator.textContent = `${currentSlide + 1} / ${slides.length}`;
+    }
+
+    function applyLanguage(lang) {
+      const safeLang = ["zh", "en"].includes(lang) ? lang : "zh";
+      const content = safeLang === "en" ? buildBilingualContent() : translations.zh;
+      document.documentElement.lang = safeLang === "zh" ? "zh-CN" : "en";
+      document.title = content.pageTitle;
+      languageSelect.value = safeLang;
+      try {
+        localStorage.setItem("makexTrainingLang", safeLang);
+      } catch (error) {
+        // Ignore storage failures and keep the page usable.
+      }
+      backLink.href = `module2-overview.html?lang=${safeLang}`;
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (content[key]) {
+          node.innerHTML = content[key];
+        }
+      });
+
+      renderSlide();
+    }
+
+    languageSelect.addEventListener("change", (event) => {
+      applyLanguage(event.target.value);
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const initialLanguage = params.get("lang") || localStorage.getItem("makexTrainingLang") || "zh";
+
+    prevButton.addEventListener("click", () => {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      renderSlide();
+    });
+
+    nextButton.addEventListener("click", () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      renderSlide();
+    });
+
+    applyLanguage(initialLanguage);
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>
+
+
+

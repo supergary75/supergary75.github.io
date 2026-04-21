@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 3 - Curriculum System</title>
+  <style>
+    :root{--text:#f7f4ef;--muted:#b8bed1;--accent:#ffba66;--accent-deep:#ff9c35;--surface:rgba(18,15,29,.88);--surface-strong:rgba(24,18,40,.96);--panel:#161221;--line:rgba(118,125,181,.28);--shadow:0 22px 60px rgba(0,0,0,.34);--study:#6aa8ff;--train:#70c96a;--compete:#ee984c;--purple:#7a61ff}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);background:radial-gradient(circle at top center, rgba(122,97,255,.16), transparent 28%),radial-gradient(circle at left top, rgba(238,152,76,.1), transparent 24%),linear-gradient(180deg,#0f0c16 0%,#140f1f 100%)}
+    .page{width:min(1680px,calc(100% - 28px));margin:0 auto;padding:28px 0 44px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+    .toolbar-right{display:flex;align-items:center;gap:12px}
+    .language-select,.back-link{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:14px;text-decoration:none;font-size:14px;font-weight:700}
+    .language-select{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--text);cursor:pointer}
+    .back-link{color:#ffd6ae;background:rgba(255,186,102,.12)}
+    .hero,.panel{padding:28px;border-radius:28px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);margin-bottom:18px}
+    .eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,186,102,.12);color:#ffd6ae;font-size:13px;font-weight:800;letter-spacing:.04em}
+    h1{margin:18px 0 12px;font-size:clamp(34px,4vw,54px);line-height:1.08}
+    h2{margin:0 0 16px;font-size:28px}
+    h3{margin:0;font-size:20px}
+    p{margin:0;color:var(--muted);line-height:1.75;font-size:15px}
+    .subtitle{margin:0 0 16px;color:#c3d5ff;font-size:18px;font-weight:700}
+    .highlight{margin-top:18px;padding:18px 20px;border-radius:20px;background:rgba(74,115,230,.15);border:1px solid rgba(106,168,255,.24);color:#e7efff;font-size:17px;font-weight:800;line-height:1.7}
+    .phase-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:14px}
+    .phase-card{padding:20px;border-radius:22px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+    .phase-card.study{box-shadow:inset 0 0 0 1px rgba(106,168,255,.16)}
+    .phase-card.train{box-shadow:inset 0 0 0 1px rgba(112,201,106,.16)}
+    .phase-card.compete{box-shadow:inset 0 0 0 1px rgba(238,152,76,.16)}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-size:13px;font-weight:800;margin-bottom:12px}
+    .badge.study{background:rgba(106,168,255,.16);color:#b8d4ff}
+    .badge.train{background:rgba(112,201,106,.16);color:#c8efc5}
+    .badge.compete{background:rgba(238,152,76,.16);color:#ffd8b2}
+    .loop-note{padding:16px 18px;border-radius:18px;background:rgba(255,186,102,.08);color:#ffd6ae;font-size:14px;font-weight:700;line-height:1.7}
+    .timeline-header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px}
+    .timeline-label{padding:12px 18px;border-radius:18px;background:rgba(74,115,230,.18);border:1px solid rgba(106,168,255,.3);color:#edf4ff;font-size:15px;font-weight:800}
+    .year-grid,.event-row{display:grid;grid-template-columns:repeat(12,minmax(108px,1fr));gap:10px}
+    .year-month,.event-month{position:relative;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+    .year-month{padding:16px 14px 18px;min-height:158px}
+    .event-month{padding:14px 12px 16px;min-height:176px}
+    .year-month.study,.event-month.study{box-shadow:inset 0 0 0 1px rgba(106,168,255,.12)}
+    .year-month.train,.event-month.train{box-shadow:inset 0 0 0 1px rgba(112,201,106,.12)}
+    .year-month.compete,.event-month.compete{box-shadow:inset 0 0 0 1px rgba(238,152,76,.12)}
+    .month-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+    .month-name{font-size:18px;font-weight:800;color:#fff}
+    .month-tag{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;font-size:13px;font-weight:800;color:#fff;flex:0 0 auto}
+    .month-tag.study{background:var(--study)}
+    .month-tag.train{background:var(--train)}
+    .month-tag.compete{background:var(--compete)}
+    .year-month h4,.event-month h4{margin:0 0 8px;font-size:17px;line-height:1.4;color:#f7f7fb}
+    .year-month p,.event-month p{font-size:13px;line-height:1.65}
+    .event-list{display:grid;gap:16px}
+    .event-card{padding:0;border-radius:26px;overflow:hidden;background:var(--surface-strong);border:1px solid var(--line);box-shadow:var(--shadow)}
+    .event-head{display:grid;grid-template-columns:220px 1fr;align-items:stretch;border-bottom:1px solid rgba(255,255,255,.08)}
+    .event-title{padding:22px 22px 18px;font-size:30px;font-weight:900;display:flex;align-items:center;gap:12px}
+    .event-summary{padding:18px 20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;background:rgba(255,255,255,.02)}
+    .summary-item{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+    .summary-item strong{display:block;margin-bottom:6px;font-size:13px;color:#fff7ea;letter-spacing:.04em}
+    .summary-item span{font-size:13px;color:var(--muted);line-height:1.65}
+    .event-body{padding:18px}
+    .event-card.inspire .event-title{background:linear-gradient(90deg,rgba(239,167,90,.2),rgba(239,167,90,.06))}
+    .event-card.starter .event-title{background:linear-gradient(90deg,rgba(231,103,120,.18),rgba(231,103,120,.05))}
+    .event-card.explorer .event-title{background:linear-gradient(90deg,rgba(86,162,148,.2),rgba(86,162,148,.05))}
+    .event-card.challenge .event-title{background:linear-gradient(90deg,rgba(121,111,217,.22),rgba(121,111,217,.06))}
+    .event-note{margin-top:14px;padding:14px 16px;border-radius:18px;background:rgba(255,186,102,.06);border:1px solid rgba(255,186,102,.14);color:#ffd6ae;font-size:13px;font-weight:700;line-height:1.7}
+    .summary-note{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(255,186,102,.08);color:#ffd6ae;font-size:14px;font-weight:700;line-height:1.7}
+    @media(max-width:1560px){.year-grid,.event-row{overflow-x:auto;padding-bottom:8px}.year-grid,.event-row{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(120px,1fr)}.event-head{grid-template-columns:1fr}.event-summary{grid-template-columns:1fr}}
+    @media(max-width:980px){.topbar,.toolbar-right,.timeline-header{flex-direction:column;align-items:stretch}.hero,.panel{padding:22px 18px}.phase-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back-link" id="backLink" href="module3-detail.html" data-i18n="backLink">返回第三模块</a>
+      <div class="toolbar-right">
+        <select class="language-select" id="languageSelect">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">Curriculum</div>
+      <h1 data-i18n="title">培训课程体系的建立</h1>
+      <p class="subtitle" data-i18n="subtitle">用“全年时间轴 + 单赛项横向闭环”组织课程节奏，建立真正可执行的成长体系</p>
+      <p data-i18n="description">这套课程体系先给出全年每个月的统一主题，再让 Inspire、Starter、Explorer、Challenge 四个赛项在相同月份下分别落实到对应重点，强调横向学练赛闭环与纵向分级成长同步推进。</p>
+      <div class="highlight" data-i18n="highlight">全年主线：两个“学-练-赛”循环并行推进（上半年一轮、下半年一轮），重点冲刺 8 月与 12 月两场大赛。</div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="stageTitle">课程体系的三阶段结构</h2>
+      <div class="phase-grid">
+        <article class="phase-card study">
+          <span class="badge study" data-i18n="studyBadge">学阶段（蓝色）</span>
+          <p data-i18n="studyBody">对应月份：1-4月、9-10月。目标：规则理解、程序规范、专项知识升级。</p>
+        </article>
+        <article class="phase-card train">
+          <span class="badge train" data-i18n="trainBadge">练阶段（绿色）</span>
+          <p data-i18n="trainBody">对应月份：5-6月、11月。目标：结构搭建、联调稳定、强化演练。</p>
+        </article>
+        <article class="phase-card compete">
+          <span class="badge compete" data-i18n="competeBadge">赛阶段（橙色）</span>
+          <p data-i18n="competeBody">对应月份：7-8月、12月。目标：实战冲刺与复盘，其中8月/12月为重点大赛。</p>
+        </article>
+      </div>
+      <div class="loop-note" data-i18n="loopNote">第一循环：1-8月；第二循环：9-12月。页面先给全年统一时间轴，再让每个赛项横向对齐 12 个月重点，强化“同月同主题、赛项有差异”的课程组织方式。</div>
+    </section>
+
+    <section class="panel">
+      <div class="timeline-header">
+        <div>
+          <h2 data-i18n="timelineTitle">全年比赛时间轴（1-12月）</h2>
+          <p data-i18n="timelineDesc">先定义每个月的统一训练主题，再让各赛项在同一月份下承接同类成长任务。</p>
+        </div>
+        <div class="timeline-label" data-i18n="timelineLabel">全年统一主题轴：月份重点先行，赛项课程横向对齐</div>
+      </div>
+      <div class="year-grid">
+        <article class="year-month study"><div class="month-head"><span class="month-name">1月</span><span class="month-tag study">学</span></div><h4>规则解读与分析规划</h4><p>建立赛季理解框架，明确任务、条件、评分与全年目标。</p></article>
+        <article class="year-month study"><div class="month-head"><span class="month-name">2月</span><span class="month-tag study">学</span></div><h4>基础设备控制方法</h4><p>统一基础控制、程序规范和底层实现方式。</p></article>
+        <article class="year-month study"><div class="month-head"><span class="month-name">3月</span><span class="month-tag study">学</span></div><h4>任务拆解与方案论证</h4><p>把规则转成模块任务、原型方向和初步策略。</p></article>
+        <article class="year-month study"><div class="month-head"><span class="month-name">4月</span><span class="month-tag study">学</span></div><h4>结构设计与联调准备</h4><p>完成系统框架、流程串联和阶段成果准备。</p></article>
+        <article class="year-month train"><div class="month-head"><span class="month-name">5月</span><span class="month-tag train">练</span></div><h4>样机搭建与专项训练</h4><p>把纸面方案转为可运行系统并做第一轮强化训练。</p></article>
+        <article class="year-month train"><div class="month-head"><span class="month-name">6月</span><span class="month-tag train">练</span></div><h4>联调稳定与场景演练</h4><p>在场地与对抗场景里验证路线、节奏和协作。</p></article>
+        <article class="year-month compete"><div class="month-head"><span class="month-name">7月</span><span class="month-tag compete">赛</span></div><h4>赛前热身与资格冲刺</h4><p>进入比赛节奏，围绕实战做高频演练。</p></article>
+        <article class="year-month compete"><div class="month-head"><span class="month-name">8月</span><span class="month-tag compete">赛</span></div><h4>重点赛事冲刺与复盘</h4><p>围绕上半年重点赛事集中输出并完成闭环总结。</p></article>
+        <article class="year-month study"><div class="month-head"><span class="month-name">9月</span><span class="month-tag study">学</span></div><h4>系统复盘与方向升级</h4><p>复盘第一轮结果，为下半轮建立升级主题和新目标。</p></article>
+        <article class="year-month study"><div class="month-head"><span class="month-name">10月</span><span class="month-tag study">学</span></div><h4>高阶策略与专项提升</h4><p>深化结构、算法、项目完善或战术层面的高级训练。</p></article>
+        <article class="year-month train"><div class="month-head"><span class="month-name">11月</span><span class="month-tag train">练</span></div><h4>强化备赛与极限调试</h4><p>完成第二轮集中联调，压缩失误并提升稳定度。</p></article>
+        <article class="year-month compete"><div class="month-head"><span class="month-name">12月</span><span class="month-tag compete">赛</span></div><h4>年终大赛与全年验证</h4><p>用总决赛检验全年课程体系与成长结果。</p></article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="eventTitle">分赛项课程体系</h2>
+      <p style="margin-bottom:16px" data-i18n="eventDesc">同一月份保持统一主题，不同赛项根据难度层级和任务特性给出各自的成长重点，让“横向闭环”和“纵向成长”同时成立。</p>
+      <div class="event-list">
+        <article class="event-card inspire">
+          <div class="event-head">
+            <div class="event-title">🎨 MakeX Inspire</div>
+            <div class="event-summary">
+              <div class="summary-item"><strong>横向闭环</strong><span>从规则理解、原型设计、项目打磨到年度成果完善，全年围绕“创新实现与系统推进”展开。</span></div>
+              <div class="summary-item"><strong>纵向成长</strong><span>先学规则和项目逻辑，再练原型与作品完善，最后在阶段任务中完成闭环验证。</span></div>
+              <div class="summary-item"><strong>课程定位</strong><span>更强调创意实现、工程记录、项目推进与完整成果沉淀能力。</span></div>
+            </div>
+          </div>
+          <div class="event-body">
+            <div class="event-row">
+              <article class="event-month study"><div class="month-head"><span class="month-name">1月</span><span class="month-tag study">学</span></div><h4>规则解读</h4><p>理解比赛任务与完成条件。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">2月</span><span class="month-tag study">学</span></div><h4>控制基础代码学习</h4><p>入门动作与流程控制。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">3月</span><span class="month-tag study">学</span></div><h4>原型设计与方案论证</h4><p>建立项目初版方向。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">4月</span><span class="month-tag study">学</span></div><h4>工程日志与阶段准备</h4><p>积累过程材料并整理阶段成果内容。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">5月</span><span class="month-tag train">练</span></div><h4>原型搭建与迭代</h4><p>完成样机搭建并开始优化。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">6月</span><span class="month-tag train">练</span></div><h4>项目演练与内容打磨</h4><p>围绕项目完成度和逻辑完整性持续优化。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">7月</span><span class="month-tag compete">赛</span></div><h4>赛前成果完善</h4><p>围绕阶段目标梳理成果、流程和关键任务。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">8月</span><span class="month-tag compete">赛</span></div><h4>阶段成果冲刺与复盘</h4><p>完成上半年重点任务并总结经验。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">9月</span><span class="month-tag study">学</span></div><h4>创新方向升级</h4><p>为下半轮重新打开主题空间。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">10月</span><span class="month-tag study">学</span></div><h4>方案优化与材料完善</h4><p>补齐项目材料与逻辑证据。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">11月</span><span class="month-tag train">练</span></div><h4>项目强化与演练</h4><p>提升整体完成度和现场稳定性。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">12月</span><span class="month-tag compete">赛</span></div><h4>年终成果总整合</h4><p>完成全年成果的系统梳理与收官总结。</p></article>
+            </div>
+            <div class="event-note">Inspire 强调把全年统一主题转成“创意实现、项目推进、成果沉淀”三条成长线，最适合体现同月同主题下的差异化课程设计。</div>
+          </div>
+        </article>
+
+        <article class="event-card starter">
+          <div class="event-head">
+            <div class="event-title">🚀 MakeX Starter</div>
+            <div class="event-summary">
+              <div class="summary-item"><strong>横向闭环</strong><span>从规则理解、任务拆解、流程联调到实战冲刺，全年围绕“基础任务稳定执行”推进。</span></div>
+              <div class="summary-item"><strong>纵向成长</strong><span>先建立基础控制和任务流程，再把稳定性做出来，最后进入比赛实战节奏。</span></div>
+              <div class="summary-item"><strong>课程定位</strong><span>更强调入门控制、流程连贯、稳定得分与基础比赛意识。</span></div>
+            </div>
+          </div>
+          <div class="event-body">
+            <div class="event-row">
+              <article class="event-month study"><div class="month-head"><span class="month-name">1月</span><span class="month-tag study">学</span></div><h4>赛事规则解读</h4><p>基于任务思考路线设计。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">2月</span><span class="month-tag study">学</span></div><h4>控制基础代码学习</h4><p>任务路线控制实现。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">3月</span><span class="month-tag study">学</span></div><h4>任务流程拆解与练习</h4><p>拆分动作并建立执行顺序。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">4月</span><span class="month-tag study">学</span></div><h4>完整流程联调测试</h4><p>让流程能够稳定串联起来。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">5月</span><span class="month-tag train">练</span></div><h4>稳定性强化与场地演练</h4><p>先把基础分做稳。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">6月</span><span class="month-tag train">练</span></div><h4>完整流程反复测试</h4><p>减少失误并优化节奏。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">7月</span><span class="month-tag compete">赛</span></div><h4>赛前实战对抗训练</h4><p>进入联赛前的对抗磨合。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">8月</span><span class="month-tag compete">赛</span></div><h4>初赛冲刺与复盘</h4><p>围绕第一场重点赛事冲刺。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">9月</span><span class="month-tag study">学</span></div><h4>专项模块升级</h4><p>补齐下半轮的短板。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">10月</span><span class="month-tag study">学</span></div><h4>策略优化与规则研究</h4><p>提高任务顺序与成功率判断。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">11月</span><span class="month-tag train">练</span></div><h4>备赛强化与演练</h4><p>保持系统稳定输出。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">12月</span><span class="month-tag compete">赛</span></div><h4>年终总决赛</h4><p>完成下半轮赛季收官。</p></article>
+            </div>
+            <div class="event-note">Starter 在统一时间轴下更强调“基础控制到完整流程”的递进，很适合用横向一行看清全年稳定性成长。</div>
+          </div>
+        </article>
+
+        <article class="event-card explorer">
+          <div class="event-head">
+            <div class="event-title">🔭 MakeX Explorer</div>
+            <div class="event-summary">
+              <div class="summary-item"><strong>横向闭环</strong><span>从规则理解、策略建模、联调演练到对抗磨合，全年围绕“系统策略能力”推进。</span></div>
+              <div class="summary-item"><strong>纵向成长</strong><span>先搭基础功能和策略认知，再做模块联调与对抗场景，最后进入比赛热身和高阶策略阶段。</span></div>
+              <div class="summary-item"><strong>课程定位</strong><span>更强调得分功能控制、节奏设计、系统稳定和对抗策略。</span></div>
+            </div>
+          </div>
+          <div class="event-body">
+            <div class="event-row">
+              <article class="event-month study"><div class="month-head"><span class="month-name">1月</span><span class="month-tag study">学</span></div><h4>赛事规则解读</h4><p>分析机器人重点得分功能。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">2月</span><span class="month-tag study">学</span></div><h4>控制基础代码学习</h4><p>重点得分功能控制。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">3月</span><span class="month-tag study">学</span></div><h4>策略分析与任务分解</h4><p>开始建立赛项策略视角。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">4月</span><span class="month-tag study">学</span></div><h4>模块联调与系统稳定</h4><p>确保子系统彼此配合。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">5月</span><span class="month-tag train">练</span></div><h4>策略测试与场地演练</h4><p>用场地验证节奏和路径。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">6月</span><span class="month-tag train">练</span></div><h4>对抗性场景训练</h4><p>把策略放进有干扰的环境里测试。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">7月</span><span class="month-tag compete">赛</span></div><h4>联赛热身与赛前磨合</h4><p>进入赛事节奏前做热身循环。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">8月</span><span class="month-tag compete">赛</span></div><h4>大赛冲刺与复盘</h4><p>围绕大赛目标做集中冲刺。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">9月</span><span class="month-tag study">学</span></div><h4>系统迭代与专项提升</h4><p>开始下半轮功能升级。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">10月</span><span class="month-tag study">学</span></div><h4>高阶策略研究</h4><p>围绕强队与复杂节奏深化研究。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">11月</span><span class="month-tag train">练</span></div><h4>综合演练与极限调试</h4><p>逼近比赛环境完成最后稳定化。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">12月</span><span class="month-tag compete">赛</span></div><h4>年终总决赛</h4><p>完成全年第二轮收官。</p></article>
+            </div>
+            <div class="event-note">Explorer 最能体现“同月同主题、赛项差异化承接”的课程方法，因为它对策略和系统联调要求明显更高。</div>
+          </div>
+        </article>
+
+        <article class="event-card challenge">
+          <div class="event-head">
+            <div class="event-title">🏆 MakeX Challenge</div>
+            <div class="event-summary">
+              <div class="summary-item"><strong>横向闭环</strong><span>从规则建模、参数控制、战术协作到高强度对抗，全年围绕“高水平竞赛执行力”推进。</span></div>
+              <div class="summary-item"><strong>纵向成长</strong><span>先把规则和参数理解打深，再做高价值动作与对抗协作，最后进入资格赛和顶级赛事冲刺。</span></div>
+              <div class="summary-item"><strong>课程定位</strong><span>更强调场地建模、参数化控制、联盟协作、对手研究和高压比赛能力。</span></div>
+            </div>
+          </div>
+          <div class="event-body">
+            <div class="event-row">
+              <article class="event-month study"><div class="month-head"><span class="month-name">1月</span><span class="month-tag study">学</span></div><h4>赛事规则解读</h4><p>依据参数完成道具与赛台建模绘制。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">2月</span><span class="month-tag study">学</span></div><h4>控制基础代码学习</h4><p>参数化控制与精度调参。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">3月</span><span class="month-tag study">学</span></div><h4>对抗战术与协作策略</h4><p>开始进入联盟和对抗思维。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">4月</span><span class="month-tag study">学</span></div><h4>关键任务极限打磨</h4><p>围绕高价值动作建立上限。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">5月</span><span class="month-tag train">练</span></div><h4>战术对抗训练</h4><p>开始实战化节奏训练。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">6月</span><span class="month-tag train">练</span></div><h4>高强度实战演练</h4><p>持续提升对抗中的稳定性。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">7月</span><span class="month-tag compete">赛</span></div><h4>联赛资格赛冲刺</h4><p>围绕资格赛建立成绩基础。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">8月</span><span class="month-tag compete">赛</span></div><h4>顶级赛事冲刺</h4><p>把策略、协作和执行力推到高峰。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">9月</span><span class="month-tag study">学</span></div><h4>系统总结与全面迭代</h4><p>复盘第一轮并重建第二轮体系。</p></article>
+              <article class="event-month study"><div class="month-head"><span class="month-name">10月</span><span class="month-tag study">学</span></div><h4>对手研究与战术升级</h4><p>围绕主要竞争对手做针对性升级。</p></article>
+              <article class="event-month train"><div class="month-head"><span class="month-name">11月</span><span class="month-tag train">练</span></div><h4>极限备战训练</h4><p>对系统做高压环境演练。</p></article>
+              <article class="event-month compete"><div class="month-head"><span class="month-name">12月</span><span class="month-tag compete">赛</span></div><h4>年终总决赛</h4><p>完成全年训练体系的最终验证。</p></article>
+            </div>
+            <div class="event-note">Challenge 这一行最能体现全年统一主题下的高阶升级路径，适合直接说明“同月同主题，但竞赛深度逐级加大”的课程理念。</div>
+          </div>
+        </article>
+      </div>
+      <div class="summary-note" data-i18n="summaryNote">课程体系建立的重点，不只是列出课程名称，而是先让全年时间轴定义统一主题，再让各赛项在同月下呈现不同层级的成长重点，从而同时看见单赛项横向闭环和分级体系纵向成长。</div>
+    </section>
+  </main>
+
+  <script>
+    const translations={
+      zh:{
+        pageTitle:"第三模块 - 培训课程体系",backLink:"返回第三模块",eyebrow:"课程体系",title:"培训课程体系的建立",subtitle:"用“全年时间轴 + 单赛项横向闭环”组织课程节奏，建立真正可执行的成长体系",description:"这套课程体系先给出全年每个月的统一主题，再让 Inspire、Starter、Explorer、Challenge 四个赛项在相同月份下分别落实到对应重点，强调横向学练赛闭环与纵向分级成长同步推进。",highlight:"全年主线：两个“学-练-赛”循环并行推进（上半年一轮、下半年一轮），重点冲刺 8 月与 12 月两场大赛。",stageTitle:"课程体系的三阶段结构",studyBadge:"学阶段（蓝色）",studyBody:"对应月份：1-4月、9-10月。目标：规则理解、程序规范、专项知识升级。",trainBadge:"练阶段（绿色）",trainBody:"对应月份：5-6月、11月。目标：结构搭建、联调稳定、强化演练。",competeBadge:"赛阶段（橙色）",competeBody:"对应月份：7-8月、12月。目标：实战冲刺与复盘，其中8月/12月为重点大赛。",loopNote:"第一循环：1-8月；第二循环：9-12月。页面先给全年统一时间轴，再让每个赛项横向对齐 12 个月重点，强化“同月同主题、赛项有差异”的课程组织方式。",timelineTitle:"全年比赛时间轴（1-12月）",timelineDesc:"先定义每个月的统一训练主题，再让各赛项在同一月份下承接同类成长任务。",timelineLabel:"全年统一主题轴：月份重点先行，赛项课程横向对齐",eventTitle:"分赛项课程体系",eventDesc:"同一月份保持统一主题，不同赛项根据难度层级和任务特性给出各自的成长重点，让“横向闭环”和“纵向成长”同时成立。",summaryNote:"课程体系建立的重点，不只是列出课程名称，而是先让全年时间轴定义统一主题，再让各赛项在同月下呈现不同层级的成长重点，从而同时看见单赛项横向闭环和分级体系纵向成长。"},
+      en:{
+        pageTitle:"Module 3 - Training Curriculum System",backLink:"Back to Module 3",eyebrow:"Curriculum",title:"Training Curriculum System Building",subtitle:"Organize the curriculum through a full-year timeline plus event-specific horizontal loops.",description:"This curriculum first defines a unified theme for each month of the year, then lets Inspire, Starter, Explorer, and Challenge land their own priorities under the same month, so horizontal learn-train-compete loops and vertical level-based growth move together.",highlight:"Yearly main line: two Learn-Train-Compete cycles move in parallel, with major pushes toward the August and December key competitions.",stageTitle:"Three-Phase Curriculum Structure",studyBadge:"Study Phase (Blue)",studyBody:"Months: Jan-Apr and Sep-Oct. Goal: rule understanding, program discipline, and topic knowledge upgrade.",trainBadge:"Train Phase (Green)",trainBody:"Months: May-Jun and Nov. Goal: structure building, system integration stability, and focused rehearsal.",competeBadge:"Compete Phase (Orange)",competeBody:"Months: Jul-Aug and Dec. Goal: real match sprint and review, with August and December as key events.",loopNote:"Cycle 1: Jan-Aug; Cycle 2: Sep-Dec. The page first shows one unified annual timeline, then aligns each event across the same 12 months to emphasize same-month themes with event-specific differences.",timelineTitle:"Full-Year Competition Timeline (Jan-Dec)",timelineDesc:"Define the common monthly training theme first, then let each event inherit the corresponding growth task in the same month.",timelineLabel:"Unified yearly theme axis: monthly priorities first, event courses aligned horizontally",eventTitle:"Event-Specific Curriculum System",eventDesc:"Each month keeps one common theme, while different events translate it into different growth priorities based on level and task complexity.",summaryNote:"The key point of curriculum-system building is not only listing course names, but letting the annual timeline define the shared theme first and then showing different growth layers for each event in the same month."}
+    };
+
+    const englishCurriculum = {
+      monthNames:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+      stageTags:{study:"S",train:"P",compete:"C"},
+      yearMonths:[
+        {title:"Rules and Planning",body:"Build the season understanding framework and clarify tasks, conditions, scoring, and yearly goals."},
+        {title:"Basic Control Methods",body:"Unify basic control, programming standards, and low-level implementation methods."},
+        {title:"Task Breakdown and Planning",body:"Turn rules into task modules, prototype directions, and initial strategy."},
+        {title:"Structure Design and Integration Prep",body:"Complete the system framework, process linking, and phase review preparation."},
+        {title:"Prototype Build and Focused Drills",body:"Turn paper plans into a working system and start the first strengthening cycle."},
+        {title:"Stable Integration and Scenario Drills",body:"Validate routes, rhythm, and coordination in field and confrontation scenarios."},
+        {title:"Pre-Match Warm-Up and Qualification Push",body:"Enter competition rhythm and run high-frequency practical drills."},
+        {title:"Key Event Sprint and Review",body:"Focus on the first major event and complete a strong review loop afterward."},
+        {title:"System Review and Direction Upgrade",body:"Review the first cycle and define upgraded themes and goals for the second half."},
+        {title:"Advanced Strategy and Topic Upgrade",body:"Deepen advanced training in structure, algorithms, presentation, or tactics."},
+        {title:"Intensive Preparation and Limit Tuning",body:"Finish the second concentrated integration cycle and reduce errors further."},
+        {title:"Year-End Major Event",body:"Use the final competition to verify the yearly curriculum and growth results."}
+      ],
+      events:[
+        {
+          summaries:[
+            {title:"Horizontal Loop",body:"Moves from rule understanding and prototype design to project polishing and yearly presentation."},
+            {title:"Vertical Growth",body:"Starts with rules and expression logic, then builds prototypes and finishes with presentation-based validation."},
+            {title:"Course Positioning",body:"Emphasizes creativity, engineering records, presentation structure, and project storytelling."}
+          ],
+          months:[
+            {title:"Rule Interpretation",body:"Understand match tasks and completion conditions."},
+            {title:"Basic Control Coding",body:"Learn entry-level actions and process control."},
+            {title:"Prototype Design and Validation",body:"Set the initial project direction."},
+            {title:"Engineering Log and Review Prep",body:"Accumulate process materials and presentation content."},
+            {title:"Prototype Build and Iteration",body:"Complete the first prototype and start optimization."},
+            {title:"Presentation Rehearsal and Refinement",body:"Improve the project through presentation-focused polishing."},
+            {title:"Presentation and Scoring Prep",body:"Prepare expression and process from the reviewer perspective."},
+            {title:"Review Showcase and Closed-Loop Review",body:"Complete the stage showcase and summarize experience."},
+            {title:"Innovation Direction Upgrade",body:"Open a new theme space for the second cycle."},
+            {title:"Plan Optimization and Materials",body:"Complete display materials and supporting logic."},
+            {title:"Presentation Reinforcement",body:"Improve live expression stability."},
+            {title:"Year-End Presentation Final",body:"Complete the yearly outcome showcase."}
+          ],
+          note:"Inspire translates the same yearly rhythm into three growth lines: creativity, project storytelling, and presentation-based expression."
+        },
+        {
+          summaries:[
+            {title:"Horizontal Loop",body:"Moves from rule understanding and task breakdown to flow integration and practical match sprinting."},
+            {title:"Vertical Growth",body:"Starts with basic control and task flow, then builds stability and finally enters real competition rhythm."},
+            {title:"Course Positioning",body:"Emphasizes entry-level control, process continuity, stable scoring, and foundational match awareness."}
+          ],
+          months:[
+            {title:"Rule Interpretation",body:"Think about route design based on task requirements."},
+            {title:"Basic Control Coding",body:"Implement route control for tasks."},
+            {title:"Task Flow Breakdown",body:"Split actions and establish execution order."},
+            {title:"Full-Flow Integration Test",body:"Make the whole flow work reliably together."},
+            {title:"Stability and Field Drills",body:"First make the basic score output stable."},
+            {title:"Repeated Full-Flow Testing",body:"Reduce mistakes and optimize rhythm."},
+            {title:"Pre-Match Practical Training",body:"Run confrontation drills before league play."},
+            {title:"Initial Event Sprint and Review",body:"Sprint around the first key event."},
+            {title:"Module Upgrade",body:"Strengthen weak points in the second cycle."},
+            {title:"Strategy Optimization",body:"Improve task order and success-rate judgment."},
+            {title:"Preparation Reinforcement",body:"Keep the system output stable."},
+            {title:"Year-End Final",body:"Complete the closing stage of the second half."}
+          ],
+          note:"Starter shows the clearest path from basic control to full-process stability when viewed in one horizontal yearly row."
+        },
+        {
+          summaries:[
+            {title:"Horizontal Loop",body:"Moves from rule understanding and strategy modeling to system integration and confrontation tuning."},
+            {title:"Vertical Growth",body:"Begins with core functions and strategy awareness, then adds system integration, confrontation, and advanced strategy."},
+            {title:"Course Positioning",body:"Emphasizes scoring-function control, rhythm design, system stability, and confrontation strategy."}
+          ],
+          months:[
+            {title:"Rule Interpretation",body:"Analyze the robot's key scoring functions."},
+            {title:"Basic Control Coding",body:"Control the main scoring modules."},
+            {title:"Strategy and Task Breakdown",body:"Start building an event-level strategy view."},
+            {title:"Module Integration and Stability",body:"Ensure subsystems work together."},
+            {title:"Strategy Testing and Field Drills",body:"Use the field to validate rhythm and routes."},
+            {title:"Confrontation Scenario Training",body:"Test strategy under interference and pressure."},
+            {title:"League Warm-Up and Tuning",body:"Enter event rhythm through pre-match integration."},
+            {title:"Major Event Sprint and Review",body:"Push hard toward the major event target."},
+            {title:"System Iteration and Topic Upgrade",body:"Start the second-cycle function upgrade."},
+            {title:"Advanced Strategy Study",body:"Deepen understanding of strong teams and complex rhythms."},
+            {title:"Comprehensive Drills and Limit Tuning",body:"Approach real-match conditions and finish final stabilization."},
+            {title:"Year-End Final",body:"Complete the second-cycle closeout of the whole year."}
+          ],
+          note:"Explorer best demonstrates the curriculum idea of same-month themes with different event-specific strategic depth."
+        },
+        {
+          summaries:[
+            {title:"Horizontal Loop",body:"Moves from rule modeling and parameter control to tactical coordination and high-intensity confrontation."},
+            {title:"Vertical Growth",body:"Starts with deep rule and parameter understanding, then builds high-value actions, alliance coordination, and elite event execution."},
+            {title:"Course Positioning",body:"Emphasizes field modeling, parameterized control, alliance coordination, opponent study, and high-pressure competition ability."}
+          ],
+          months:[
+            {title:"Rule Interpretation",body:"Use parameters to model props and field layouts."},
+            {title:"Basic Control Coding",body:"Learn parameterized control and precision tuning."},
+            {title:"Confrontation Tactics and Coordination",body:"Enter alliance and confrontation thinking."},
+            {title:"Extreme Refinement of Key Tasks",body:"Build the upper limit around high-value actions."},
+            {title:"Tactical Confrontation Training",body:"Start practical rhythm-based match training."},
+            {title:"High-Intensity Practical Drills",body:"Keep improving stability in confrontation."},
+            {title:"Qualification Sprint",body:"Build the score base around qualification matches."},
+            {title:"Top-Level Event Sprint",body:"Push strategy, coordination, and execution to their peak."},
+            {title:"System Review and Full Iteration",body:"Review the first cycle and rebuild the second-cycle system."},
+            {title:"Opponent Study and Tactical Upgrade",body:"Upgrade around the main competitors."},
+            {title:"Extreme Preparation Training",body:"Train the system under high-pressure conditions."},
+            {title:"Year-End Final",body:"Verify the full-year training system through the final event."}
+          ],
+          note:"Challenge most clearly shows the advanced growth path under one shared yearly theme, with competitive depth increasing month by month."
+        }
+      ]
+    };
+
+    
+    function buildBilingualContent() {
+      const escapeHtml = (value) => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+      const bilingual = {};
+      Object.keys(translations.zh).forEach((key) => {
+        const zhValue = translations.zh[key];
+        const enValue = translations.en[key];
+        if (key === "pageTitle" && typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = `${escapeHtml(zhValue)} / ${escapeHtml(enValue)}`;
+          return;
+        }
+        if (typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = key === "heroTitle"
+            ? `<span style="display:block;color:var(--muted);font-size:.62em;font-weight:500;opacity:.72;line-height:1.08">${escapeHtml(zhValue)}</span><span style="display:block;color:var(--text);font-size:1em;font-weight:900;line-height:1.05">${escapeHtml(enValue)}</span>`
+            : `<span style="color:var(--muted);font-weight:500;opacity:.65">${escapeHtml(zhValue)}</span><span style="opacity:.3"> / </span><span style="color:var(--text);font-weight:900">${escapeHtml(enValue)}</span>`;
+        } else {
+          bilingual[key] = escapeHtml(enValue ?? zhValue);
+        }
+      });
+      return bilingual;
+    }
+const languageSelect=document.getElementById("languageSelect"),backLink=document.getElementById("backLink");
+    const yearMonthNodes=[...document.querySelectorAll(".year-grid .year-month")];
+    const eventCardNodes=[...document.querySelectorAll(".event-card")];
+    let zhSnapshot=null;
+
+    function captureZhSnapshot(){
+      return {
+        yearMonths: yearMonthNodes.map(node=>({
+          month: node.querySelector(".month-name").textContent,
+          tag: node.querySelector(".month-tag").textContent,
+          title: node.querySelector("h4").textContent,
+          body: node.querySelector("p").textContent
+        })),
+        events: eventCardNodes.map(card=>({
+          summaries:[...card.querySelectorAll(".summary-item")].map(item=>({
+            title:item.querySelector("strong").textContent,
+            body:item.querySelector("span").textContent
+          })),
+          months:[...card.querySelectorAll(".event-month")].map(node=>({
+            month:node.querySelector(".month-name").textContent,
+            tag:node.querySelector(".month-tag").textContent,
+            title:node.querySelector("h4").textContent,
+            body:node.querySelector("p").textContent
+          })),
+          note:card.querySelector(".event-note").textContent
+        }))
+      };
+    }
+
+    function applyCurriculumContent(lang){
+      if(!zhSnapshot) zhSnapshot=captureZhSnapshot();
+      const isEnglish=lang==="en";
+      const base=isEnglish?englishCurriculum:zhSnapshot;
+
+      yearMonthNodes.forEach((node,index)=>{
+        const item=base.yearMonths[index];
+        node.querySelector(".month-name").textContent=isEnglish?englishCurriculum.monthNames[index]:item.month;
+        node.querySelector(".month-tag").textContent=isEnglish?englishCurriculum.stageTags[node.classList.contains("study")?"study":node.classList.contains("train")?"train":"compete"]:item.tag;
+        node.querySelector("h4").textContent=item.title;
+        node.querySelector("p").textContent=item.body;
+      });
+
+      eventCardNodes.forEach((card,cardIndex)=>{
+        const eventData=base.events[cardIndex];
+        [...card.querySelectorAll(".summary-item")].forEach((item,itemIndex)=>{
+          item.querySelector("strong").textContent=eventData.summaries[itemIndex].title;
+          item.querySelector("span").textContent=eventData.summaries[itemIndex].body;
+        });
+        [...card.querySelectorAll(".event-month")].forEach((node,monthIndex)=>{
+          const monthData=eventData.months[monthIndex];
+          node.querySelector(".month-name").textContent=isEnglish?englishCurriculum.monthNames[monthIndex]:monthData.month;
+          node.querySelector(".month-tag").textContent=isEnglish?englishCurriculum.stageTags[node.classList.contains("study")?"study":node.classList.contains("train")?"train":"compete"]:monthData.tag;
+          node.querySelector("h4").textContent=monthData.title;
+          node.querySelector("p").textContent=monthData.body;
+        });
+        card.querySelector(".event-note").textContent=eventData.note;
+      });
+    }
+
+    function applyLanguage(lang){
+      const safeLang=["zh","en"].includes(lang)?lang:"zh";
+      const c=safeLang==="en"?buildBilingualContent():translations.zh;
+      document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";
+      document.title=c.pageTitle;
+      languageSelect.value=safeLang;
+      localStorage.setItem("makexTrainingLang",safeLang);
+      backLink.href=`module3-detail.html?lang=${safeLang}`;
+      document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});
+      applyCurriculumContent(safeLang);
+    }
+
+    languageSelect.addEventListener("change",e=>applyLanguage(e.target.value));
+    const params=new URLSearchParams(window.location.search);
+    applyLanguage(params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh");
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>
+
+
+
+
+

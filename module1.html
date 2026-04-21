@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 1 - AI Camera Training</title>
+  <style>
+    :root {
+      --text: #1f2430;
+      --muted: #5d6472;
+      --accent: #cc5a2f;
+      --accent-deep: #8d3010;
+      --surface: rgba(255, 250, 242, 0.92);
+      --line: rgba(31, 36, 48, 0.1);
+      --shadow: 0 24px 60px rgba(64, 43, 26, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(204, 90, 47, 0.16), transparent 34%),
+        linear-gradient(180deg, #f7f1e7 0%, #f2ece3 100%);
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .back-link,
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .back-link {
+      color: var(--accent-deep);
+      background: rgba(204, 90, 47, 0.1);
+    }
+
+    .download-link {
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    }
+
+    .hero {
+      padding: 40px;
+      border-radius: 28px;
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(204, 90, 47, 0.1);
+      color: var(--accent-deep);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin: 0 0 18px;
+      color: var(--accent-deep);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 900px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .focus {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin: 22px 0 0;
+    }
+
+    .focus-card {
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    .focus-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .focus-card span {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .pdf-panel {
+      overflow: hidden;
+      border-radius: 28px;
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: var(--shadow);
+    }
+
+    .pdf-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pdf-head h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .pdf-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .pdf-wrap {
+      height: min(78vh, 1100px);
+      background: #d8d3cc;
+    }
+
+    .pdf-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .topbar,
+      .pdf-head {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .focus {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 28px 22px;
+      }
+
+      .pdf-wrap {
+        height: 72vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back-link" href="index.html">杩斿洖棣栭〉</a>
+      <a class="download-link" href="assets/pdf/module-1-ai-camera.pdf" download>涓嬭浇 PDF</a>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">Module 01</div>
+      <h1>Technical Training</h1>
+      <p class="subtitle">AI Camera 瀹為檯浣跨敤妗堜緥涓?AI 宸ュ叿杈呭姪绔炶禌绛栫暐</p>
+      <p>
+        鏈ā鍧楀洿缁?AI Camera 鐨勭湡瀹炲簲鐢ㄣ€丄I 宸ュ叿涓?MakeX 鏈哄櫒浜烘瘮璧涚殑缁撳悎鏂瑰紡灞曞紑锛?        鏍稿績涓绘棬鏄細鍦?2026 骞磋禌瀛ｄ腑锛屾渶浣崇瓥鐣ヤ箣涓€鏄皢 AI 浣滀负楂樻晥銆佸彲鎵ц銆佸彲澶嶇敤鐨勮緟鍔╁伐鍏凤紝
+        鐢ㄤ簬鎻愬崌璁捐鐞嗚В銆佷换鍔″垽鏂€佽皟璇曟晥鐜囧拰姣旇禌鍑嗗璐ㄩ噺銆?      </p>
+
+      <div class="focus">
+        <div class="focus-card">
+          <strong>閲嶇偣 1</strong>
+          <span>AI Camera 瀹為檯浣跨敤妗堜緥锛屽府鍔╁鍛樹粠鍔熻兘鐞嗚В璧板悜钀藉湴搴旂敤銆?/span>
+        </div>
+        <div class="focus-card">
+          <strong>閲嶇偣 2</strong>
+          <span>AI 宸ュ叿涓?MakeX 鏈哄櫒浜烘瘮璧涳紝鑱氱劍璁粌銆佽皟璇曘€佸垎鏋愪笌绛栫暐杈呭姪銆?/span>
+        </div>
+        <div class="focus-card">
+          <strong>鏍稿績鍒ゆ柇</strong>
+          <span>2026 骞存瘮璧涙渶鍏风珵浜夊姏鐨勬柟鍚戜箣涓€锛屾槸绯荤粺鎬у湴浣跨敤 AI 鏉ヨ緟鍔╁洟闃熷喅绛栦笌鎵ц銆?/span>
+        </div>
+      </div>
+    </section>
+
+    <section class="pdf-panel">
+      <div class="pdf-head">
+        <div>
+          <h2>PPT PDF 棰勮</h2>
+          <p>宸插皢浣犳彁渚涚殑 PPT 杞崲涓?PDF锛屽苟宓屽叆鍒扮涓€妯″潡浜岀骇椤甸潰涓€?/p>
+        </div>
+        <a class="download-link" href="assets/pdf/module-1-ai-camera.pdf" download>涓嬭浇褰撳墠 PDF</a>
+      </div>
+      <div class="pdf-wrap">
+        <iframe src="assets/pdf/module-1-ai-camera.pdf" title="Module 1 PDF Preview"></iframe>
+      </div>
+    </section>
+  </main>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>
+

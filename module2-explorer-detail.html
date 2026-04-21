@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maker Explorer Key Points</title>
+  <style>
+    :root {
+      --text:#1f2430;
+      --muted:#5d6472;
+      --accent:#cc5a2f;
+      --accent-deep:#8d3010;
+      --accent-soft:rgba(204,90,47,.1);
+      --surface:rgba(255,250,242,.94);
+      --line:rgba(31,36,48,.1);
+      --shadow:0 24px 60px rgba(64,43,26,.12);
+      --good:#127c56;
+      --warn:#b96e16;
+      --mid:#3568b8;
+      --final:#a73a1b;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family:"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans KR","Noto Sans Thai",sans-serif;
+      color:var(--text);
+      background:radial-gradient(circle at top left, rgba(204,90,47,.16), transparent 34%), linear-gradient(180deg, #f7f1e7 0%, #f2ece3 100%);
+    }
+    .page { width:min(1180px, calc(100% - 32px)); margin:0 auto; padding:32px 0 48px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; }
+    .toolbar-right { display:flex; align-items:center; gap:12px; }
+    .language-select,.back-link { display:inline-flex; align-items:center; justify-content:center; padding:12px 18px; border-radius:14px; text-decoration:none; font-size:14px; font-weight:700; }
+    .language-select { border:1px solid rgba(31,36,48,.12); background:#fffdfa; color:var(--text); cursor:pointer; }
+    .back-link { color:var(--accent-deep); background:var(--accent-soft); }
+    .hero,.panel { padding:32px; border-radius:28px; background:var(--surface); border:1px solid rgba(255,255,255,.65); box-shadow:var(--shadow); margin-bottom:22px; }
+    .eyebrow { display:inline-flex; padding:8px 14px; border-radius:999px; background:var(--accent-soft); color:var(--accent-deep); font-size:14px; font-weight:700; }
+    h1 { margin:18px 0 12px; font-size:clamp(32px,4vw,52px); line-height:1.08; }
+    h2 { margin:0 0 16px; font-size:28px; line-height:1.2; }
+    h3 { margin:0 0 10px; font-size:20px; line-height:1.3; }
+    p { margin:0; color:var(--muted); line-height:1.8; font-size:16px; }
+    .subtitle { margin:0 0 18px; color:var(--accent-deep); font-size:18px; font-weight:700; }
+    .image-wrap { overflow:hidden; border-radius:22px; border:1px solid var(--line); background:#09111f; margin-top:24px; }
+    .image-wrap img { display:block; width:100%; height:auto; }
+    .image-grid { display:grid; grid-template-columns:1fr; gap:16px; padding:16px; }
+    .image-grid img { display:block; width:100%; height:auto; border-radius:18px; }
+    .grid-2,.grid-3,.timeline,.highlights { display:grid; gap:18px; }
+    .grid-2,.timeline,.highlights { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .grid-3 { grid-template-columns:repeat(3, minmax(0,1fr)); }
+    .info-card,.timeline-step,.highlight-card { padding:22px; border-radius:22px; background:rgba(255,255,255,.78); border:1px solid var(--line); }
+    .metric { display:inline-flex; margin:0 8px 8px 0; padding:8px 12px; border-radius:999px; background:rgba(204,90,47,.08); color:var(--accent-deep); font-size:13px; font-weight:700; }
+    .list { margin:14px 0 0; padding-left:20px; color:var(--text); }
+    .list li { margin-bottom:10px; line-height:1.7; }
+    .step-tag { display:inline-flex; padding:8px 12px; border-radius:999px; font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:#fff; }
+    .tag-auto { background:var(--good); }
+    .tag-mid { background:var(--mid); }
+    .tag-manual { background:var(--warn); }
+    .tag-final { background:var(--final); }
+    .step-time { margin:14px 0 8px; font-size:28px; font-weight:800; color:var(--text); }
+    .step-focus { margin-top:12px; padding:10px 12px; border-radius:14px; background:rgba(204,90,47,.08); color:var(--accent-deep); font-size:14px; font-weight:700; line-height:1.6; }
+    .highlight-card strong { display:block; margin-bottom:8px; color:var(--text); font-size:16px; }
+    .note-band { margin-top:16px; padding:16px 18px; border-radius:18px; background:rgba(18,124,86,.08); border:1px solid rgba(18,124,86,.18); color:#1d5a46; font-size:14px; line-height:1.7; font-weight:700; }
+    .summary-grid { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:18px; }
+    .summary-card { padding:22px; border-radius:22px; background:rgba(255,255,255,.78); border:1px solid var(--line); box-shadow:0 12px 30px rgba(64,43,26,.06); }
+    .summary-card h3 { margin-bottom:10px; }
+    .summary-tag { display:inline-flex; margin-bottom:12px; padding:8px 12px; border-radius:999px; background:rgba(204,90,47,.08); color:var(--accent-deep); font-size:13px; font-weight:800; }
+    .summary-card ul { margin:12px 0 0; padding-left:20px; color:var(--text); }
+    .summary-card li { margin-bottom:10px; line-height:1.7; }
+    @media (max-width:900px) { .topbar,.toolbar-right{flex-direction:column;align-items:stretch;} .hero,.panel{padding:24px 20px;} .grid-2,.grid-3,.timeline,.highlights{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back-link" id="backLink" href="module2-competition-planning-v2.html" data-i18n="backLink">返回比赛规划</a>
+      <div class="toolbar-right">
+        <select class="language-select" id="languageSelect" aria-label="Language selector">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+          
+          
+          
+        </select>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">Explorer Detail</div>
+      <h1 data-i18n="title">Maker Explorer 备赛重点版</h1>
+      <p class="subtitle" data-i18n="subtitle">尺寸重量、电机舵机限制、得分结构与节奏策略一页讲清</p>
+      <p data-i18n="desc">这一页依据 2026 MakeX Explorer《博弈前线》规则手册整理成适合培训、海报和课件使用的重点版。</p>
+      <div class="image-wrap">
+        <div class="image-grid">
+          <img src="assets/images/explorer-rule-limit.png" alt="Explorer Rule Limit Overview">
+          <img src="assets/images/explorer-strategy-timeline.png" alt="Explorer Strategy Timeline">
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="summaryTitle">Explorer 规则摘要</h2>
+      <div class="summary-grid">
+        <article class="summary-card">
+          <div class="summary-tag" data-i18n="sum1Tag">限制</div>
+          <h3 data-i18n="sum1Title">机器人外形与重量</h3>
+          <ul>
+            <li data-i18n="sum1a">最大尺寸 320 mm × 320 mm × 450 mm，按最大延展状态判定。</li>
+            <li data-i18n="sum1b">最大净重量 6 kg，包含电池，不含护盾旗帜。</li>
+          </ul>
+        </article>
+        <article class="summary-card">
+          <div class="summary-tag" data-i18n="sum2Tag">机构</div>
+          <h3 data-i18n="sum2Title">动力器件限制</h3>
+          <ul>
+            <li data-i18n="sum2a">电机最多 4 个，舵机最多 4 个。</li>
+            <li data-i18n="sum2b">电机 + 舵机总数不超过 8 个。</li>
+            <li data-i18n="sum2c">主控 1 个，蓝牙手柄 1 个，车轮直径不超过 70 mm。</li>
+          </ul>
+        </article>
+        <article class="summary-card">
+          <div class="summary-tag" data-i18n="sum3Tag">节奏</div>
+          <h3 data-i18n="sum3Title">比赛流程节点</h3>
+          <ul>
+            <li data-i18n="sum3a">裁判宣布开始后计时，5 秒后才能接触机器人。</li>
+            <li data-i18n="sum3b">随后进入 20 秒抽签阶段，再进入 30 秒自动控制阶段。</li>
+            <li data-i18n="sum3c">自动结束后进入 3 分 30 秒手动阶段。</li>
+          </ul>
+        </article>
+        <article class="summary-card">
+          <div class="summary-tag" data-i18n="sum4Tag">优先级</div>
+          <h3 data-i18n="sum4Title">高分策略方向</h3>
+          <ul>
+            <li data-i18n="sum4a">第一优先：黄球归属权，决定后续高分是否算给自己。</li>
+            <li data-i18n="sum4b">第二优先：战队旗帜，30 分 / 面，稳定高价值收尾。</li>
+            <li data-i18n="sum4c">第三优先：锥桶、黄色防火墙、三层高分球。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="s1">1. 机器人尺寸、重量限制</h2>
+      <div class="grid-2">
+        <div class="info-card">
+          <h3 data-i18n="s1a">尺寸限制</h3>
+          <div class="metric" data-i18n="m1">320 mm × 320 mm × 450 mm</div>
+          <ul class="list">
+            <li data-i18n="s1a1">比赛过程中机器人最大尺寸不得超过长 320 mm × 宽 320 mm × 高 450 mm。</li>
+            <li data-i18n="s1a2">尺寸判定按机器人可运动伸展到的最大状态计算。</li>
+            <li data-i18n="s1a3">这意味着所有展开机构都必须提前纳入外形边界设计。</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3 data-i18n="s1b">重量限制</h3>
+          <div class="metric" data-i18n="m2">≤ 6 kg</div>
+          <ul class="list">
+            <li data-i18n="s1b1">机器人任意时刻总重量不得超过 6 kg。</li>
+            <li data-i18n="s1b2">这个重量包含电池重量。</li>
+            <li data-i18n="s1b3">这个重量不包含防御护盾重量。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="s2">2. 电机和舵机数量限制</h2>
+      <div class="grid-3">
+        <div class="info-card">
+          <h3 data-i18n="s2a">电机限制</h3>
+          <ul class="list"><li data-i18n="s2a1">电机总数不得超过 4 个。</li></ul>
+        </div>
+        <div class="info-card">
+          <h3 data-i18n="s2b">舵机限制</h3>
+          <ul class="list"><li data-i18n="s2b1">舵机总数不得超过 4 个。</li></ul>
+        </div>
+        <div class="info-card">
+          <h3 data-i18n="s2c">总数限制</h3>
+          <ul class="list">
+            <li data-i18n="s2c1">电机与舵机总数量合计不得超过 8 个。</li>
+            <li data-i18n="s2c2">设计上要尽早决定主任务路线，避免机构堆叠。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="s3">3. 得分道具与阶段得分重点</h2>
+      <div class="grid-2">
+        <div class="info-card">
+          <h3 data-i18n="s3a">阶段规则</h3>
+          <ul class="list">
+            <li data-i18n="s3a1">比赛分为自动控制阶段 30 秒和手动控制阶段 3 分 30 秒。</li>
+            <li data-i18n="s3a2">多数任务在自动和手动阶段都能完成。</li>
+            <li data-i18n="s3a3">悬挂护盾旗帜只能在手动阶段完成。</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3 data-i18n="s3b">主要得分道具</h3>
+          <ul class="list">
+            <li data-i18n="s3b1">红 / 蓝球，黄球</li>
+            <li data-i18n="s3b2">红 / 蓝方块</li>
+            <li data-i18n="s3b3">锥桶</li>
+            <li data-i18n="s3b4">黄色大方块、黄色小方块</li>
+            <li data-i18n="s3b5">战队旗帜</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlights">
+        <div class="highlight-card"><strong data-i18n="h1t">高分卫星 / 公益卫星</strong><span data-i18n="h1d">红蓝球一层 5 分、二层 10 分、三层 20 分。黄球二层 20 分、三层 40 分，一层无效。黄球得分归属取决于自动阶段识别结果。</span></div>
+        <div class="highlight-card"><strong data-i18n="h2t">低分卫星</strong><span data-i18n="h2d">红 / 蓝方块 10 分 / 个，上限 5 个。</span></div>
+        <div class="highlight-card"><strong data-i18n="h3t">火箭运载装置 / 防火墙</strong><span data-i18n="h3d">锥桶 20 分 / 个，上限 6 个。黄色大方块和黄色小方块都是 15 分 / 个，大方块上限 4 个，小方块上限 2 个。</span></div>
+        <div class="highlight-card"><strong data-i18n="h4t">护盾旗帜</strong><span data-i18n="h4d">战队旗帜 30 分 / 面，上限 2 面，且只能在手动阶段完成。</span></div>
+      </div>
+
+      <div class="note-band" data-i18n="s3band">最关键的先手任务是自动阶段识别高分卫星身份，因为这会直接决定黄球得分归属权。</div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="s4">4. 得分策略流程图</h2>
+      <div class="timeline">
+        <div class="timeline-step"><span class="step-tag tag-auto" data-i18n="stepTag1">等待</span><div class="step-time">0-5s</div><h3 data-i18n="t0">先等待接触窗口</h3><p data-i18n="t0d">裁判宣布开始后计时，5 秒后才能接触机器人。</p><div class="step-focus" data-i18n="t0f">这一步先稳住启动节奏，不急着抢动作。</div></div>
+        <div class="timeline-step"><span class="step-tag tag-mid" data-i18n="stepTag2">抽签</span><div class="step-time">5-25s</div><h3 data-i18n="t1">抽签与识别</h3><p data-i18n="t1d">进入 20 秒抽签阶段，随后在自动阶段优先识别高分卫星身份。</p><div class="step-focus" data-i18n="t1f">这一步决定黄球后续的归属权，是全场最关键先手。</div></div>
+        <div class="timeline-step"><span class="step-tag tag-manual" data-i18n="stepTag3">自动</span><div class="step-time">30s</div><h3 data-i18n="t2">自动控制阶段</h3><p data-i18n="t2d">完成识别后，自动阶段可继续做高分球、低分卫星、锥桶和防火墙任务。</p><div class="step-focus" data-i18n="t2f">自动阶段要优先拿黄球归属权，再尽量顺路得分。</div></div>
+        <div class="timeline-step"><span class="step-tag tag-final" data-i18n="stepTag4">手动</span><div class="step-time">3m30s</div><h3 data-i18n="t3">手动控制阶段</h3><p data-i18n="t3d">进入手动后，继续做高分球、低分卫星、锥桶、防火墙，并完成挂旗。</p><div class="step-focus" data-i18n="t3f">最后优先挂旗，若不稳就回到低风险稳定得分。</div></div>
+      </div>
+      <div class="note-band" data-i18n="summary">教练口令式流程：先等 5 秒接触窗口，再经过 20 秒抽签，自动阶段优先抢黄球归属权，随后自动做高分球和中低分任务，手动阶段以挂旗收尾，最后 30 秒只做稳的。</div>
+    </section>
+  </main>
+  <script>
+    translations.ko={...translations.en,pageTitle:"Maker Explorer 핵심 정리",backLink:"경기 계획으로 돌아가기",title:"Maker Explorer 핵심 버전",subtitle:"크기, 무게, 모터와 서보 제한, 득점 구조와 경기 흐름을 한 페이지에 정리",desc:"이 페이지는 2026 MakeX Explorer 'Battlefront' 규칙을 교육과 발표용 핵심 버전으로 정리한 것입니다."};
+    translations.th={...translations.en,pageTitle:"สาระสำคัญ Maker Explorer",backLink:"กลับไปหน้าวางแผนการแข่งขัน",title:"Maker Explorer ฉบับสรุปสำคัญ",subtitle:"สรุปขนาด น้ำหนัก ข้อจำกัดมอเตอร์และเซอร์โว โครงสร้างคะแนน และจังหวะกลยุทธ์ในหน้าเดียว",desc:"หน้านี้สรุปกติกา 2026 MakeX Explorer 'Battlefront' ให้อยู่ในรูปแบบที่เหมาะสำหรับการฝึกอบรมและงานนำเสนอ"};
+    translations.ms={...translations.en,pageTitle:"Fokus Utama Maker Explorer",backLink:"Kembali ke Perancangan Pertandingan",title:"Maker Explorer Versi Utama",subtitle:"Saiz, berat, had motor dan servo, struktur skor, dan rentak strategi dalam satu halaman",desc:"Halaman ini menyusun peraturan 2026 MakeX Explorer 'Battlefront' ke dalam versi ringkas untuk latihan dan pembentangan."};
+    
+    function buildBilingualContent() {
+      const escapeHtml = (value) => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+      const bilingual = {};
+      Object.keys(translations.zh).forEach((key) => {
+        const zhValue = translations.zh[key];
+        const enValue = translations.en[key];
+        if (key === "pageTitle" && typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = `${escapeHtml(zhValue)} / ${escapeHtml(enValue)}`;
+          return;
+        }
+        if (typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = key === "heroTitle"
+            ? `<span style="display:block;color:var(--muted);font-size:.62em;font-weight:500;opacity:.72;line-height:1.08">${escapeHtml(zhValue)}</span><span style="display:block;color:var(--text);font-size:1em;font-weight:900;line-height:1.05">${escapeHtml(enValue)}</span>`
+            : `<span style="color:var(--muted);font-weight:500;opacity:.65">${escapeHtml(zhValue)}</span><span style="opacity:.3"> / </span><span style="color:var(--text);font-weight:900">${escapeHtml(enValue)}</span>`;
+        } else {
+          bilingual[key] = escapeHtml(enValue ?? zhValue);
+        }
+      });
+      return bilingual;
+    }
+const languageSelect=document.getElementById("languageSelect"); const backLink=document.getElementById("backLink");
+    function applyLanguage(lang){const safeLang=["zh","en"].includes(lang)?lang:"zh";const c=safeLang==="en"?buildBilingualContent():translations.zh;document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module2-competition-planning-v2.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});const tags=safeLang==="zh"?["等待","抽签","自动","手动"]:["Wait","Draw","Auto","Manual"];document.querySelectorAll(".step-tag").forEach((node,i)=>{if(tags[i]) node.textContent=tags[i];});}
+    languageSelect.addEventListener("change",e=>applyLanguage(e.target.value)); const params=new URLSearchParams(window.location.search); const rawLang=params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh";applyLanguage(rawLang);
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+

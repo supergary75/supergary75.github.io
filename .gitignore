@@ -1,0 +1,30 @@
+# Windows / editor noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
+
+# Browser temp/profile folders created during local checks
+edge-*/
+edge-check-*/
+edge-temp-*/
+edge-batch-profile*/
+edge-profile*/
+
+# Generated / ad hoc test outputs
+test-*.pdf
+*.tmp
+challenge-rulebook-converted.docx
+
+# Local credentials / keys
+github_codex_*
+id_ed25519
+id_ed25519.pub
+id_rsa
+id_rsa.pub
+*.pem
+*.ppk
+*.key
+
+# Local package / dependency folders if added later
+node_modules/

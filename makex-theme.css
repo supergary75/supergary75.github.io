@@ -1,0 +1,342 @@
+/* MakeX soft cyberpunk shared theme */
+:root{
+  --surface: rgba(14, 21, 35, .84);
+  --text: #f4f7ff;
+  --muted: #b7c2d9;
+  --line: rgba(90, 168, 255, .18);
+  --accent: #f25d6c;
+  --accent-deep: #c63d53;
+  --accent-blue: #5aa8ff;
+  --accent-cyan: #8beaff;
+  --accent-soft: rgba(242, 93, 108, .12);
+  --shadow: 0 22px 60px rgba(2, 6, 18, .36);
+  --primary: #f25d6c;
+  --primary-dark: #c63d53;
+  --primary-light: #ff8f9b;
+  --primary-bg: rgba(242, 93, 108, .12);
+  --secondary: #5aa8ff;
+  --success: #27d6a8;
+  --success-dark: #12b388;
+  --danger: #f25d6c;
+  --danger-dark: #c63d53;
+  --warning: #f7c948;
+  --info: #5aa8ff;
+  --gray-50: #0d1423;
+  --gray-100: #111a2c;
+  --gray-200: #172338;
+  --gray-300: #21314d;
+  --gray-400: #58739a;
+  --gray-500: #7b93b8;
+  --gray-600: #aab8d2;
+  --gray-700: #d5e0f2;
+  --gray-800: #f3f7ff;
+  --gray-900: #07101d;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .18);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, .22);
+  --shadow-lg: 0 12px 30px rgba(0, 0, 0, .28);
+  --shadow-xl: 0 22px 42px rgba(0, 0, 0, .34);
+  --transition-fast: .15s cubic-bezier(.4, 0, .2, 1);
+  --transition-base: .2s cubic-bezier(.4, 0, .2, 1);
+  --transition-slow: .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+html{
+  background: #07101d;
+}
+
+body{
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 15%, rgba(242, 93, 108, .16), transparent 28%),
+    radial-gradient(circle at 84% 20%, rgba(90, 168, 255, .18), transparent 24%),
+    radial-gradient(circle at 50% 92%, rgba(139, 234, 255, .06), transparent 28%),
+    linear-gradient(180deg, #09111e 0%, #101b2f 56%, #09111e 100%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+  isolation: isolate;
+}
+
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90,168,255,.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(180deg, rgba(0,0,0,.95), rgba(0,0,0,.45) 60%, transparent 100%);
+  opacity: .34;
+  z-index: 0;
+}
+
+body::after{
+  content: "";
+  position: fixed;
+  right: -120px;
+  bottom: -120px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(242, 93, 108, .14), transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+main,
+.page,
+.app,
+.container,
+#root{
+  position: relative;
+  z-index: 1;
+}
+
+body, button, select, input, textarea{
+  font-family: "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+
+a{
+  color: inherit;
+}
+
+h1,h2,h3{
+  color: var(--text);
+  text-shadow: 0 0 18px rgba(90,168,255,.10);
+}
+
+p, li, label, span{
+  color: inherit;
+}
+
+.hero,
+.panel,
+.card,
+.info-card,
+.story-card,
+.contact-card,
+.season-card,
+.archive-card,
+.season-stat,
+.pdf-panel,
+.diagram-shell,
+.summary-box,
+.contact-note,
+.season-summary,
+.panel,
+.module-card,
+.topbar > *,
+.hero-actions > *,
+.content,
+.modal,
+.card-item,
+.table-shell,
+.form-card,
+.status-card{
+  background: rgba(10, 15, 28, .78);
+  border: 1px solid rgba(90, 168, 255, .16);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.hero,
+.panel,
+.card,
+.info-card,
+.story-card,
+.contact-card,
+.season-card,
+.archive-card,
+.season-stat,
+.pdf-panel,
+.diagram-shell,
+.summary-box,
+.contact-note,
+.content,
+.modal,
+.card-item,
+.table-shell,
+.form-card,
+.status-card{
+  border-radius: 22px;
+}
+
+.hero::after,
+.card::after,
+.season-card::after,
+.pdf-panel::after,
+.panel::after{
+  background: radial-gradient(circle, rgba(242, 93, 108, .10), transparent 70%);
+}
+
+.eyebrow,
+.tag,
+.season-badge,
+.pill-link,
+.card-link,
+.back-link,
+.download-link,
+.action-btn,
+.ghost-btn,
+.manageBtn,
+.addBtn,
+.generateBtn,
+.fetchBtn,
+.uploadBtn{
+  border: 1px solid rgba(123,240,255,.22);
+  background: linear-gradient(135deg, rgba(242,93,108,.88), rgba(90,168,255,.84));
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(90, 168, 255, .14);
+}
+
+.eyebrow,
+.tag,
+.season-badge{
+  color: #fff;
+}
+
+.card-link:hover,
+.back-link:hover,
+.pill-link:hover,
+.download-link:hover,
+.action-btn:hover,
+.ghost-btn:hover,
+.manageBtn:hover,
+.addBtn:hover,
+.generateBtn:hover,
+.fetchBtn:hover,
+.uploadBtn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(90,168,255,.18), 0 0 0 1px rgba(139,234,255,.14);
+}
+
+button,
+.card-link,
+.back-link,
+.pill-link,
+.download-link,
+.action-btn,
+.ghost-btn,
+.manageBtn,
+.addBtn,
+.generateBtn,
+.fetchBtn,
+.uploadBtn{
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base), background var(--transition-base);
+  text-decoration: none;
+}
+
+.language-box{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid rgba(62, 167, 255, .20);
+  border-radius: 18px;
+  background: rgba(10, 15, 28, .78);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.language-box label{
+  color: var(--text);
+  font-weight: 700;
+}
+
+.language-select,
+.language-box select,
+select,
+input,
+textarea{
+  border: 1px solid rgba(62, 167, 255, .22);
+  background: rgba(9, 15, 26, .88);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+  color-scheme: dark;
+  cursor: pointer;
+}
+
+.language-select:focus,
+.language-box select:focus,
+select:focus,
+input:focus,
+textarea:focus{
+  outline: none;
+  border-color: rgba(139,234,255,.68);
+  box-shadow: 0 0 0 3px rgba(90,168,255,.14);
+}
+
+select option{
+  background: #10192c;
+  color: var(--text);
+}
+
+::placeholder{
+  color: var(--gray-500);
+}
+
+ul{
+  color: var(--text);
+}
+
+.subtitle,
+.hint,
+.intro-note,
+.muted,
+.section-head span,
+.label,
+.archive-label,
+.season-label{
+  color: var(--muted);
+}
+
+.section-title,
+.topbar,
+.section-head h2,
+.season-head h3,
+.card h3,
+.story-card h3,
+.info-card .value,
+.season-score strong{
+  color: var(--text);
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(10,15,28,.72);
+  border: 1px solid rgba(62,167,255,.18);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+th{
+  background: linear-gradient(135deg, rgba(242,93,108,.86), rgba(90,168,255,.82));
+  color: #fff;
+}
+
+th, td{
+  border-bottom: 1px solid rgba(62,167,255,.10);
+}
+
+td{
+  color: var(--text);
+}
+
+::selection{
+  background: rgba(242,93,108,.88);
+  color: #fff;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MakeX 全站导出</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f5efe6; color: #1f2430; font-family: "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+    .book { width: 100%; }
+    .page-frame {
+      break-after: page;
+      page-break-after: always;
+      padding: 0;
+      margin: 0;
+    }
+    .page-frame:last-child { break-after: auto; page-break-after: auto; }
+    .page-frame iframe {
+      display: block;
+      width: 100%;
+      border: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+    .export-note {
+      position: fixed;
+      inset: 16px 16px auto auto;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(31, 36, 48, .84);
+      color: #fff;
+      font-size: 12px;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    @media print {
+      .export-note { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="export-note">MakeX 页面总览导出中</div>
+  <main class="book" id="book"></main>
+  <script>
+    const pages = [
+      "index.html",
+      "module1-detail.html",
+      "module1.html",
+      "module2-overview.html",
+      "module2-detail.html",
+      "module2-robot-design.html",
+      "module2-parameter-demo.html",
+      "module2-competition-planning.html",
+      "module2-competition-planning-v2.html",
+      "module2-inspire-detail.html",
+      "module2-starter-detail.html",
+      "module2-explorer-detail.html",
+      "module2-challenge-detail.html",
+      "module3-detail.html",
+      "module3-knowledge-detail.html",
+      "module3-curriculum-detail.html",
+      "module3-training-detail.html"
+    ];
+
+    const book = document.getElementById("book");
+
+    function resizeFrame(iframe) {
+      try {
+        const doc = iframe.contentWindow.document;
+        const height = Math.max(
+          doc.body ? doc.body.scrollHeight : 0,
+          doc.documentElement ? doc.documentElement.scrollHeight : 0,
+          800
+        );
+        iframe.style.height = height + "px";
+      } catch (err) {
+        iframe.style.height = "1200px";
+      }
+    }
+
+    pages.forEach((src) => {
+      const frameWrap = document.createElement("section");
+      frameWrap.className = "page-frame";
+      const iframe = document.createElement("iframe");
+      iframe.src = src;
+      iframe.loading = "eager";
+      iframe.referrerPolicy = "no-referrer";
+      iframe.addEventListener("load", () => resizeFrame(iframe));
+      frameWrap.appendChild(iframe);
+      book.appendChild(frameWrap);
+    });
+
+    window.addEventListener("load", () => {
+      document.querySelectorAll("iframe").forEach((iframe) => resizeFrame(iframe));
+      setTimeout(() => {
+        document.querySelectorAll("iframe").forEach((iframe) => resizeFrame(iframe));
+      }, 1500);
+    });
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>

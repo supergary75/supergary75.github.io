@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 2 - Competition Planning</title>
+  <style>
+    :root { --text:#1f2430; --muted:#5d6472; --accent:#cc5a2f; --accent-deep:#8d3010; --surface:rgba(255,250,242,.92); --line:rgba(31,36,48,.1); --shadow:0 24px 60px rgba(64,43,26,.12); }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans KR","Noto Sans Thai",sans-serif; color:var(--text); background:radial-gradient(circle at top left, rgba(204,90,47,.16), transparent 34%), linear-gradient(180deg, #f7f1e7 0%, #f2ece3 100%); }
+    .page { width:min(1080px, calc(100% - 32px)); margin:0 auto; padding:32px 0 48px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; }
+    .toolbar-right { display:flex; align-items:center; gap:12px; }
+    .language-select,.back-link { display:inline-flex; align-items:center; justify-content:center; padding:12px 18px; border-radius:14px; text-decoration:none; font-size:14px; font-weight:700; }
+    .language-select { border:1px solid rgba(31,36,48,.12); background:#fffdfa; color:var(--text); cursor:pointer; }
+    .back-link { color:var(--accent-deep); background:rgba(204,90,47,.1); }
+    .hero,.panel { padding:32px; border-radius:28px; background:var(--surface); border:1px solid rgba(255,255,255,.65); box-shadow:var(--shadow); }
+    .hero { margin-bottom:22px; }
+    .eyebrow { display:inline-flex; padding:8px 14px; border-radius:999px; background:rgba(204,90,47,.1); color:var(--accent-deep); font-size:14px; font-weight:700; }
+    h1 { margin:18px 0 12px; font-size:clamp(32px,4vw,52px); line-height:1.1; }
+    .subtitle { margin:0 0 18px; color:var(--accent-deep); font-size:18px; font-weight:700; }
+    p { margin:0; color:var(--muted); line-height:1.8; font-size:16px; }
+    .list { margin:18px 0 0; padding-left:22px; color:var(--text); }
+    .list li { margin-bottom:10px; line-height:1.7; }
+    @media (max-width:900px) { .topbar,.toolbar-right{flex-direction:column;align-items:stretch;} .hero,.panel{padding:24px 20px;} }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back-link" id="backLink" href="module2-overview.html" data-i18n="backLink">杩斿洖绗簩妯″潡</a>
+      <div class="toolbar-right">
+        <select class="language-select" id="languageSelect" aria-label="Language selector">
+          <option value="zh">涓枃</option><option value="en">English</option><option value="ko">頃滉淡鞏?/option><option value="th">喙勦笚喔?/option><option value="ms">Bahasa Melayu</option>
+        </select>
+      </div>
+    </div>
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">妯″潡 02 - Part 03</div>
+      <h1 data-i18n="title">鍚勮禌椤规瘮璧涜鍒?/h1>
+      <p class="subtitle" data-i18n="subtitle">灞曠ず涓嶅悓璧涢」涓嬬殑浠诲姟鎷嗚В涓庨樁娈佃鍒?/p>
+      <p data-i18n="description">杩欎釜瀛愰〉鐢ㄤ簬璁茶В涓嶅悓璧涢」涓紝濡備綍鍥寸粫瑙勫垯銆佷换鍔°€佹椂闂村拰璧勬簮鍋氭瘮璧涜鍒掋€備綘鍚庣画鍙互鍦ㄨ繖閲屽姞鍏ュ悇璧涢」瀵规瘮銆佺敇鐗瑰浘銆侀噷绋嬬鍜岀瓥鐣ュ垎宸ュ唴瀹广€?/p>
+    </section>
+    <section class="panel">
+      <p data-i18n="panelIntro">寤鸿鍦ㄨ繖涓€椤电户缁ˉ鍏呬互涓嬪唴瀹癸細</p>
+      <ul class="list">
+        <li data-i18n="item1">瑙勫垯鎷嗚В锛氬緱鍒嗛」銆佺害鏉熸潯浠躲€佷紭鍏堢骇</li>
+        <li data-i18n="item2">闃舵瑙勫垝锛氱爺鍙戙€佹祴璇曘€佽缁冦€佽禌鍓嶄紭鍖?/li>
+        <li data-i18n="item3">璧勬簮鍒嗛厤锛氭椂闂淬€佷汉鍔涖€佺‖浠躲€佸浠?/li>
+        <li data-i18n="item4">绛栫暐鍒ゆ柇锛氱ǔ瀹氭€т紭鍏堛€佸緱鍒嗘晥鐜囦紭鍏堛€侀闄╂帶鍒?/li>
+      </ul>
+    </section>
+  </main>
+  <script>
+    const translations = {
+      zh:{pageTitle:"绗簩妯″潡 - 姣旇禌瑙勫垝",backLink:"杩斿洖绗簩妯″潡",eyebrow:"妯″潡 02 - Part 03",title:"鍚勮禌椤规瘮璧涜鍒?,subtitle:"灞曠ず涓嶅悓璧涢」涓嬬殑浠诲姟鎷嗚В涓庨樁娈佃鍒?,description:"杩欎釜瀛愰〉鐢ㄤ簬璁茶В涓嶅悓璧涢」涓紝濡備綍鍥寸粫瑙勫垯銆佷换鍔°€佹椂闂村拰璧勬簮鍋氭瘮璧涜鍒掋€備綘鍚庣画鍙互鍦ㄨ繖閲屽姞鍏ュ悇璧涢」瀵规瘮銆佺敇鐗瑰浘銆侀噷绋嬬鍜岀瓥鐣ュ垎宸ュ唴瀹广€?,panelIntro:"寤鸿鍦ㄨ繖涓€椤电户缁ˉ鍏呬互涓嬪唴瀹癸細",item1:"瑙勫垯鎷嗚В锛氬緱鍒嗛」銆佺害鏉熸潯浠躲€佷紭鍏堢骇",item2:"闃舵瑙勫垝锛氱爺鍙戙€佹祴璇曘€佽缁冦€佽禌鍓嶄紭鍖?,item3:"璧勬簮鍒嗛厤锛氭椂闂淬€佷汉鍔涖€佺‖浠躲€佸浠?,item4:"绛栫暐鍒ゆ柇锛氱ǔ瀹氭€т紭鍏堛€佸緱鍒嗘晥鐜囦紭鍏堛€侀闄╂帶鍒?},
+      en:{pageTitle:"Module 2 - Competition Planning",backLink:"Back to Module 2",eyebrow:"Module 02 - Part 03",title:"Competition Planning by Event",subtitle:"Show task breakdown and phase planning across different events",description:"This subpage is for explaining how competition planning is done around rules, tasks, time, and resources across different events. You can later add event comparisons, Gantt charts, milestones, and strategy roles here.",panelIntro:"Recommended content to add on this page:",item1:"Rule breakdown: scoring items, constraints, priorities",item2:"Phase planning: development, testing, training, pre-match optimization",item3:"Resource allocation: time, manpower, hardware, spare parts",item4:"Strategy decisions: reliability first, scoring efficiency first, risk control"},
+      ko:{pageTitle:"氇搱 2 - 瓴疥赴 瓿勴殟",backLink:"氇搱 2搿?霃岇晞臧€旮?,eyebrow:"氇搱 02 - Part 03",title:"膦呺氤?瓴疥赴 瓿勴殟",subtitle:"雼れ枒頃?膦呺鞐愳劀 瓿检牅 攵勴暣鞕€ 雼硠 瓿勴殟鞚?氤挫棳欤缄赴",description:"鞚?頃橃渼 韼橃澊歆€電?雼れ枒頃?膦呺鞐愳劀 攴滌箼, 瓿检牅, 鞁滉皠, 鞛愳洂鞚?欷戩嫭鞙茧 瓴疥赴 瓿勴殟鞚?鞏措柣瓴?靹胳毎電旍 靹る獏頃橁赴 鞙勴暅 瓿店皠鞛呺媹雼? 鞚错泟 膦呺 牍勱祼, 臧勴姼 彀姼, 毵堨澕鞀ろ啢, 鞝勲灥 鞐暊 攵勲嫶鞚?於旉皜頃?靾?鞛堨姷雼堧嫟.",panelIntro:"鞚?韼橃澊歆€鞐?於旉皜頃橂┐ 膦嬱潃 雮挫毄:",item1:"攴滌箼 攵勴暣: 霌濎爯 頃, 鞝滌暯 臁瓣贝, 鞖办劆靾滌渼",item2:"雼硠 瓿勴殟: 臧滊皽, 韰岇姢韸? 頉堧牗, 瓴疥赴 鞝?斓滌爜頇?,item3:"鞛愳洂 氚半秳: 鞁滉皠, 鞚鸽牓, 頃橂摐鞗柎, 鞓堧箘 攵€頀?,item4:"鞝勲灥 韺愲嫧: 鞎堨爼靹?鞖办劆, 霌濎爯 須湪 鞖办劆, 毽姢韥?甏€毽?},
+      th:{pageTitle:"喙傕浮喔斷腹喔?2 - 喔佮覆喔｀抚喔侧竾喙佮笢喔權竵喔侧福喙佮競喙堗竾喔傕副喔?,backLink:"喔佮弗喔编笟喙勦笡喙傕浮喔斷腹喔?2",eyebrow:"喙傕浮喔斷腹喔?02 - Part 03",title:"喔佮覆喔｀抚喔侧竾喙佮笢喔權竵喔侧福喙佮競喙堗竾喔傕副喔權笗喔侧浮喙佮笗喙堗弗喔班福喔侧涪喔佮覆喔?,subtitle:"喙佮釜喔斷竾喔佮覆喔｀箒喔⑧竵喔犩覆喔｀竵喔脆笀喙佮弗喔班竵喔侧福喔о覆喔囙箒喔溹笝喙€喔涏箛喔權笂喙堗抚喔囙箖喔權箒喔曕箞喔ム赴喔｀覆喔⑧竵喔侧福",description:"喔笝喙夃覆喔⑧箞喔涪喔權傅喙夃箖喔娻箟喔赋喔福喔编笟喔笜喔脆笟喔侧涪喔о箞喔侧箖喔權箒喔曕箞喔ム赴喔｀覆喔⑧竵喔侧福喙佮競喙堗竾喔傕副喔?喙€喔｀覆喔堗赴喔о覆喔囙箒喔溹笝喙傕笖喔⑧腑喔脆竾喔佮笌 喔犩覆喔｀竵喔脆笀 喙€喔о弗喔?喙佮弗喔班笚喔｀副喔炧涪喔侧竵喔｀腑喔⑧箞喔侧竾喙勦福 喔犩覆喔⑧斧喔ム副喔囙竸喔膏笓喔覆喔∴覆喔｀笘喙€喔炧复喙堗浮喔佮覆喔｀箑喔涏福喔掂涪喔氞箑喔椸傅喔⑧笟喙佮笗喙堗弗喔班福喔侧涪喔佮覆喔?喙佮笢喔權笭喔灌浮喔脆箒喔佮笝喔曕箤 喔堗父喔斷釜喔赤竸喔编笉 喙佮弗喔班竵喔侧福喙佮笟喙堗竾喔氞笚喔氞覆喔椸箑喔娻复喔囙竵喔ム涪喔膏笚喔樴箤喙勦笖喙?,panelIntro:"喙佮笝喔班笝喔赤箖喔箟喙€喔炧复喙堗浮喙€喔權阜喙夃腑喔覆喔曕箞喔箘喔涏笝喔掂箟喙冟笝喔笝喙夃覆喔權傅喙?",item1:"喔佮覆喔｀箒喔⑧竵喔佮笌: 喔｀覆喔⑧竵喔侧福喙冟斧喙夃竸喔班箒喔權笝 喔傕箟喔笀喔赤竵喔编笖 喔ム赋喔斷副喔氞竸喔о覆喔∴釜喔赤竸喔编笉",item2:"喔佮覆喔｀抚喔侧竾喙佮笢喔權箑喔涏箛喔權笂喙堗抚喔? 喔炧副喔掄笝喔?喔椸笖喔腑喔?喔澿付喔佮笅喙夃腑喔?喔涏福喔编笟喙佮笗喙堗竾喔佮箞喔笝喙佮競喙堗竾",item3:"喔佮覆喔｀笀喔编笖喔福喔｀笚喔｀副喔炧涪喔侧竵喔? 喙€喔о弗喔?喔氞父喔勦弗喔侧竵喔?喔覆喔｀箤喔斷箒喔о福喙?喔赴喙勦斧喔ム箞喔赋喔｀腑喔?,item4:"喔佮覆喔｀笗喔编笖喔复喔權箖喔堗箑喔娻复喔囙竵喔ム涪喔膏笚喔樴箤: 喙€喔權箟喔權竸喔о覆喔∴箑喔笘喔掂涪喔?喙€喔權箟喔權笡喔｀赴喔复喔椸笜喔脆笭喔侧笧喔佮覆喔｀笚喔赤竸喔班箒喔權笝 喔佮覆喔｀竸喔о笟喔勦父喔∴竸喔о覆喔∴箑喔傅喙堗涪喔?},
+      ms:{pageTitle:"Modul 2 - Perancangan Pertandingan",backLink:"Kembali ke Modul 2",eyebrow:"Modul 02 - Part 03",title:"Perancangan Pertandingan Mengikut Acara",subtitle:"Tunjukkan pecahan tugasan dan perancangan fasa bagi acara berbeza",description:"Subhalaman ini digunakan untuk menerangkan bagaimana perancangan pertandingan dibuat berdasarkan peraturan, tugasan, masa, dan sumber bagi acara yang berbeza. Anda boleh kemudian menambah perbandingan acara, carta Gantt, batu tanda, dan pembahagian peranan strategi di sini.",panelIntro:"Cadangan kandungan untuk ditambah di halaman ini:",item1:"Pecahan peraturan: item pemarkahan, kekangan, keutamaan",item2:"Perancangan fasa: pembangunan, ujian, latihan, pengoptimuman pra-perlawanan",item3:"Agihan sumber: masa, tenaga kerja, perkakasan, alat ganti",item4:"Keputusan strategi: kebolehpercayaan dahulu, kecekapan skor dahulu, kawalan risiko"}
+    };
+    
+    function buildBilingualContent() {
+      const escapeHtml = (value) => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+      const bilingual = {};
+      Object.keys(translations.zh).forEach((key) => {
+        const zhValue = translations.zh[key];
+        const enValue = translations.en[key];
+        if (key === "pageTitle" && typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = `${escapeHtml(zhValue)} / ${escapeHtml(enValue)}`;
+          return;
+        }
+        if (typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = key === "heroTitle"
+            ? `<span style="display:block;color:var(--muted);font-size:.62em;font-weight:500;opacity:.72;line-height:1.08">${escapeHtml(zhValue)}</span><span style="display:block;color:var(--text);font-size:1em;font-weight:900;line-height:1.05">${escapeHtml(enValue)}</span>`
+            : `<span style="color:var(--muted);font-weight:500;opacity:.65">${escapeHtml(zhValue)}</span><span style="opacity:.3"> / </span><span style="color:var(--text);font-weight:900">${escapeHtml(enValue)}</span>`;
+        } else {
+          bilingual[key] = escapeHtml(enValue ?? zhValue);
+        }
+      });
+      return bilingual;
+    }
+const languageSelect=document.getElementById("languageSelect");
+    const backLink=document.getElementById("backLink");
+    function applyLanguage(lang){const c=translations[lang]||translations.zh;document.documentElement.lang=lang;document.title=c.pageTitle;languageSelect.value=lang;localStorage.setItem("makexTrainingLang",lang);backLink.href=`module2-overview.html?lang=${lang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});}
+    languageSelect.addEventListener("change",e=>applyLanguage(e.target.value));
+    const params=new URLSearchParams(window.location.search);applyLanguage(params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh");
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>
+
+
+
+
+

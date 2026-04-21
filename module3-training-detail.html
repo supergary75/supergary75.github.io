@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 3 - Training Mechanism</title>
+  <style>
+    :root{--text:#1f2430;--muted:#5d6472;--accent:#cc5a2f;--accent-deep:#8d3010;--surface:rgba(255,250,242,.92);--line:rgba(31,36,48,.1);--shadow:0 24px 60px rgba(64,43,26,.12)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);background:radial-gradient(circle at top left, rgba(204,90,47,.16), transparent 34%),linear-gradient(180deg,#f7f1e7 0%,#f2ece3 100%)}
+    .page{width:min(1180px, calc(100% - 32px));margin:0 auto;padding:32px 0 48px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}
+    .toolbar-right{display:flex;align-items:center;gap:12px}
+    .language-select,.back-link{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:14px;text-decoration:none;font-size:14px;font-weight:700}
+    .language-select{border:1px solid rgba(31,36,48,.12);background:#fffdfa;color:var(--text);cursor:pointer}
+    .back-link{color:var(--accent-deep);background:rgba(204,90,47,.1)}
+    .hero,.panel{padding:32px;border-radius:28px;background:var(--surface);border:1px solid rgba(255,255,255,.65);box-shadow:var(--shadow);margin-bottom:22px}
+    .hero{position:relative;overflow:hidden}
+    .hero-copy{position:relative;z-index:1;max-width:700px}
+    .hero-art{position:absolute;right:14px;top:50%;transform:translateY(-50%);z-index:0;pointer-events:none}
+    .hero-art img{width:160px;height:auto;display:block;filter:drop-shadow(0 18px 28px rgba(16,20,31,.16))}
+    .eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(204,90,47,.1);color:var(--accent-deep);font-size:14px;font-weight:700}
+    h1{margin:18px 0 12px;font-size:clamp(32px,4vw,52px);line-height:1.1}
+    h2{margin:0 0 12px;font-size:26px}
+    h3{margin:0 0 10px;font-size:21px}
+    p{margin:0;color:var(--muted);line-height:1.8;font-size:16px}
+    .subtitle{margin:0 0 18px;color:var(--accent-deep);font-size:18px;font-weight:700}
+    .summary-grid,.card-grid,.flow-grid{display:grid;gap:18px}
+    .summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .flow-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .visual-figure{margin:0}
+    .visual-frame{padding:16px;border-radius:24px;background:rgba(255,255,255,.78);border:1px solid var(--line)}
+    .visual-image{width:100%;display:block;border-radius:18px}
+    .visual-caption{margin-top:14px;color:var(--muted);font-size:14px;line-height:1.7}
+    .summary-card,.module-card,.flow-card{padding:20px;border-radius:22px;background:rgba(255,255,255,.78);border:1px solid var(--line)}
+    .summary-card strong,.module-tag{display:block;color:var(--accent-deep);margin-bottom:8px;font-size:13px}
+    .module-tag{display:inline-flex;padding:7px 12px;border-radius:999px;background:rgba(204,90,47,.1);font-weight:700}
+    .module-card p{margin-bottom:14px}
+    ul{margin:0;padding-left:22px;color:var(--text)}
+    li{margin-bottom:8px;line-height:1.7}
+    .note{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(204,90,47,.08);color:var(--accent-deep);font-size:14px;font-weight:700;line-height:1.7}
+    @media(max-width:900px){.topbar,.toolbar-right{flex-direction:column;align-items:stretch}.hero,.panel{padding:24px 20px}.summary-grid,.card-grid,.flow-grid{grid-template-columns:1fr}.hero-art{display:none}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back-link" id="backLink" href="module3-detail.html" data-i18n="backLink">返回第三模块</a>
+      <div class="toolbar-right">
+        <select class="language-select" id="languageSelect">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow" data-i18n="eyebrow">Training</div>
+        <h1 data-i18n="title">执行与反馈机制</h1>
+        <p class="subtitle" data-i18n="subtitle">训练不是练得越多越好，而是要用数据、记录和复盘形成持续改进的闭环。</p>
+        <p data-i18n="description">这一页重点放在训练闭环里的执行、记录、复盘和版本迭代，让内容更接近比赛实战。</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <img src="assets/images/makex-trophy.png" alt="">
+      </div>
+    </section>
+
+    <section class="panel">
+      <figure class="visual-figure">
+        <div class="visual-frame">
+          <img class="visual-image" src="assets/images/training-mechanism-principles.png" alt="MakeX training mechanism visual map">
+        </div>
+        <figcaption class="visual-caption" data-i18n="visualCaption">这张图可以作为整页的主视觉，用来总览训练机制的 6 个关键组成部分，并帮助观众快速理解它们之间的闭环关系。</figcaption>
+      </figure>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="keyTitle">执行与反馈先回答四个核心问题</h2>
+      <div class="summary-grid">
+        <article class="summary-card"><strong data-i18n="q1t">收集什么</strong><p data-i18n="q1b">收集日期、训练主题、成功率、平均成绩、关键任务耗时和主要失误原因。</p></article>
+        <article class="summary-card"><strong data-i18n="q2t">怎么复盘</strong><p data-i18n="q2b">复盘结果是什么、为什么出现、下次调整什么、谁负责验证。</p></article>
+        <article class="summary-card"><strong data-i18n="q3t">怎么改进</strong><p data-i18n="q3b">每次只改少量关键项，改完立即验证，避免同时改太多失去判断依据。</p></article>
+        <article class="summary-card"><strong data-i18n="q4t">怎么验证</strong><p data-i18n="q4b">把下次训练任务和验证标准提前写清楚，让每次调整都可追踪。</p></article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="modulesTitle">六个关键组成部分</h2>
+      <div class="card-grid">
+        <article class="module-card">
+          <span class="module-tag" data-i18n="m1tag">模块 1</span>
+          <h3 data-i18n="m1t">目标设定</h3>
+          <p data-i18n="m1d">训练的起点是先明确训练为什么而进行，把结果目标、过程目标和能力目标同步建立起来。</p>
+          <ul>
+            <li data-i18n="m1a">结果目标：区域赛进入前八、模拟赛稳定达到目标分数、自动阶段形成得分优势。</li>
+            <li data-i18n="m1b">过程目标：每周完整跑图次数、专项测试次数、关键任务成功率目标。</li>
+            <li data-i18n="m1c">能力目标：独立解释策略、独立排查故障、比赛中完成明确分工协同。</li>
+          </ul>
+        </article>
+
+        <article class="module-card">
+          <span class="module-tag" data-i18n="m2tag">模块 2</span>
+          <h3 data-i18n="m2t">节奏设计</h3>
+          <p data-i18n="m2d">建立“日常训练 - 每周复盘 - 阶段推进”的三级结构，让训练不是靠赛前冲刺，而是持续推进。</p>
+          <ul>
+            <li data-i18n="m2a">日常训练：训练准备、专项训练、实战跑图、训练复盘四步固定化。</li>
+            <li data-i18n="m2b">每周训练：围绕成绩、效率、稳定性、团队协作四类指标做系统复盘。</li>
+            <li data-i18n="m2c">阶段训练：规则搭建、专项强化、整场整合、赛前冲刺四阶段逐级升级。</li>
+          </ul>
+        </article>
+
+        <article class="module-card">
+          <span class="module-tag" data-i18n="m3tag">模块 3</span>
+          <h3 data-i18n="m3t">数据收集</h3>
+          <p data-i18n="m3d">训练不是练得越多越好，而是要用数据、记录和复盘形成持续改进的闭环。</p>
+          <ul>
+            <li data-i18n="m3a">数据收集：日期、训练主题、成功率、平均成绩、关键任务耗时、主要失误原因。</li>
+            <li data-i18n="m3b">复盘问题：结果是什么、为什么出现、下次调整什么、谁负责验证。</li>
+            <li data-i18n="m3c">版本管理：每次只改少量关键项，改完立即验证，避免同时改太多失去判断依据。</li>
+          </ul>
+        </article>
+
+        <article class="module-card">
+          <span class="module-tag" data-i18n="m4tag">模块 4</span>
+          <h3 data-i18n="m4t">团队协作</h3>
+          <p data-i18n="m4d">比赛中很多失败并不是机器人能力不够，而是角色不清、口令混乱、临场节奏失控。</p>
+          <ul>
+            <li data-i18n="m4a">角色分工：主操作手、副操作手、程序负责人、结构负责人、教练/队长职责清晰。</li>
+            <li data-i18n="m4b">协同训练：固定口令、时间节点提醒、失误后切换、主副策略切换沟通长期强化。</li>
+            <li data-i18n="m4c">核心目标：在任何变化下都能迅速配合，而不是只在理想状态下完成任务。</li>
+          </ul>
+        </article>
+
+        <article class="module-card">
+          <span class="module-tag" data-i18n="m5tag">模块 5</span>
+          <h3 data-i18n="m5t">对手分析</h3>
+          <p data-i18n="m5d">高水平训练不能只练自己，还要持续研究主要竞争对手的打法、节奏、优势与弱点。</p>
+          <ul>
+            <li data-i18n="m5a">资料收集：比赛直播、公开视频、社交媒体片段、历届成绩、公开复盘。</li>
+            <li data-i18n="m5b">分析维度：开局任务、中段切换、高风险任务时机、失误恢复、稳定性波动。</li>
+            <li data-i18n="m5c">输出结论：形成重点对手档案，并转化为针对性的训练任务和比赛策略。</li>
+          </ul>
+        </article>
+
+        <article class="module-card">
+          <span class="module-tag" data-i18n="m6tag">模块 6</span>
+          <h3 data-i18n="m6t">反制训练</h3>
+          <p data-i18n="m6d">对手研究的价值不是“看懂对手”，而是改变自己的准备方式，把分析结果变成可执行训练。</p>
+          <ul>
+            <li data-i18n="m6a">面对自动优势型：强化自动成功率、起步精度、失败补救速度和保底方案。</li>
+            <li data-i18n="m6b">面对后程爆发型或稳定型强队：训练前中段建差、关键点提速和 A/B 策略切换。</li>
+            <li data-i18n="m6c">固定安排：每周一次外部赛队分析会，每阶段一次重点对手研判。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="flowTitle">标准训练闭环建议</h2>
+      <div class="flow-grid">
+        <article class="flow-card">
+          <h3 data-i18n="f1t">每次训练</h3>
+          <ul>
+            <li data-i18n="f1a">训练前：目标确认、设备检查、程序确认、记录表准备。</li>
+            <li data-i18n="f1b">训练中：专项突破、实战模拟、数据收集、小步迭代。</li>
+            <li data-i18n="f1c">训练后：复盘总结、问题分类、责任落实、下次任务确认。</li>
+          </ul>
+        </article>
+        <article class="flow-card">
+          <h3 data-i18n="f2t">每周训练</h3>
+          <ul>
+            <li data-i18n="f2a">周目标明确，周中推进专项训练。</li>
+            <li data-i18n="f2b">周末安排完整模拟赛与系统周复盘。</li>
+            <li data-i18n="f2c">固定一次外部赛队分析，形成下周针对性任务。</li>
+          </ul>
+        </article>
+        <article class="flow-card">
+          <h3 data-i18n="f3t">每阶段训练</h3>
+          <ul>
+            <li data-i18n="f3a">明确阶段目标，拆解关键问题。</li>
+            <li data-i18n="f3b">实施专项突破并进行阶段测试。</li>
+            <li data-i18n="f3c">判断是否进入下一阶段，并完成版本冻结或策略升级。</li>
+          </ul>
+        </article>
+      </div>
+      <div class="note" data-i18n="note">训练机制的核心，不是“多训练”，而是用数据、记录和复盘形成持续改进的闭环。</div>
+    </section>
+  </main>
+
+  <script>
+    const translations={
+      zh:{
+        pageTitle:"第三模块 - 执行与反馈机制",backLink:"返回第三模块",eyebrow:"模块 03",title:"执行与反馈机制",subtitle:"训练不是练得越多越好，而是要用数据、记录和复盘形成持续改进的闭环。",description:"这一页重点放在训练闭环里的执行、记录、复盘和版本迭代，让内容更接近比赛实战。",visualCaption:"这张图可以作为整页的主视觉，用来总览训练机制的 6 个关键组成部分，并帮助观众快速理解它们之间的闭环关系。",
+        keyTitle:"执行与反馈先回答四个核心问题",q1t:"收集什么",q1b:"收集日期、训练主题、成功率、平均成绩、关键任务耗时和主要失误原因。",q2t:"怎么复盘",q2b:"复盘结果是什么、为什么出现、下次调整什么、谁负责验证。",q3t:"怎么改进",q3b:"每次只改少量关键项，改完立即验证，避免同时改太多失去判断依据。",q4t:"怎么验证",q4b:"把下次训练任务和验证标准提前写清楚，让每次调整都可追踪。",
+        modulesTitle:"六个关键组成部分",
+        m1tag:"模块 1",m1t:"目标设定",m1d:"训练的起点是先明确训练为什么而进行，把结果目标、过程目标和能力目标同步建立起来。",m1a:"结果目标：区域赛进入前八、模拟赛稳定达到目标分数、自动阶段形成得分优势。",m1b:"过程目标：每周完整跑图次数、专项测试次数、关键任务成功率目标。",m1c:"能力目标：独立解释策略、独立排查故障、比赛中完成明确分工协同。",
+        m2tag:"模块 2",m2t:"节奏设计",m2d:"建立“日常训练 - 每周复盘 - 阶段推进”的三级结构，让训练不是靠赛前冲刺，而是持续推进。",m2a:"日常训练：训练准备、专项训练、实战跑图、训练复盘四步固定化。",m2b:"每周训练：围绕成绩、效率、稳定性、团队协作四类指标做系统复盘。",m2c:"阶段训练：规则搭建、专项强化、整场整合、赛前冲刺四阶段逐级升级。",
+        m3tag:"Module 3",m3t:"Data Collection",m3d:"Training is not improved by doing more sessions, but by creating a loop of data, records, and review that drives constant improvement.",m3a:"Data collection: date, topic, success rate, average result, key-task time, and main error causes.",m3b:"Review prompts: what happened, why it happened, what changes next, and who validates it.",m3c:"Version control: change only a few key items at a time and verify immediately.",
+        m4tag:"模块 4",m4t:"团队协作",m4d:"比赛中很多失败并不是机器人能力不够，而是角色不清、口令混乱、临场节奏失控。",m4a:"角色分工：主操作手、副操作手、程序负责人、结构负责人、教练/队长职责清晰。",m4b:"协同训练：固定口令、时间节点提醒、失误后切换、主副策略切换沟通长期强化。",m4c:"核心目标：在任何变化下都能迅速配合，而不是只在理想状态下完成任务。",
+        m5tag:"模块 5",m5t:"对手分析",m5d:"高水平训练不能只练自己，还要持续研究主要竞争对手的打法、节奏、优势与弱点。",m5a:"资料收集：比赛直播、公开视频、社交媒体片段、历届成绩、公开复盘。",m5b:"分析维度：开局任务、中段切换、高风险任务时机、失误恢复、稳定性波动。",m5c:"输出结论：形成重点对手档案，并转化为针对性的训练任务和比赛策略。",
+        m6tag:"模块 6",m6t:"反制训练",m6d:"对手研究的价值不是“看懂对手”，而是改变自己的准备方式，把分析结果变成可执行训练。",m6a:"面对自动优势型：强化自动成功率、起步精度、失败补救速度和保底方案。",m6b:"面对后程爆发型或稳定型强队：训练前中段建差、关键点提速和 A/B 策略切换。",m6c:"固定安排：每周一次外部赛队分析会，每阶段一次重点对手研判。",
+        flowTitle:"Standard Training Loop Recommendations",f1t:"Each Session",f1a:"Before training: confirm goals, inspect equipment, confirm software, and prepare records.",f1b:"During training: focused breakthroughs, match simulation, data collection, and small-step iteration.",f1c:"After training: review, classify issues, assign owners, and confirm the next task.",f2t:"Each Week",f2a:"Define the weekly goal and push focused drills during the week.",f2b:"Run a full mock match and a systematic weekly review at the end of the week.",f2c:"Hold one external-team analysis session and turn it into next-week tasks.",f3t:"Each Phase",f3a:"Set the phase goal and break down key problems.",f3b:"Execute focused breakthroughs and run a phase test.",f3c:"Decide whether the team is ready for the next phase and freeze or upgrade strategy accordingly.",note:"The core of training is not doing more. It is turning training behavior into match performance through a stable rhythm."
+      },
+      en:{
+        pageTitle:"Module 3 - Training Mechanism",backLink:"Back to Module 3",eyebrow:"Training",title:"Training Mechanism",subtitle:"Build a training system focused on continuous improvement, precise feedback, stable iteration, and real competition",description:"A strong MakeX training mechanism is not just about adding more sessions. It is about turning technical ability, strategy, teamwork, and opponent study into results through a clear rhythm.",visualCaption:"This visual works as the main page graphic, summarizing the seven key parts of the training mechanism and helping viewers quickly understand the closed-loop relationship between them.",
+        keyTitle:"Four Core Questions the Training Mechanism Must Answer",q1t:"What to train",q1b:"What the team should practice each day, each week, and in each phase.",q2t:"How to judge progress",q2b:"How to tell whether training is actually producing improvement.",q3t:"How to correct",q3b:"How to use review and data records to keep fixing problems.",q4t:"How to compete",q4b:"How to combine strong-opponent analysis with targeted strategy and training plans.",
+        modulesTitle:"Six Core Training Modules",
+        m1tag:"Module 1",m1t:"Goal-Oriented Mechanism",m1d:"Training should begin with clear reasons for why it is being done, combining outcome goals, process goals, and capability goals.",m1a:"Outcome goals: top-eight finish, stable target score in mock matches, and an auto-stage scoring edge.",m1b:"Process goals: number of full runs per week, number of focused tests, and target success rate for key tasks.",m1c:"Capability goals: explain strategy independently, diagnose common failures, and execute clear role-based collaboration.",
+        m2tag:"Module 2",m2t:"Training Rhythm Mechanism",m2d:"Build a three-level structure of daily training, weekly review, and phase progression so growth does not depend on last-minute rushing.",m2a:"Daily training: preparation, focused drills, match simulation, and review as a fixed routine.",m2b:"Weekly training: review score, efficiency, stability, and teamwork indicators together.",m2c:"Phase training: rules and build-up, focused strengthening, full-run integration, and pre-event sprint.",
+        m3tag:"Module 3",m3t:"Execution and Feedback Mechanism",m3d:"Training improves through data, records, and review, not just through spending more time.",m3a:"Data records: date, topic, success rate, average result, key-task time, and main error causes.",m3b:"Review prompts: what happened, why it happened, what changes next, and who validates it.",m3c:"Version control: change only a few key items at a time and verify immediately.",
+        m4tag:"Module 4",m4t:"Team Collaboration Mechanism",m4d:"Many match losses come from unclear roles, poor communication, and unstable in-match rhythm rather than weak robot ability.",m4a:"Role allocation: main driver, support operator, programmer, mechanical lead, and coach/captain all need clear responsibility.",m4b:"Coordination drills: fixed callouts, timing reminders, recovery after mistakes, and A/B strategy switching.",m4c:"Core objective: respond together under change, not only in ideal conditions.",
+        m5tag:"Module 5",m5t:"External Team Analysis Mechanism",m5d:"High-level preparation should not only focus on your own team. It should also study the rhythm, strengths, and weaknesses of major opponents.",m5a:"Data sources: match livestreams, public videos, social clips, past rankings, and public reviews.",m5b:"Analysis dimensions: opening choices, mid-match switches, high-risk timing, recovery behavior, and consistency.",m5c:"Output: build opponent profiles and turn them into targeted training tasks and match strategies.",
+        m6tag:"Module 6",m6t:"Competitive Strategy Conversion Mechanism",m6d:"Opponent study matters only when it changes how you prepare and becomes executable training.",m6a:"Against auto-strong teams: strengthen auto reliability, starting accuracy, recovery speed, and fallback plans.",m6b:"Against late-game or stable strong teams: train early leads, speed up key steps, and prepare A/B strategy switches.",m6c:"Fixed rhythm: one opponent-analysis meeting each week and one focused rival review each phase.",
+        flowTitle:"Standard Training Flow Recommendations",f1t:"Each Session",f1a:"Before training: confirm goals, inspect equipment, confirm software, and prepare records.",f1b:"During training: focused breakthroughs, match simulation, data logging, and small-step iteration.",f1c:"After training: review, classify issues, assign owners, and confirm the next task.",f2t:"Each Week",f2a:"Define the weekly goal and push focused drills during the week.",f2b:"Run a full mock match and a systematic weekly review at the end of the week.",f2c:"Hold one external-team analysis session and turn it into next-week tasks.",f3t:"Each Phase",f3a:"Set the phase goal and break down key problems.",f3b:"Execute focused breakthroughs and run a phase test.",f3c:"Decide whether the team is ready for the next phase and freeze or upgrade strategy accordingly.",note:"The core of training is not doing more. It is turning training behavior into match performance through a stable rhythm."
+      }
+    };
+    
+    function buildBilingualContent() {
+      const escapeHtml = (value) => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+      const bilingual = {};
+      Object.keys(translations.zh).forEach((key) => {
+        const zhValue = translations.zh[key];
+        const enValue = translations.en[key];
+        if (key === "pageTitle" && typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = `${escapeHtml(zhValue)} / ${escapeHtml(enValue)}`;
+          return;
+        }
+        if (typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = key === "heroTitle"
+            ? `<span style="display:block;color:var(--muted);font-size:.62em;font-weight:500;opacity:.72;line-height:1.08">${escapeHtml(zhValue)}</span><span style="display:block;color:var(--text);font-size:1em;font-weight:900;line-height:1.05">${escapeHtml(enValue)}</span>`
+            : `<span style="color:var(--muted);font-weight:500;opacity:.65">${escapeHtml(zhValue)}</span><span style="opacity:.3"> / </span><span style="color:var(--text);font-weight:900">${escapeHtml(enValue)}</span>`;
+        } else {
+          bilingual[key] = escapeHtml(enValue ?? zhValue);
+        }
+      });
+      return bilingual;
+    }
+const languageSelect=document.getElementById("languageSelect");
+    const backLink=document.getElementById("backLink");
+    function applyLanguage(lang){
+      const safeLang=["zh","en"].includes(lang)?lang:"zh";
+      const c=safeLang==="en"?buildBilingualContent():translations.zh;
+      document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";
+      document.title=c.pageTitle;
+      languageSelect.value=safeLang;
+      localStorage.setItem("makexTrainingLang",safeLang);
+      backLink.href=`module3-detail.html?lang=${safeLang}`;
+      document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});
+    }
+    languageSelect.addEventListener("change",e=>applyLanguage(e.target.value));
+    const params=new URLSearchParams(window.location.search);
+    applyLanguage(params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh");
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>
+
+
+
+
+

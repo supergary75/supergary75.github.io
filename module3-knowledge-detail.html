@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 3 - Knowledge Capability</title>
+  <style>
+    :root{--text:#1f2430;--muted:#5d6472;--accent:#cc5a2f;--accent-deep:#8d3010;--surface:rgba(255,250,242,.92);--line:rgba(31,36,48,.1);--shadow:0 24px 60px rgba(64,43,26,.12);--inspire:#efa75a;--starter:#e76778;--explorer:#56a294;--challenge:#796fd9}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);background:radial-gradient(circle at top left, rgba(204,90,47,.16), transparent 34%),linear-gradient(180deg,#f7f1e7 0%,#f2ece3 100%)}
+    .page{width:min(1240px, calc(100% - 32px));margin:0 auto;padding:32px 0 48px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}
+    .toolbar-right{display:flex;align-items:center;gap:12px}
+    .language-select,.back-link{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:14px;text-decoration:none;font-size:14px;font-weight:700}
+    .language-select{border:1px solid rgba(31,36,48,.12);background:#fffdfa;color:var(--text);cursor:pointer}
+    .back-link{color:var(--accent-deep);background:rgba(204,90,47,.1)}
+    .hero,.panel{padding:32px;border-radius:28px;background:var(--surface);border:1px solid rgba(255,255,255,.65);box-shadow:var(--shadow);margin-bottom:22px}
+    .eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(204,90,47,.1);color:var(--accent-deep);font-size:14px;font-weight:700}
+    h1{margin:18px 0 12px;font-size:clamp(32px,4vw,52px);line-height:1.1}
+    h2{margin:0 0 14px;font-size:28px}
+    h3{margin:0 0 12px;font-size:22px}
+    h4{margin:0 0 8px;font-size:18px}
+    p{margin:0;color:var(--muted);line-height:1.8;font-size:16px}
+    .subtitle{margin:0 0 18px;color:var(--accent-deep);font-size:18px;font-weight:700}
+    .model-figure{margin:0}
+    .model-frame{padding:16px;border-radius:24px;background:rgba(255,255,255,.78);border:1px solid var(--line)}
+    .model-image{width:100%;display:block;border-radius:18px}
+    .model-caption{margin-top:14px;color:var(--muted);font-size:14px;line-height:1.7}
+    .intro-grid,.event-grid,.summary-grid,.progress-grid{display:grid;gap:18px}
+    .intro-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .event-grid{grid-template-columns:1fr 1fr}
+    .summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .progress-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card,.event-card,.summary-card,.progress-card{padding:22px;border-radius:22px;background:rgba(255,255,255,.78);border:1px solid var(--line)}
+    .event-card{position:relative;overflow:hidden}
+    .event-card::before{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:var(--accent);opacity:.9}
+    .event-card.inspire::before{background:var(--inspire)}
+    .event-card.starter::before{background:var(--starter)}
+    .event-card.explorer::before{background:var(--explorer)}
+    .event-card.challenge::before{background:var(--challenge)}
+    .event-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;padding-left:8px}
+    .event-title{font-size:24px;font-weight:800}
+    .event-level{padding:8px 12px;border-radius:999px;background:rgba(31,36,48,.06);font-size:13px;font-weight:700;color:var(--accent-deep)}
+    .section-label{display:inline-flex;padding:7px 12px;border-radius:999px;background:rgba(204,90,47,.1);font-size:13px;font-weight:700;color:var(--accent-deep);margin-bottom:10px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .chip{padding:8px 10px;border-radius:999px;background:#fff7ef;border:1px solid rgba(204,90,47,.12);font-size:13px;color:#5b4b3d}
+    .focus-box{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(204,90,47,.08);color:var(--accent-deep);font-size:15px;font-weight:700;line-height:1.7}
+    .summary-card strong,.progress-card strong{display:block;margin-bottom:8px;font-size:14px;color:var(--accent-deep)}
+    .quote{margin-top:16px;padding:18px 20px;border-radius:20px;background:rgba(121,111,217,.08);border:1px solid rgba(121,111,217,.15);font-size:18px;font-weight:800;line-height:1.7;color:#4b408b}
+    .note{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(204,90,47,.08);color:var(--accent-deep);font-size:14px;font-weight:700;line-height:1.7}
+    @media(max-width:980px){.topbar,.toolbar-right{flex-direction:column;align-items:stretch}.hero,.panel{padding:24px 20px}.intro-grid,.event-grid,.summary-grid,.progress-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back-link" id="backLink" href="module3-detail.html" data-i18n="backLink">返回第三模块</a>
+      <div class="toolbar-right">
+        <select class="language-select" id="languageSelect">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">Capability</div>
+      <h1 data-i18n="title">知识、技术和个人能力</h1>
+      <p class="subtitle" data-i18n="subtitle">建立学生从知识结构到个人成长的完整能力模型</p>
+      <p data-i18n="description">这一页把 MakeX 四个赛项对应的学科内容、21 世纪核心能力和成长定位整合到同一个框架里，帮助团队看清不同年龄段和不同赛项之间的递进关系。</p>
+    </section>
+
+    <section class="panel">
+      <figure class="model-figure">
+        <div class="model-frame">
+          <img class="model-image" src="assets/images/knowledge-ps-model-upgrade1.png" alt="Knowledge, programming and personal abilities growth model">
+        </div>
+        <figcaption class="model-caption" data-i18n="imageCaption">这张模型图适合用来讲清楚知识、编程与个人能力之间的循环关系，帮助团队把“学什么、怎么做、成长到哪里”放进一个统一框架里。</figcaption>
+      </figure>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="frameworkTitle">能力框架总览</h2>
+      <div class="intro-grid">
+        <article class="card">
+          <h3 data-i18n="c1">知识结构</h3>
+          <p data-i18n="b1">围绕数学、科学、工程原理、比赛规则和策略理解建立系统知识框架。</p>
+        </article>
+        <article class="card">
+          <h3 data-i18n="c2">技术能力</h3>
+          <p data-i18n="b2">包含搭建、调试、编程控制、结构优化、问题排查和现场执行能力。</p>
+        </article>
+        <article class="card">
+          <h3 data-i18n="c3">个人能力</h3>
+          <p data-i18n="b3">强化表达、协作、责任感、时间管理、复盘意识和决策能力，让学生更稳定地成长。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="eventTitle">MakeX 四赛项 × 学科内容 × 21世纪核心能力</h2>
+      <div class="event-grid">
+        <article class="event-card inspire">
+          <div class="event-head"><div class="event-title">MakeX Inspire</div><div class="event-level" data-i18n="level1">小学低年级</div></div>
+          <span class="section-label" data-i18n="mathScience">数学与科学内容</span>
+          <p data-i18n="i_desc">以认知建立和兴趣驱动为核心，把基础数学、观察与简单科学经验融入项目体验。</p>
+          <div class="chips" data-chip-group="i-ms">
+            <span class="chip">计数</span><span class="chip">比较</span><span class="chip">长度与时间</span><span class="chip">方向</span><span class="chip">基础图形</span>
+            <span class="chip">观察</span><span class="chip">材料特性</span><span class="chip">简单力与运动</span>
+          </div>
+          <span class="section-label" data-i18n="coreAbility">21世纪核心能力</span>
+          <div class="chips" data-chip-group="i-ca">
+            <span class="chip">好奇心</span><span class="chip">基础表达</span><span class="chip">初级合作意识</span><span class="chip">学习习惯</span>
+          </div>
+          <div class="focus-box" data-i18n="focus1">核心定位：认知建立 + 兴趣驱动</div>
+        </article>
+
+        <article class="event-card starter">
+          <div class="event-head"><div class="event-title">MakeX Starter</div><div class="event-level" data-i18n="level2">小学中高年级</div></div>
+          <span class="section-label" data-i18n="mathScience">数学与科学内容</span>
+          <p data-i18n="s_desc">以执行能力和基础工程思维为核心，让学生从“会做”逐步过渡到“能稳定完成”。</p>
+          <div class="chips" data-chip-group="s-ms">
+            <span class="chip">测量</span><span class="chip">角度</span><span class="chip">周长与面积</span><span class="chip">坐标直觉</span><span class="chip">数据记录</span>
+            <span class="chip">摩擦</span><span class="chip">平衡</span><span class="chip">重心</span><span class="chip">简单机械</span>
+          </div>
+          <span class="section-label" data-i18n="coreAbility">21世纪核心能力</span>
+          <div class="chips" data-chip-group="s-ca">
+            <span class="chip">问题解决</span><span class="chip">逻辑思维</span><span class="chip">沟通与合作</span><span class="chip">自我管理</span>
+          </div>
+          <div class="focus-box" data-i18n="focus2">核心定位：执行能力 + 基础工程思维</div>
+        </article>
+
+        <article class="event-card explorer">
+          <div class="event-head"><div class="event-title">MakeX Explorer</div><div class="event-level" data-i18n="level3">初中低年级</div></div>
+          <span class="section-label" data-i18n="mathPhysics">数学与科学 / 物理内容</span>
+          <p data-i18n="e_desc">以工程分析和优化能力为核心，让学生开始从结果导向转向系统分析和策略选择。</p>
+          <div class="chips" data-chip-group="e-ms">
+            <span class="chip">比例</span><span class="chip">坐标</span><span class="chip">统计</span><span class="chip">误差分析</span><span class="chip">路径优化</span>
+            <span class="chip">力</span><span class="chip">运动</span><span class="chip">摩擦</span><span class="chip">重心</span><span class="chip">结构力学</span>
+          </div>
+          <span class="section-label" data-i18n="coreAbility">21世纪核心能力</span>
+          <div class="chips" data-chip-group="e-ca">
+            <span class="chip">批判性思维</span><span class="chip">分析能力</span><span class="chip">团队协作</span><span class="chip">适应能力</span>
+          </div>
+          <div class="focus-box" data-i18n="focus3">核心定位：工程分析 + 优化能力</div>
+        </article>
+
+        <article class="event-card challenge">
+          <div class="event-head"><div class="event-title">MakeX Challenge</div><div class="event-level" data-i18n="level4">初中中高年级</div></div>
+          <span class="section-label" data-i18n="mathPhysics">数学与科学 / 物理内容</span>
+          <p data-i18n="ch_desc">以系统工程和比赛决策为核心，让学生完成从技术执行者到竞赛决策者的升级。</p>
+          <div class="chips" data-chip-group="ch-ms">
+            <span class="chip">建模</span><span class="chip">函数</span><span class="chip">数据分析</span><span class="chip">概率与决策</span>
+            <span class="chip">受力分析</span><span class="chip">机械效率</span><span class="chip">速度与变化</span><span class="chip">系统稳定性</span>
+          </div>
+          <span class="section-label" data-i18n="coreAbility">21世纪核心能力</span>
+          <div class="chips" data-chip-group="ch-ca">
+            <span class="chip">决策能力</span><span class="chip">领导力</span><span class="chip">战略思维</span><span class="chip">抗压与韧性</span>
+          </div>
+          <div class="focus-box" data-i18n="focus4">核心定位：系统工程 + 比赛决策</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="progressTitle">总体进阶逻辑</h2>
+      <div class="summary-grid">
+        <article class="summary-card"><strong data-i18n="routeTitle">Inspire → Starter → Explorer → Challenge</strong><p data-i18n="routeDesc">四个赛项不是平行分布，而是能力要求逐级上升的成长路径。</p></article>
+        <article class="summary-card"><strong data-i18n="knowledgeTitle">知识</strong><p data-i18n="knowledgeProgress">从感知 → 理解 → 应用 → 建模</p></article>
+        <article class="summary-card"><strong data-i18n="skillsTitle">技能</strong><p data-i18n="skillsProgress">从执行 → 控制 → 优化 → 集成</p></article>
+        <article class="summary-card"><strong data-i18n="abilitiesTitle">能力</strong><p data-i18n="abilitiesProgress">从好奇 → 逻辑 → 分析 → 决策</p></article>
+      </div>
+      <div class="quote" data-i18n="quote">Inspire 培养兴趣与认知，Starter 强化执行与逻辑，Explorer 建立分析与优化能力，Challenge 完成决策与系统能力闭环。</div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="mappingTitle">对培训设计的直接启发</h2>
+      <div class="progress-grid">
+        <article class="progress-card"><strong data-i18n="p1t">课程设计</strong><p data-i18n="p1b">课程不应只按机器人功能安排，还应按年龄阶段和能力层级组织学习内容。</p></article>
+        <article class="progress-card"><strong data-i18n="p2t">训练重点</strong><p data-i18n="p2b">低年龄段更强调兴趣、表达和习惯，中高年龄段逐步转向分析、优化与决策。</p></article>
+        <article class="progress-card"><strong data-i18n="p3t">人才培养</strong><p data-i18n="p3b">赛项级别越高，越需要把知识、技术和个人能力放进同一个培养闭环中。</p></article>
+      </div>
+      <div class="note" data-i18n="note">这一页最适合在培训里作为“能力发展地图”使用，帮助教练理解不同赛项背后的培养目标，而不是只关注比赛结果本身。</div>
+    </section>
+  </main>
+
+  <script>
+    const translations={
+      zh:{
+        pageTitle:"第三模块 - 知识技术与个人能力",backLink:"返回第三模块",eyebrow:"能力建设",title:"知识、技术和个人能力",subtitle:"建立学生从知识结构到个人成长的完整能力模型",description:"这一页把 MakeX 四个赛项对应的学科内容、21 世纪核心能力和成长定位整合到同一个框架里，帮助团队看清不同年龄段和不同赛项之间的递进关系。",imageCaption:"这张模型图适合用来讲清楚知识、编程与个人能力之间的循环关系，帮助团队把“学什么、怎么做、成长到哪里”放进一个统一框架里。",frameworkTitle:"能力框架总览",c1:"知识结构",b1:"围绕数学、科学、工程原理、比赛规则和策略理解建立系统知识框架。",c2:"技术能力",b2:"包含搭建、调试、编程控制、结构优化、问题排查和现场执行能力。",c3:"个人能力",b3:"强化表达、协作、责任感、时间管理、复盘意识和决策能力，让学生更稳定地成长。",eventTitle:"MakeX 四赛项 × 学科内容 × 21世纪核心能力",level1:"小学低年级",level2:"小学中高年级",level3:"初中低年级",level4:"初中中高年级",mathScience:"数学与科学内容",mathPhysics:"数学与科学 / 物理内容",coreAbility:"21世纪核心能力",i_desc:"以认知建立和兴趣驱动为核心，把基础数学、观察与简单科学经验融入项目体验。",s_desc:"以执行能力和基础工程思维为核心，让学生从“会做”逐步过渡到“能稳定完成”。",e_desc:"以工程分析和优化能力为核心，让学生开始从结果导向转向系统分析和策略选择。",ch_desc:"以系统工程和比赛决策为核心，让学生完成从技术执行者到竞赛决策者的升级。",focus1:"核心定位：认知建立 + 兴趣驱动",focus2:"核心定位：执行能力 + 基础工程思维",focus3:"核心定位：工程分析 + 优化能力",focus4:"核心定位：系统工程 + 比赛决策",progressTitle:"总体进阶逻辑",routeTitle:"Inspire → Starter → Explorer → Challenge",routeDesc:"四个赛项不是平行分布，而是能力要求逐级上升的成长路径。",knowledgeTitle:"知识",knowledgeProgress:"从感知 → 理解 → 应用 → 建模",skillsTitle:"技能",skillsProgress:"从执行 → 控制 → 优化 → 集成",abilitiesTitle:"能力",abilitiesProgress:"从好奇 → 逻辑 → 分析 → 决策",quote:"Inspire 培养兴趣与认知，Starter 强化执行与逻辑，Explorer 建立分析与优化能力，Challenge 完成决策与系统能力闭环。",mappingTitle:"对培训设计的直接启发",p1t:"课程设计",p1b:"课程不应只按机器人功能安排，还应按年龄阶段和能力层级组织学习内容。",p2t:"训练重点",p2b:"低年龄段更强调兴趣、表达和习惯，中高年龄段逐步转向分析、优化与决策。",p3t:"人才培养",p3b:"赛项级别越高，越需要把知识、技术和个人能力放进同一个培养闭环中。",note:"这一页最适合在培训里作为“能力发展地图”使用，帮助教练理解不同赛项背后的培养目标，而不是只关注比赛结果本身。"},
+      en:{
+        pageTitle:"Module 3 - Knowledge, Technical and Personal Capability",backLink:"Back to Module 3",eyebrow:"Capability",title:"Knowledge, Technical and Personal Capability",subtitle:"Build a complete capability model from knowledge structure to personal growth",description:"This page integrates subject knowledge, 21st-century core abilities, and growth positioning across the four MakeX events, helping the team understand the progression between age groups and event levels.",imageCaption:"This model works well for explaining the loop between knowledge, programming, and personal abilities, helping the team place what to learn, how to execute, and where growth should lead inside one shared framework.",frameworkTitle:"Capability Framework Overview",c1:"Knowledge Structure",b1:"Build a systematic framework around mathematics, science, engineering principles, competition rules, and strategy understanding.",c2:"Technical Capability",b2:"Includes building, debugging, programming control, structure optimization, troubleshooting, and on-site execution.",c3:"Personal Capability",b3:"Strengthen communication, collaboration, responsibility, time management, review habits, and decision-making so students grow more steadily.",eventTitle:"MakeX Events × Subject Content × 21st-Century Core Abilities",level1:"Lower Primary",level2:"Upper Primary",level3:"Lower Secondary",level4:"Middle / Upper Secondary",mathScience:"Math and Science Content",mathPhysics:"Math and Science / Physics Content",coreAbility:"21st-Century Core Abilities",i_desc:"Focused on cognition building and interest-driven learning, integrating basic mathematics, observation, and simple science experience into project-based activity.",s_desc:"Focused on execution ability and foundational engineering thinking, helping students move from ‘can do’ to ‘can do reliably.’",e_desc:"Focused on engineering analysis and optimization, helping students shift from result-oriented work to system analysis and strategic choice.",ch_desc:"Focused on systems engineering and competition decision-making, helping students grow from technical executors into competitive decision-makers.",focus1:"Core Positioning: Cognition Building + Interest Driven Learning",focus2:"Core Positioning: Execution Ability + Foundational Engineering Thinking",focus3:"Core Positioning: Engineering Analysis + Optimization Ability",focus4:"Core Positioning: Systems Engineering + Competition Decision-Making",progressTitle:"Overall Progression Logic",routeTitle:"Inspire → Starter → Explorer → Challenge",routeDesc:"The four events are not parallel tracks, but a growth path with gradually increasing capability requirements.",knowledgeTitle:"Knowledge",knowledgeProgress:"From perception → understanding → application → modeling",skillsTitle:"Skills",skillsProgress:"From execution → control → optimization → integration",abilitiesTitle:"Abilities",abilitiesProgress:"From curiosity → logic → analysis → decision-making",quote:"Inspire builds interest and cognition. Starter strengthens execution and logic. Explorer develops analysis and optimization. Challenge completes the loop of decision-making and systems capability.",mappingTitle:"Direct Implications for Training Design",p1t:"Course Design",p1b:"Courses should not be organized only by robot functions, but also by age stage and capability level.",p2t:"Training Focus",p2b:"Lower age groups should emphasize interest, expression, and habits, while older groups gradually shift toward analysis, optimization, and decision-making.",p3t:"Talent Development",p3b:"The higher the event level, the more important it is to place knowledge, technical skills, and personal abilities into one unified development loop.",note:"This page works best in training as a capability-development map, helping coaches understand the educational goals behind different events instead of focusing only on competition results."}
+    };
+    const chipTranslations={
+      zh:{
+        "i-ms":["计数","比较","长度与时间","方向","基础图形","观察","材料特性","简单力与运动"],
+        "i-ca":["好奇心","基础表达","初级合作意识","学习习惯"],
+        "s-ms":["测量","角度","周长与面积","坐标直觉","数据记录","摩擦","平衡","重心","简单机械"],
+        "s-ca":["问题解决","逻辑思维","沟通与合作","自我管理"],
+        "e-ms":["比例","坐标","统计","误差分析","路径优化","力","运动","摩擦","重心","结构力学"],
+        "e-ca":["批判性思维","分析能力","团队协作","适应能力"],
+        "ch-ms":["建模","函数","数据分析","概率与决策","受力分析","机械效率","速度与变化","系统稳定性"],
+        "ch-ca":["决策能力","领导力","战略思维","抗压与韧性"]
+      },
+      en:{
+        "i-ms":["Counting","Comparison","Length & Time","Direction","Basic Shapes","Observation","Material Properties","Simple Force & Motion"],
+        "i-ca":["Curiosity","Basic Communication","Collaboration Awareness","Learning Habits"],
+        "s-ms":["Measurement","Angles","Perimeter & Area","Coordinate Intuition","Data Recording","Friction","Balance","Center of Gravity","Simple Machines"],
+        "s-ca":["Problem Solving","Logical Thinking","Communication & Collaboration","Self-Management"],
+        "e-ms":["Ratio","Coordinates","Statistics","Error Analysis","Path Optimization","Force","Motion","Friction","Center of Gravity","Structural Mechanics"],
+        "e-ca":["Critical Thinking","Analytical Thinking","Team Collaboration","Adaptability"],
+        "ch-ms":["Modeling","Functions","Data Analysis","Probability & Decision Making","Force Analysis","Mechanical Efficiency","Velocity & Change","System Stability"],
+        "ch-ca":["Decision Making","Leadership","Strategic Thinking","Resilience"]
+      }
+    };
+    
+    function buildBilingualContent() {
+      const escapeHtml = (value) => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+      const bilingual = {};
+      Object.keys(translations.zh).forEach((key) => {
+        const zhValue = translations.zh[key];
+        const enValue = translations.en[key];
+        if (key === "pageTitle" && typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = `${escapeHtml(zhValue)} / ${escapeHtml(enValue)}`;
+          return;
+        }
+        if (typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = key === "heroTitle"
+            ? `<span style="display:block;color:var(--muted);font-size:.62em;font-weight:500;opacity:.72;line-height:1.08">${escapeHtml(zhValue)}</span><span style="display:block;color:var(--text);font-size:1em;font-weight:900;line-height:1.05">${escapeHtml(enValue)}</span>`
+            : `<span style="color:var(--muted);font-weight:500;opacity:.65">${escapeHtml(zhValue)}</span><span style="opacity:.3"> / </span><span style="color:var(--text);font-weight:900">${escapeHtml(enValue)}</span>`;
+        } else {
+          bilingual[key] = escapeHtml(enValue ?? zhValue);
+        }
+      });
+      return bilingual;
+    }
+const languageSelect=document.getElementById("languageSelect"),backLink=document.getElementById("backLink");
+    function applyChipLanguage(lang){
+      document.querySelectorAll("[data-chip-group]").forEach(group=>{
+        const key=group.getAttribute("data-chip-group");
+        const items=chipTranslations[lang][key]||[];
+        group.innerHTML=items.map(item=>`<span class="chip">${item}</span>`).join("");
+      });
+    }
+    function applyLanguage(lang){const safeLang=["zh","en"].includes(lang)?lang:"zh";const c=safeLang==="en"?buildBilingualContent():translations.zh;document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module3-detail.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});applyChipLanguage(safeLang);}
+    languageSelect.addEventListener("change",e=>applyLanguage(e.target.value));
+    const params=new URLSearchParams(window.location.search);
+    applyLanguage(params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh");
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>
+
+
+
+
+

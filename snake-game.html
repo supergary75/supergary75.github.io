@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>贪食蛇 Snake Game</title>
+  <style>
+    :root {
+      --bg0: #06101d;
+      --bg1: #111b30;
+      --panel: rgba(9, 15, 28, 0.84);
+      --line: rgba(110, 179, 255, 0.18);
+      --text: #eef4ff;
+      --muted: #a8b6d5;
+      --accent: #62d6ff;
+      --accent2: #ff6d7f;
+      --shadow: 0 24px 64px rgba(1, 6, 18, 0.44);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+
+    body {
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 12%, rgba(98, 214, 255, 0.18), transparent 24%),
+        radial-gradient(circle at 84% 18%, rgba(255, 109, 127, 0.16), transparent 26%),
+        radial-gradient(circle at 50% 92%, rgba(49, 211, 157, 0.08), transparent 30%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(98, 214, 255, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.92), transparent 100%);
+      opacity: 0.42;
+    }
+
+    .page {
+      width: min(1100px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 24px 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(16, 24, 41, 0.88), rgba(9, 15, 28, 0.92));
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -120px -140px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(98, 214, 255, 0.2), transparent 68%);
+      filter: blur(4px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(98, 214, 255, 0.1);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 16px 0 12px;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      max-width: 780px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat {
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) 320px;
+      gap: 22px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .board-shell,
+    .side-panel {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .board-shell { padding: 18px; }
+    .side-panel { padding: 18px; }
+
+    .board-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .board-head h2,
+    .side-panel h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .canvas-wrap {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(98, 214, 255, 0.08), transparent 28%),
+        linear-gradient(180deg, rgba(5, 10, 19, 0.92), rgba(8, 14, 24, 0.96));
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(6, 11, 22, 0.08), rgba(6, 11, 22, 0.56));
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .overlay-card {
+      max-width: 340px;
+      padding: 22px 20px;
+      border-radius: 22px;
+      background: rgba(8, 14, 25, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .overlay-card h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+
+    .overlay-card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 16px;
+      border-radius: 14px;
+      color: #fff;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 12px 26px rgba(98, 214, 255, 0.16);
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .btn.secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(98, 214, 255, 0.18);
+    }
+
+    .btn:active { transform: translateY(0); }
+
+    .section {
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .section:first-of-type { padding-top: 0; }
+    .section:last-of-type { border-bottom: none; padding-bottom: 0; }
+
+    .meta-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta-row strong {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .speed {
+      width: 100%;
+      margin-top: 12px;
+      accent-color: var(--accent);
+    }
+
+    .control-pad {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+      user-select: none;
+    }
+
+    .pad-btn {
+      min-height: 54px;
+      border-radius: 16px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .pad-btn.primary {
+      background: linear-gradient(135deg, rgba(98, 214, 255, 0.9), rgba(255, 109, 127, 0.88));
+      color: #fff;
+    }
+
+    .pad-btn.wide { grid-column: span 3; }
+
+    .tips {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .tips li { margin-bottom: 8px; }
+
+    .footer-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 960px) {
+      .layout { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .side-panel { order: -1; }
+    }
+
+    @media (max-width: 560px) {
+      .page { width: min(100% - 14px, 1000px); padding-top: 10px; }
+      .hero,
+      .board-shell,
+      .side-panel { border-radius: 24px; }
+      .hero { padding: 20px; }
+      .board-shell,
+      .side-panel { padding: 14px; }
+      h1 { font-size: clamp(30px, 11vw, 48px); }
+      .pad-btn { min-height: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Arcade / 贪食蛇</div>
+      <h1>贪食蛇游戏</h1>
+      <p class="lead">用键盘方向键、WASD 或屏幕按钮控制小蛇，吃到食物就会变长。支持暂停、重开、触屏滑动和最高分记录，打开就能直接玩。</p>
+
+      <div class="hero-stats" aria-label="游戏统计">
+        <div class="stat">
+          <span class="stat-label">当前分数</span>
+          <div class="stat-value" id="score">0</div>
+        </div>
+        <div class="stat">
+          <span class="stat-label">最高分</span>
+          <div class="stat-value" id="bestScore">0</div>
+        </div>
+        <div class="stat">
+          <span class="stat-label">状态</span>
+          <div class="stat-value" id="gameState">待开始</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="board-shell">
+        <div class="board-head">
+          <div>
+            <h2>游戏面板</h2>
+            <div class="status" id="statusText">按下开始，或者直接按方向键就会自动启动。</div>
+          </div>
+          <div class="actions">
+            <button class="btn" id="toggleBtn" type="button">开始</button>
+            <button class="btn secondary" id="restartBtn" type="button">重新开始</button>
+          </div>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="gameCanvas" width="640" height="640" aria-label="贪食蛇游戏画布"></canvas>
+          <div class="overlay" id="overlay" aria-hidden="true">
+            <div class="overlay-card">
+              <h3 id="overlayTitle">游戏结束</h3>
+              <p id="overlayText">再来一局吧。点击重新开始，或者用按钮直接回到棋盘。</p>
+              <div class="actions">
+                <button class="btn" id="overlayRestartBtn" type="button">再来一局</button>
+                <button class="btn secondary" id="overlayResumeBtn" type="button">返回游戏</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side-panel">
+        <div class="section">
+          <h2>难度</h2>
+          <div class="meta-grid">
+            <div class="meta-row">
+              <span>基础速度</span>
+              <strong id="speedLabel">中等</strong>
+            </div>
+          </div>
+          <input class="speed" id="speedSlider" type="range" min="1" max="10" step="1" value="5" aria-label="基础速度调节">
+        </div>
+
+        <div class="section">
+          <h2>触屏控制</h2>
+          <div class="control-pad" aria-label="方向控制按钮">
+            <div></div>
+            <button class="pad-btn" data-dir="up" type="button">↑</button>
+            <div></div>
+            <button class="pad-btn" data-dir="left" type="button">←</button>
+            <button class="pad-btn primary" data-dir="pause" type="button">⏯</button>
+            <button class="pad-btn" data-dir="right" type="button">→</button>
+            <div></div>
+            <button class="pad-btn" data-dir="down" type="button">↓</button>
+            <div></div>
+            <button class="pad-btn wide" data-dir="restart" type="button">重开一局</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>玩法提示</h2>
+          <ul class="tips">
+            <li>方向键或 WASD 控制移动，空格键暂停 / 继续。</li>
+            <li>不要撞墙，也不要咬到自己的身体。</li>
+            <li>每吃到一个食物，蛇会变长，速度也会逐渐提升。</li>
+            <li>移动端可以直接点击按钮，或者在棋盘上滑动。</li>
+          </ul>
+        </div>
+
+        <div class="footer-note">这个版本是单页实现的，保存后直接用浏览器打开 `snake-game.html` 就能运行。</div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const scoreEl = document.getElementById("score");
+    const bestScoreEl = document.getElementById("bestScore");
+    const gameStateEl = document.getElementById("gameState");
+    const statusTextEl = document.getElementById("statusText");
+    const toggleBtn = document.getElementById("toggleBtn");
+    const restartBtn = document.getElementById("restartBtn");
+    const overlay = document.getElementById("overlay");
+    const overlayRestartBtn = document.getElementById("overlayRestartBtn");
+    const overlayResumeBtn = document.getElementById("overlayResumeBtn");
+    const speedSlider = document.getElementById("speedSlider");
+    const speedLabel = document.getElementById("speedLabel");
+
+    const GRID = 20;
+    const STORAGE_KEY = "snakeGameBestScore";
+    const DIRS = {
+      up: { x: 0, y: -1 },
+      down: { x: 0, y: 1 },
+      left: { x: -1, y: 0 },
+      right: { x: 1, y: 0 },
+    };
+
+    const SPEED_NAMES = {
+      1: "慢速",
+      2: "较慢",
+      3: "偏慢",
+      4: "均衡",
+      5: "中等",
+      6: "稍快",
+      7: "快速",
+      8: "更快",
+      9: "极速",
+      10: "挑战",
+    };
+
+    let boardSize = 640;
+    let cell = boardSize / GRID;
+    let snake = [];
+    let food = { x: 0, y: 0 };
+    let dir = { x: 1, y: 0 };
+    let nextDir = { x: 1, y: 0 };
+    let score = 0;
+    let bestScore = Number(localStorage.getItem(STORAGE_KEY) || 0);
+    let running = false;
+    let gameOver = false;
+    let started = false;
+    let baseSpeed = Number(speedSlider.value);
+    let delay = 140;
+    let lastTime = 0;
+    let accumulator = 0;
+
+    function updateSpeedLabel() {
+      speedLabel.textContent = SPEED_NAMES[baseSpeed] || "中等";
+    }
+
+    function updateDelay() {
+      delay = Math.max(70, 220 - (baseSpeed - 1) * 16 - Math.min(score * 2, 60));
+    }
+
+    function setStateUI() {
+      scoreEl.textContent = score;
+      bestScoreEl.textContent = bestScore;
+      gameStateEl.textContent = gameOver ? "失败" : running ? "进行中" : started ? "暂停" : "待开始";
+      toggleBtn.textContent = running ? "暂停" : gameOver ? "开始" : started ? "继续" : "开始";
+      statusTextEl.textContent = gameOver
+        ? "你撞上了边界或者自己的身体。点击重新开始再战一局。"
+        : running
+          ? "小蛇正在前进，继续吃掉食物来提高分数。"
+          : started
+            ? "游戏已经暂停，点击继续或按空格恢复。"
+            : "按下开始，或者直接按方向键就会自动启动。";
+      overlay.classList.toggle("show", gameOver);
+      overlay.setAttribute("aria-hidden", String(!gameOver));
+    }
+
+    function fitCanvas() {
+      const max = Math.min(720, Math.floor(window.innerWidth - 24));
+      boardSize = Math.max(280, max);
+      cell = boardSize / GRID;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.style.width = `${boardSize}px`;
+      canvas.style.height = `${boardSize}px`;
+      canvas.width = Math.round(boardSize * dpr);
+      canvas.height = Math.round(boardSize * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
+    }
+
+    function randomCell() {
+      let point;
+      do {
+        point = {
+          x: Math.floor(Math.random() * GRID),
+          y: Math.floor(Math.random() * GRID),
+        };
+      } while (snake.some((part) => part.x === point.x && part.y === point.y));
+      return point;
+    }
+
+    function resetGame() {
+      snake = [
+        { x: 8, y: 10 },
+        { x: 7, y: 10 },
+        { x: 6, y: 10 },
+      ];
+      dir = { x: 1, y: 0 };
+      nextDir = { x: 1, y: 0 };
+      score = 0;
+      running = false;
+      gameOver = false;
+      started = false;
+      food = randomCell();
+      accumulator = 0;
+      updateSpeedLabel();
+      updateDelay();
+      setStateUI();
+      draw();
+    }
+
+    function beginGame() {
+      if (gameOver) {
+        resetGame();
+      }
+      started = true;
+      running = true;
+      gameOver = false;
+      setStateUI();
+    }
+
+    function toggleGame() {
+      if (gameOver) {
+        resetGame();
+        beginGame();
+        return;
+      }
+      started = true;
+      running = !running;
+      setStateUI();
+    }
+
+    function isCollision(point) {
+      return point.x < 0 || point.y < 0 || point.x >= GRID || point.y >= GRID;
+    }
+
+    function step() {
+      dir = nextDir;
+      const head = snake[0];
+      const nextHead = { x: head.x + dir.x, y: head.y + dir.y };
+      const willGrow = nextHead.x === food.x && nextHead.y === food.y;
+      const bodyToCheck = willGrow ? snake : snake.slice(0, -1);
+
+      if (isCollision(nextHead) || bodyToCheck.some((part) => part.x === nextHead.x && part.y === nextHead.y)) {
+        gameOver = true;
+        running = false;
+        if (score > bestScore) {
+          bestScore = score;
+          localStorage.setItem(STORAGE_KEY, String(bestScore));
+        }
+        setStateUI();
+        return;
+      }
+
+      snake.unshift(nextHead);
+
+      if (willGrow) {
+        score += 1;
+        if (score > bestScore) {
+          bestScore = score;
+          localStorage.setItem(STORAGE_KEY, String(bestScore));
+        }
+        food = randomCell();
+      } else {
+        snake.pop();
+      }
+
+      updateDelay();
+      setStateUI();
+    }
+
+    function roundRectPath(x, y, w, h, r) {
+      const radius = Math.min(r, w / 2, h / 2);
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.arcTo(x + w, y, x + w, y + h, radius);
+      ctx.arcTo(x + w, y + h, x, y + h, radius);
+      ctx.arcTo(x, y + h, x, y, radius);
+      ctx.arcTo(x, y, x + w, y, radius);
+      ctx.closePath();
+    }
+
+    function drawGrid() {
+      ctx.fillStyle = "#07101d";
+      ctx.fillRect(0, 0, boardSize, boardSize);
+      ctx.strokeStyle = "rgba(255,255,255,0.05)";
+      ctx.lineWidth = 1;
+      for (let i = 1; i < GRID; i += 1) {
+        const p = i * cell;
+        ctx.beginPath();
+        ctx.moveTo(p, 0);
+        ctx.lineTo(p, boardSize);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, p);
+        ctx.lineTo(boardSize, p);
+        ctx.stroke();
+      }
+    }
+
+    function drawFood() {
+      const cx = food.x * cell + cell / 2;
+      const cy = food.y * cell + cell / 2;
+      const r = cell * 0.32;
+      ctx.save();
+      ctx.shadowColor = "rgba(255,109,127,0.7)";
+      ctx.shadowBlur = 18;
+      ctx.fillStyle = "#ff6d7f";
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "rgba(255,255,255,0.9)";
+      ctx.beginPath();
+      ctx.arc(cx - r * 0.28, cy - r * 0.28, r * 0.22, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawSnake() {
+      snake.forEach((part, index) => {
+        const x = part.x * cell;
+        const y = part.y * cell;
+        const pad = index === 0 ? cell * 0.08 : cell * 0.12;
+        const size = cell - pad * 2;
+        const radius = Math.max(6, cell * 0.28);
+        ctx.save();
+        ctx.shadowColor = index === 0 ? "rgba(98,214,255,0.72)" : "rgba(49,211,157,0.18)";
+        ctx.shadowBlur = index === 0 ? 16 : 8;
+        ctx.fillStyle = index === 0 ? "#62d6ff" : "rgba(98, 214, 255, 0.76)";
+        roundRectPath(x + pad, y + pad, size, size, radius);
+        ctx.fill();
+        if (index === 0) {
+          ctx.shadowBlur = 0;
+          ctx.fillStyle = "rgba(8,16,27,0.92)";
+          const eyeY = y + cell * 0.36;
+          const eyeR = Math.max(1.8, cell * 0.06);
+          const offset = cell * 0.18 * (dir.x === 1 ? 1 : dir.x === -1 ? -1 : 0);
+          ctx.beginPath();
+          ctx.arc(x + cell * 0.38 + offset, eyeY, eyeR, 0, Math.PI * 2);
+          ctx.arc(x + cell * 0.62 + offset, eyeY, eyeR, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      });
+    }
+
+    function draw() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, boardSize, boardSize);
+      drawGrid();
+      const glow = ctx.createRadialGradient(boardSize * 0.2, boardSize * 0.18, 10, boardSize * 0.5, boardSize * 0.5, boardSize * 0.72);
+      glow.addColorStop(0, "rgba(98,214,255,0.06)");
+      glow.addColorStop(1, "rgba(7,16,29,0)");
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, boardSize, boardSize);
+      drawFood();
+      drawSnake();
+      if (!running && !gameOver && snake.length) {
+        ctx.fillStyle = "rgba(255,255,255,0.05)";
+        ctx.fillRect(0, 0, boardSize, boardSize);
+      }
+    }
+
+    function tick(timestamp) {
+      const dt = timestamp - lastTime;
+      lastTime = timestamp;
+
+      if (running && !gameOver) {
+        accumulator += dt;
+        while (accumulator >= delay) {
+          step();
+          accumulator -= delay;
+          if (gameOver) break;
+        }
+      } else {
+        accumulator = 0;
+      }
+
+      draw();
+      requestAnimationFrame(tick);
+    }
+
+    function setDirection(name) {
+      const next = DIRS[name];
+      if (!next) return;
+      const reverse = next.x === -dir.x && next.y === -dir.y;
+      if (!reverse) {
+        nextDir = next;
+      }
+      if (!running && !gameOver) {
+        beginGame();
+      }
+    }
+
+    function handleControl(name) {
+      if (name === "pause") {
+        toggleGame();
+        return;
+      }
+      if (name === "restart") {
+        resetGame();
+        beginGame();
+        return;
+      }
+      setDirection(name);
+    }
+
+    function handleKeydown(event) {
+      const key = event.key.toLowerCase();
+      if (key === "arrowup" || key === "w") {
+        event.preventDefault();
+        setDirection("up");
+      } else if (key === "arrowdown" || key === "s") {
+        event.preventDefault();
+        setDirection("down");
+      } else if (key === "arrowleft" || key === "a") {
+        event.preventDefault();
+        setDirection("left");
+      } else if (key === "arrowright" || key === "d") {
+        event.preventDefault();
+        setDirection("right");
+      } else if (key === " " || key === "spacebar") {
+        event.preventDefault();
+        toggleGame();
+      } else if (key === "enter") {
+        event.preventDefault();
+        if (gameOver) {
+          resetGame();
+          beginGame();
+        } else {
+          toggleGame();
+        }
+      }
+    }
+
+    let touchStart = null;
+    canvas.addEventListener("touchstart", (event) => {
+      const touch = event.changedTouches[0];
+      touchStart = { x: touch.clientX, y: touch.clientY };
+    }, { passive: true });
+
+    canvas.addEventListener("touchend", (event) => {
+      if (!touchStart) return;
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - touchStart.x;
+      const dy = touch.clientY - touchStart.y;
+      touchStart = null;
+
+      const threshold = 24;
+      if (Math.abs(dx) < threshold && Math.abs(dy) < threshold) {
+        if (!running && !gameOver) {
+          toggleGame();
+        }
+        return;
+      }
+
+      if (Math.abs(dx) > Math.abs(dy)) {
+        handleControl(dx > 0 ? "right" : "left");
+      } else {
+        handleControl(dy > 0 ? "down" : "up");
+      }
+    }, { passive: true });
+
+    window.addEventListener("resize", fitCanvas);
+    document.addEventListener("keydown", handleKeydown);
+
+    toggleBtn.addEventListener("click", toggleGame);
+    restartBtn.addEventListener("click", () => {
+      resetGame();
+      beginGame();
+    });
+    overlayRestartBtn.addEventListener("click", () => {
+      resetGame();
+      beginGame();
+    });
+    overlayResumeBtn.addEventListener("click", () => {
+      resetGame();
+      beginGame();
+    });
+    speedSlider.addEventListener("input", () => {
+      baseSpeed = Number(speedSlider.value);
+      updateSpeedLabel();
+      updateDelay();
+      setStateUI();
+    });
+
+    document.querySelectorAll("[data-dir]").forEach((button) => {
+      button.addEventListener("click", () => handleControl(button.dataset.dir));
+    });
+
+    updateSpeedLabel();
+    fitCanvas();
+    resetGame();
+    setStateUI();
+    requestAnimationFrame((t) => {
+      lastTime = t;
+      requestAnimationFrame(tick);
+    });
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>

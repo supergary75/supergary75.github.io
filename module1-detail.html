@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 1 - AI Training</title>
+  <style>
+    :root { --text:#1f2430; --muted:#5d6472; --accent:#cc5a2f; --accent-deep:#8d3010; --surface:rgba(255,250,242,.92); --line:rgba(31,36,48,.1); --shadow:0 24px 60px rgba(64,43,26,.12); }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; color:var(--text); background:radial-gradient(circle at top left, rgba(204,90,47,.16), transparent 34%), linear-gradient(180deg, #f7f1e7 0%, #f2ece3 100%); }
+    .page { width:min(1180px, calc(100% - 32px)); margin:0 auto; padding:32px 0 48px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; }
+    .toolbar-right { display:flex; align-items:center; gap:12px; }
+    .language-select,.back-link,.download-link { display:inline-flex; align-items:center; justify-content:center; padding:12px 18px; border-radius:14px; text-decoration:none; font-size:14px; font-weight:700; }
+    .language-select { border:1px solid rgba(31,36,48,.12); background:#fffdfa; color:var(--text); cursor:pointer; }
+    .back-link { color:var(--accent-deep); background:rgba(204,90,47,.1); }
+    .download-link { color:#fff; background:linear-gradient(135deg, var(--accent), var(--accent-deep)); }
+    .hero,.panel,.pdf-panel { padding:32px; border-radius:28px; background:var(--surface); border:1px solid rgba(255,255,255,.65); box-shadow:var(--shadow); margin-bottom:22px; }
+    .eyebrow { display:inline-flex; padding:8px 14px; border-radius:999px; background:rgba(204,90,47,.1); color:var(--accent-deep); font-size:14px; font-weight:700; }
+    h1 { margin:18px 0 12px; font-size:clamp(32px,4vw,52px); line-height:1.1; }
+    h2 { margin:0 0 14px; font-size:26px; }
+    h3 { margin:0 0 10px; font-size:22px; }
+    p { margin:0; color:var(--muted); line-height:1.8; font-size:16px; }
+    .subtitle { margin:0 0 18px; color:var(--accent-deep); font-size:18px; font-weight:700; }
+    .lead-box { margin-top:20px; padding:20px 22px; border-radius:22px; background:rgba(204,90,47,.08); border:1px solid rgba(204,90,47,.14); color:var(--accent-deep); font-size:16px; font-weight:700; line-height:1.8; }
+    .part-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+    .part-card { padding:24px; border-radius:24px; background:rgba(255,255,255,.78); border:1px solid var(--line); }
+    .part-tag { display:inline-flex; padding:8px 12px; border-radius:999px; background:rgba(204,90,47,.1); color:var(--accent-deep); font-size:13px; font-weight:800; margin-bottom:14px; }
+    .part-card ul { margin:0; padding-left:22px; color:var(--text); }
+    .part-card li { margin-bottom:9px; line-height:1.7; }
+    .resource-link { display:inline-flex; align-items:center; justify-content:center; margin-top:14px; padding:10px 16px; border-radius:999px; text-decoration:none; font-size:14px; font-weight:700; color:#fff; background:linear-gradient(135deg, var(--accent), var(--accent-deep)); box-shadow:0 12px 24px rgba(141,48,16,.2); }
+    .summary-box { margin-top:18px; padding:18px 20px; border-radius:20px; background:rgba(121,111,217,.08); border:1px solid rgba(121,111,217,.14); color:#5a4fa2; font-size:15px; font-weight:700; line-height:1.8; }
+    .diagram-shell { position:relative; padding:28px; border-radius:26px; background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(247,240,233,.82)); border:1px solid rgba(31,36,48,.08); overflow:hidden; }
+    .diagram-shell::before { content:""; position:absolute; inset:-80px auto auto -80px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle, rgba(204,90,47,.16), transparent 70%); }
+    .diagram-shell::after { content:""; position:absolute; inset:auto -90px -90px auto; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle, rgba(121,111,217,.14), transparent 72%); }
+    .diagram-title { position:relative; z-index:1; margin-bottom:18px; }
+    .diagram-title p { font-size:15px; }
+    .diagram-grid { position:relative; z-index:1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .diagram-step { position:relative; padding:20px; border-radius:22px; background:rgba(255,255,255,.88); border:1px solid rgba(31,36,48,.08); min-height:180px; box-shadow:0 14px 34px rgba(60,42,27,.07); }
+    .diagram-step:nth-child(1),.diagram-step:nth-child(4){transform:translateY(10px);}
+    .diagram-step:nth-child(3),.diagram-step:nth-child(6){transform:translateY(10px);}
+    .diagram-step strong { display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:14px; background:linear-gradient(135deg,var(--accent),var(--accent-deep)); color:#fff; font-size:16px; margin-bottom:12px; }
+    .diagram-step h3 { font-size:20px; margin-bottom:10px; }
+    .diagram-step p { font-size:15px; line-height:1.75; }
+    .diagram-footer { position:relative; z-index:1; margin-top:22px; padding:18px 20px; border-radius:20px; background:rgba(90,79,162,.08); border:1px solid rgba(90,79,162,.12); color:#5a4fa2; font-size:15px; font-weight:700; line-height:1.8; }
+    .pdf-panel { overflow:hidden; }
+    .pdf-head { display:flex; justify-content:space-between; align-items:center; gap:16px; padding-bottom:18px; border-bottom:1px solid var(--line); margin-bottom:18px; }
+    .pdf-head h2 { margin:0; }
+    .pdf-head p { margin-top:6px; font-size:14px; }
+    .pdf-wrap { height:min(78vh, 1100px); background:#d8d3cc; border-radius:20px; overflow:hidden; }
+    .pdf-wrap iframe { width:100%; height:100%; border:0; background:#fff; }
+    @media (max-width:900px) { .topbar,.toolbar-right,.pdf-head { flex-direction:column; align-items:stretch; } .hero,.panel,.pdf-panel { padding:24px 20px; } .part-grid,.diagram-grid { grid-template-columns:1fr; } .diagram-step,.diagram-step:nth-child(1),.diagram-step:nth-child(3),.diagram-step:nth-child(4),.diagram-step:nth-child(6){transform:none;} .pdf-wrap { height:72vh; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back-link" id="backLink" href="index.html" data-i18n="backLink">返回首页</a>
+      <div class="toolbar-right">
+        <select class="language-select" id="languageSelect" aria-label="Language selector"><option value="zh">中文</option><option value="en">English</option></select>
+        <a class="download-link" href="assets/pdf/module-1-ai-camera.pdf" download data-i18n="downloadPdf">下载 PDF</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">模块 01</div>
+      <h1 data-i18n="title">AI 工具基础培训</h1>
+      <p class="subtitle" data-i18n="subtitle">围绕 AI Camera 基础使用、AI 辅助编程与年度关键 insight 展开的培训模块</p>
+      <p data-i18n="description">这个模块以培训方设定的主题为基础，聚焦两个适合培训落地的内容：第一部分讲 AI Camera 的简单介绍和基础使用培训，第二部分讲 AI 工具如何用于 MakeX 机器人的辅助编程。同时，这一模块也保留今年最值得强调的 insight：AI Camera 和 AI 辅助工具的全面使用，正在成为更重要的学习与开发方式。</p>
+      <div class="lead-box" data-i18n="leadBox">模块主旨：帮助学员先理解 AI Camera 是什么、怎么用，再进一步理解 AI 工具如何在 MakeX 机器人的编程、调试和教学中发挥辅助作用；而今年的核心 insight，则是推动 AI Camera 和 AI 辅助工具从单点尝试走向全面使用。</div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="structureTitle">模块结构</h2>
+      <div class="part-grid">
+        <article class="part-card">
+          <div class="part-tag" data-i18n="part1Tag">Part 1</div>
+          <h3 data-i18n="part1Title">AI Camera 的简单介绍和基础使用培训</h3>
+          <p data-i18n="part1Desc">这一部分的目标是让学员建立对 AI Camera 的基础认知，并能够完成最基本的连接、配置和功能调用。</p>
+          <ul>
+            <li data-i18n="part1a">AI Camera 的基本功能与适用场景</li>
+            <li data-i18n="part1b">硬件连接、基础配置和常见识别功能</li>
+            <li data-i18n="part1c">从“知道功能”走向“能完成基础使用”</li>
+            <li data-i18n="part1d">适合培训现场演示的入门案例</li>
+          </ul>
+        </article>
+        <article class="part-card">
+          <div class="part-tag" data-i18n="part2Tag">Part 2</div>
+          <h3 data-i18n="part2Title">AI 工具可以用于 MakeX 机器人的辅助编程</h3>
+          <p data-i18n="part2Desc">这一部分的目标是让学员理解 AI 工具并不替代基础编程能力，而是帮助更快地整理逻辑、生成代码思路、辅助调试和提升学习效率。</p>
+          <ul>
+            <li data-i18n="part2a">用 AI 工具辅助理解任务逻辑和程序流程</li>
+            <li data-i18n="part2b">用 AI 工具辅助生成、修改和解释代码</li>
+            <li data-i18n="part2c">用 AI 工具辅助调试、排错和训练教学</li>
+            <li data-i18n="part2d">建立“基础编程能力 + AI 辅助”结合的认知</li>
+          </ul>
+        </article>
+      </div>
+      <div class="summary-box" data-i18n="summaryBox">结论：AI 的价值不在于替代学生编程，而在于帮助学生更高效地理解、编写、修改和调试 MakeX 机器人程序。今年最重要的 insight 之一，就是推动 AI Camera 和 AI 辅助工具在学习、开发和训练中的全面使用。</div>
+    </section>
+
+    <section class="panel">
+      <div class="diagram-shell">
+        <div class="diagram-title">
+          <h2 data-i18n="diagramTitle">AI 辅助编程闭环逻辑图</h2>
+          <p data-i18n="diagramDesc">重点不是“让 AI 直接写代码”，而是让队员学会分析问题、提出高质量需求、验证结果，并根据测试继续迭代优化。</p>
+        </div>
+        <div class="diagram-grid">
+          <article class="diagram-step"><strong>01</strong><h3 data-i18n="d1t">分析问题</h3><p data-i18n="d1b">先明确任务目标、输入输出、限制条件和希望机器人完成的具体动作。</p></article>
+          <article class="diagram-step"><strong>02</strong><h3 data-i18n="d2t">有逻辑地提出需求</h3><p data-i18n="d2b">把需求结构化告诉 AI，包括功能目标、程序流程、边界条件和预期结果。</p></article>
+          <article class="diagram-step"><strong>03</strong><h3 data-i18n="d3t">生成初版代码</h3><p data-i18n="d3b">让 AI 给出第一版程序、逻辑框架或局部代码实现，作为起点而不是终点。</p></article>
+          <article class="diagram-step"><strong>04</strong><h3 data-i18n="d4t">测试生成结果</h3><p data-i18n="d4b">把生成结果放进真实调试环境中运行，观察是否能完成任务、是否稳定可用。</p></article>
+          <article class="diagram-step"><strong>05</strong><h3 data-i18n="d5t">记录问题并定位原因</h3><p data-i18n="d5b">把错误、偏差、不稳定点和逻辑漏洞整理出来，不只说“有问题”，而是说清“问题在哪里”。</p></article>
+          <article class="diagram-step"><strong>06</strong><h3 data-i18n="d6t">重新描述并继续优化</h3><p data-i18n="d6b">把测试中发现的问题反馈给 AI，再修改、再测试，形成可持续迭代的闭环。</p></article>
+        </div>
+        <div class="diagram-footer" data-i18n="diagramFooter">训练重点：让队员学会“分析任务 → 提出需求 → 测试验证 → 反馈修改”的完整思维链，而不是只会把一句模糊的话丢给 AI。</div>
+      </div>
+    </section>
+
+    <section class="pdf-panel">
+      <div class="pdf-head">
+        <div>
+          <h2 data-i18n="pdfTitle">PPT PDF 预览</h2>
+          <p data-i18n="pdfDescription">这里内嵌了由 PPT 转换得到的 PDF，方便在页面中直接查看与下载。</p>
+        </div>
+        <a class="download-link" href="assets/pdf/module-1-ai-camera.pdf" download data-i18n="downloadCurrentPdf">下载当前 PDF</a>
+      </div>
+      <div class="pdf-wrap"><iframe src="assets/pdf/module-1-ai-camera.pdf" title="Module 1 PDF Preview"></iframe></div>
+    </section>
+  </main>
+
+  <script>
+    const translations = {
+      zh: {
+        pageTitle: "第一模块 - AI 基础培训",
+        backLink: "返回首页",
+        eyebrow: "模块 01",
+        title: "AI 工具基础培训",
+        subtitle: "围绕 AI Camera 基础使用、AI 辅助编程与年度关键 insight 展开的培训模块",
+        description: "这个模块以培训方设定的主题为基础，聚焦两个适合培训落地的内容：第一部分讲 AI Camera 的简单介绍和基础使用培训，第二部分讲 AI 工具如何用于 MakeX 机器人的辅助编程。同时，这一模块也保留今年最值得强调的 insight：AI Camera 和 AI 辅助工具的全面使用，正在成为更重要的学习与开发方式。",
+        leadBox: "模块主旨：帮助学员先理解 AI Camera 是什么、怎么用，再进一步理解 AI 工具如何在 MakeX 机器人的编程、调试和教学中发挥辅助作用；而今年的核心 insight，则是推动 AI Camera 和 AI 辅助工具从单点尝试走向全面使用。",
+        structureTitle: "模块结构",
+        part1Tag: "Part 1",
+        part1Title: "AI Camera 的简单介绍和基础使用培训",
+        part1Desc: "这一部分的目标是让学员建立对 AI Camera 的基础认知，并能够完成最基本的连接、配置和功能调用。",
+        part1a: "AI Camera 的基本功能与适用场景",
+        part1b: "硬件连接、基础配置和常见识别功能",
+        part1c: "从“知道功能”走向“能完成基础使用”",
+        part1d: "适合培训现场演示的入门案例",
+        part2Tag: "Part 2",
+        part2Title: "AI 工具可以用于 MakeX 机器人的辅助编程",
+        part2Desc: "这一部分的目标是让学员理解 AI 工具并不替代基础编程能力，而是帮助更快地整理逻辑、生成代码思路、辅助调试和提升学习效率。",
+        part2a: "用 AI 工具辅助理解任务逻辑和程序流程",
+        part2b: "用 AI 工具辅助生成、修改和解释代码",
+        part2c: "用 AI 工具辅助调试、排错和训练教学",
+        part2d: "建立“基础编程能力 + AI 辅助”结合的认知",
+        summaryBox: "结论：AI 的价值不在于替代学生编程，而在于帮助学生更高效地理解、编写、修改和调试 MakeX 机器人程序。今年最重要的 insight 之一，就是推动 AI Camera 和 AI 辅助工具在学习、开发和训练中的全面使用。",
+        diagramTitle: "AI 辅助编程闭环逻辑图",
+        diagramDesc: "重点不是“让 AI 直接写代码”，而是让队员学会分析问题、提出高质量 Request、验证结果，并根据测试继续迭代优化。",
+        d1t: "分析问题",
+        d1b: "先明确任务目标、输入输出、限制条件和希望机器人完成的具体动作。",
+        d2t: "有逻辑地提出 Request",
+        d2b: "把 Request 结构化告诉 AI，包括功能目标、程序流程、边界条件和预期结果。",
+        d3t: "生成初版代码",
+        d3b: "让 AI 给出第一版程序、逻辑框架或局部代码实现，作为起点而不是终点。",
+        d4t: "测试生成结果",
+        d4b: "把生成结果放进真实调试环境中运行，观察是否能完成任务、是否稳定可用。",
+        d5t: "记录问题并定位原因",
+        d5b: "把错误、偏差、不稳定点和逻辑漏洞整理出来，不只说“有问题”，而是说清“问题在哪里”。",
+        d6t: "重新描述并继续优化",
+        d6b: "把测试中发现的问题反馈给 AI，再修改、再测试，形成可持续迭代的闭环。",
+        diagramFooter: "训练重点：让队员学会“分析任务 → 提出 Request → 测试验证 → 反馈修改”的完整思维链，而不是只会把一句模糊的话丢给 AI。",
+        pdfTitle: "PPT PDF 预览",
+        pdfDescription: "这里内嵌了由 PPT 转换得到的 PDF，方便在页面中直接查看与下载。",
+        downloadPdf: "下载 PDF",
+        downloadCurrentPdf: "下载当前 PDF"
+      },
+      en: {
+        pageTitle: "Module 1 - AI Basics Training",
+        backLink: "Back to Home",
+        eyebrow: "Module 01",
+        title: "AI Tools Basic Training",
+        subtitle: "A training module built around basic AI Camera use, AI-assisted programming, and this year's key insight",
+        description: "This module follows the organizer-defined training theme while focusing on two practical training topics: Part 1 introduces AI Camera and its basic use, and Part 2 explains how AI tools can support programming for MakeX robots. At the same time, it keeps this year's key insight visible: the broader use of AI Camera and AI support tools is becoming a more important way to learn and develop.",
+        leadBox: "Module purpose: help learners first understand what AI Camera is and how to use it, then understand how AI tools can support programming, debugging, and teaching for MakeX robots. The key insight for this year is to move from isolated AI Camera and AI tool trials toward broader, more comprehensive use.",
+        structureTitle: "Module Structure",
+        part1Tag: "Part 1",
+        part1Title: "Simple Introduction to AI Camera and Basic Use Training",
+        part1Desc: "The goal of this part is to build basic AI Camera awareness and help learners complete the most basic connection, configuration, and feature calls.",
+        part1a: "Basic AI Camera functions and suitable use cases",
+        part1b: "Hardware connection, basic setup, and common recognition features",
+        part1c: "Move from 'knowing the feature' to 'being able to use it'",
+        part1d: "Beginner-friendly demo cases for live training",
+        part2Tag: "Part 2",
+        part2Title: "AI Tools Can Support Programming for MakeX Robots",
+        part2Desc: "The goal of this part is to show that AI tools do not replace core programming ability, but help organize logic faster, generate code ideas, support debugging, and improve learning efficiency.",
+        part2a: "Use AI tools to understand task logic and program flow",
+        part2b: "Use AI tools to generate, modify, and explain code",
+        part2c: "Use AI tools to assist debugging, troubleshooting, and training",
+        part2d: "Build the idea of 'basic programming ability + AI assistance'",
+        summaryBox: "Conclusion: the value of AI is not to replace student programming, but to help students understand, write, modify, and debug MakeX robot programs more efficiently. One of this year's most important insights is the broader use of AI Camera and AI support tools across learning, development, and training.",
+        diagramTitle: "Closed-Loop Logic of AI-Assisted Programming",
+        diagramDesc: "The goal is not to let AI write code blindly, but to help students learn how to analyze problems, describe high-quality Requests, validate results, and iterate based on testing.",
+        d1t: "Analyze the Problem",
+        d1b: "Clarify the task goal, inputs and outputs, constraints, and the exact robot action that is required.",
+        d2t: "Describe the Request Logically",
+        d2b: "Tell the AI the Request in a structured way, including function goals, program flow, boundary conditions, and expected outcomes.",
+        d3t: "Generate the First Code Version",
+        d3b: "Let the AI produce the first version of the program, the logic framework, or a partial implementation as a starting point.",
+        d4t: "Test the Generated Result",
+        d4b: "Run the generated result in a real debugging environment and check whether it completes the task and remains stable.",
+        d5t: "Record Problems and Locate Causes",
+        d5b: "Organize the errors, deviations, instability points, and logic flaws. Do not just say 'it has a problem' - say exactly what the problem is.",
+        d6t: "Redescribe and Keep Optimizing",
+        d6b: "Feed the discovered problems back to the AI, revise again, test again, and build a sustainable improvement loop.",
+        diagramFooter: "Training focus: help students build the full thinking chain of 'analyze the task -> describe the Request -> test and validate -> feed back and revise' instead of only throwing a vague sentence at AI.",
+        pdfTitle: "PPT PDF Preview",
+        pdfDescription: "This page embeds the PDF converted from your PPT so it can be viewed and downloaded directly.",
+        downloadPdf: "Download PDF",
+        downloadCurrentPdf: "Download Current PDF"
+      }
+    };
+
+    function buildBilingualContent() {
+      const escapeHtml = (value) => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+      const bilingual = {};
+      Object.keys(translations.zh).forEach((key) => {
+        const zhValue = translations.zh[key];
+        const enValue = translations.en[key];
+        if (key === "pageTitle") {
+          bilingual[key] = `${escapeHtml(zhValue)} / ${escapeHtml(enValue)}`;
+          return;
+        }
+        if (typeof zhValue === "string" && typeof enValue === "string") {
+          bilingual[key] = key === "title"
+            ? `<span style="display:block;color:var(--muted);font-size:.62em;font-weight:500;opacity:.72;line-height:1.08">${escapeHtml(zhValue)}</span><span style="display:block;color:var(--text);font-size:1em;font-weight:900;line-height:1.05">${escapeHtml(enValue)}</span>`
+            : `<span style="color:var(--muted);font-weight:500;opacity:.65">${escapeHtml(zhValue)}</span><span style="opacity:.3"> / </span><span style="color:var(--text);font-weight:900">${escapeHtml(enValue)}</span>`;
+        } else {
+          bilingual[key] = escapeHtml(enValue ?? zhValue);
+        }
+      });
+      return bilingual;
+    }
+
+    const languageSelect = document.getElementById("languageSelect");
+    const backLink = document.getElementById("backLink");
+
+    function applyLanguage(lang) {
+      const safeLang = ["zh", "en"].includes(lang) ? lang : "zh";
+      const content = safeLang === "en" ? buildBilingualContent() : translations.zh;
+      document.documentElement.lang = safeLang === "zh" ? "zh-CN" : "en";
+      document.title = content.pageTitle;
+      languageSelect.value = safeLang;
+      try {
+        localStorage.setItem("makexTrainingLang", safeLang);
+      } catch (error) {
+        // Ignore storage errors in file:// or restricted contexts.
+      }
+      backLink.href = `index.html?lang=${safeLang}`;
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (content[key]) {
+          node.innerHTML = content[key];
+        }
+      });
+    }
+
+    languageSelect.addEventListener("change", (event) => applyLanguage(event.target.value));
+    const params = new URLSearchParams(window.location.search);
+    applyLanguage(params.get("lang") || localStorage.getItem("makexTrainingLang") || "zh");
+  </script>
+  <script defer src="assets/no-copy.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
