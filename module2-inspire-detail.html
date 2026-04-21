@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -32,22 +32,23 @@
     .list li { margin-bottom:10px; line-height:1.7; }
     @media (max-width:900px) { .topbar,.toolbar-right{flex-direction:column;align-items:stretch;} .hero,.panel{padding:24px 20px;} .summary-grid{grid-template-columns:1fr;} }
   </style>
+  <script src="assets/access-gate.js"></script>
 </head>
 <body>
   <main class="page">
     <div class="topbar">
-      <a class="back-link" id="backLink" href="module2-competition-planning-v2.html" data-i18n="backLink">返回比赛规划</a>
+      <a class="back-link" id="backLink" href="module2-competition-planning-v2.html" data-i18n="backLink">杩斿洖姣旇禌瑙勫垝</a>
       <div class="toolbar-right">
         <select class="language-select" id="languageSelect" aria-label="Language selector">
-          <option value="zh">中文</option><option value="en">English</option>
+          <option value="zh">涓枃</option><option value="en">English</option>
         </select>
       </div>
     </div>
     <section class="hero">
       <div class="eyebrow" data-i18n="eyebrow">Inspire Detail</div>
-      <h1 data-i18n="title">MakeX Inspire 次级页面</h1>
-      <p class="subtitle" data-i18n="subtitle">用于展示 Inspire 赛项的规划重点</p>
-      <p data-i18n="description">这个页面可用于补充 Inspire 的任务理解、基础得分逻辑、课堂组织方式和阶段安排内容。</p>
+      <h1 data-i18n="title">MakeX Inspire 娆＄骇椤甸潰</h1>
+      <p class="subtitle" data-i18n="subtitle">鐢ㄤ簬灞曠ず Inspire 璧涢」鐨勮鍒掗噸鐐?/p>
+      <p data-i18n="description">杩欎釜椤甸潰鍙敤浜庤ˉ鍏?Inspire 鐨勪换鍔＄悊瑙ｃ€佸熀纭€寰楀垎閫昏緫銆佽鍫傜粍缁囨柟寮忓拰闃舵瀹夋帓鍐呭銆?/p>
     </section>
     <section class="panel">
       <div class="image-wrap">
@@ -58,56 +59,56 @@
       </div>
     </section>
     <section class="panel">
-      <h2 data-i18n="summaryTitle">Inspire 规则摘要</h2>
+      <h2 data-i18n="summaryTitle">Inspire 瑙勫垯鎽樿</h2>
       <div class="summary-grid">
         <article class="summary-card">
-          <div class="summary-tag" data-i18n="sum1Tag">限制</div>
-          <h3 data-i18n="sum1Title">机器人尺寸与重量</h3>
+          <div class="summary-tag" data-i18n="sum1Tag">闄愬埗</div>
+          <h3 data-i18n="sum1Title">鏈哄櫒浜哄昂瀵镐笌閲嶉噺</h3>
           <ul>
-            <li data-i18n="sum1a">最大展开尺寸为 250 mm × 250 mm × 300 mm，检录按最大展开状态测量。</li>
-            <li data-i18n="sum1b">机器人最大净重量不得超过 2 kg。</li>
+            <li data-i18n="sum1a">鏈€澶у睍寮€灏哄涓?250 mm 脳 250 mm 脳 300 mm锛屾褰曟寜鏈€澶у睍寮€鐘舵€佹祴閲忋€?/li>
+            <li data-i18n="sum1b">鏈哄櫒浜烘渶澶у噣閲嶉噺涓嶅緱瓒呰繃 2 kg銆?/li>
           </ul>
         </article>
         <article class="summary-card">
-          <div class="summary-tag" data-i18n="sum2Tag">机械</div>
-          <h3 data-i18n="sum2Title">轮子与零件限制</h3>
+          <div class="summary-tag" data-i18n="sum2Tag">鏈烘</div>
+          <h3 data-i18n="sum2Title">杞瓙涓庨浂浠堕檺鍒?/h3>
           <ul>
-            <li data-i18n="sum2a">最多 2 个动力轮 + 1 个辅助轮，动力轮不能使用全向轮。</li>
-            <li data-i18n="sum2b">车轮直径不超过 70 mm。</li>
-            <li data-i18n="sum2c">自制零件单个不超过 5 × 5 × 5 cm，总数不超过 15 个。</li>
+            <li data-i18n="sum2a">鏈€澶?2 涓姩鍔涜疆 + 1 涓緟鍔╄疆锛屽姩鍔涜疆涓嶈兘浣跨敤鍏ㄥ悜杞€?/li>
+            <li data-i18n="sum2b">杞﹁疆鐩村緞涓嶈秴杩?70 mm銆?/li>
+            <li data-i18n="sum2c">鑷埗闆朵欢鍗曚釜涓嶈秴杩?5 脳 5 脳 5 cm锛屾€绘暟涓嶈秴杩?15 涓€?/li>
           </ul>
         </article>
         <article class="summary-card">
-          <div class="summary-tag" data-i18n="sum3Tag">动力</div>
-          <h3 data-i18n="sum3Title">电机与舵机数量</h3>
+          <div class="summary-tag" data-i18n="sum3Tag">鍔ㄥ姏</div>
+          <h3 data-i18n="sum3Title">鐢垫満涓庤埖鏈烘暟閲?/h3>
           <ul>
-            <li data-i18n="sum3a">电机和舵机总数量最多 5 个。</li>
-            <li data-i18n="sum3b">只能使用规则表允许的电机和舵机。</li>
-            <li data-i18n="sum3c">禁止更改电机或舵机内部机械结构和电气布局。</li>
+            <li data-i18n="sum3a">鐢垫満鍜岃埖鏈烘€绘暟閲忔渶澶?5 涓€?/li>
+            <li data-i18n="sum3b">鍙兘浣跨敤瑙勫垯琛ㄥ厑璁哥殑鐢垫満鍜岃埖鏈恒€?/li>
+            <li data-i18n="sum3c">绂佹鏇存敼鐢垫満鎴栬埖鏈哄唴閮ㄦ満姊扮粨鏋勫拰鐢垫皵甯冨眬銆?/li>
           </ul>
         </article>
         <article class="summary-card">
-          <div class="summary-tag" data-i18n="sum4Tag">得分</div>
-          <h3 data-i18n="sum4Title">加密环与计分方式</h3>
+          <div class="summary-tag" data-i18n="sum4Tag">寰楀垎</div>
+          <h3 data-i18n="sum4Title">鍔犲瘑鐜笌璁″垎鏂瑰紡</h3>
           <ul>
-            <li data-i18n="sum4a">正式得分道具只有“加密环”，150 秒单阶段统一计分。</li>
-            <li data-i18n="sum4b">10 分 / 个：转运到对应颜色信标塔所在投递区。</li>
-            <li data-i18n="sum4c">50 分 / 个：完整套在对应颜色信标塔上。</li>
+            <li data-i18n="sum4a">姝ｅ紡寰楀垎閬撳叿鍙湁鈥滃姞瀵嗙幆鈥濓紝150 绉掑崟闃舵缁熶竴璁″垎銆?/li>
+            <li data-i18n="sum4b">10 鍒?/ 涓細杞繍鍒板搴旈鑹蹭俊鏍囧鎵€鍦ㄦ姇閫掑尯銆?/li>
+            <li data-i18n="sum4c">50 鍒?/ 涓細瀹屾暣濂楀湪瀵瑰簲棰滆壊淇℃爣濉斾笂銆?/li>
           </ul>
         </article>
       </div>
     </section>
     <section class="panel">
-      <p data-i18n="panelIntro">建议继续加入以下内容：</p>
+      <p data-i18n="panelIntro">寤鸿缁х画鍔犲叆浠ヤ笅鍐呭锛?/p>
       <ul class="list">
-        <li data-i18n="item1">任务目标与教学切入点</li>
-        <li data-i18n="item2">基础得分路径与节奏安排</li>
-        <li data-i18n="item3">课堂组织与演示步骤</li>
+        <li data-i18n="item1">浠诲姟鐩爣涓庢暀瀛﹀垏鍏ョ偣</li>
+        <li data-i18n="item2">鍩虹寰楀垎璺緞涓庤妭濂忓畨鎺?/li>
+        <li data-i18n="item3">璇惧爞缁勭粐涓庢紨绀烘楠?/li>
       </ul>
     </section>
   </main>
   <script>
-    const translations={zh:{pageTitle:"Inspire 次级页面",backLink:"返回比赛规划",eyebrow:"Inspire Detail",title:"MakeX Inspire 次级页面",subtitle:"用于展示 Inspire 赛项的规划重点",description:"这个页面可用于补充 Inspire 的任务理解、基础得分逻辑、课堂组织方式和阶段安排内容。",summaryTitle:"Inspire 规则摘要",sum1Tag:"限制",sum1Title:"机器人尺寸与重量",sum1a:"最大展开尺寸为 250 mm × 250 mm × 300 mm，检录按最大展开状态测量。",sum1b:"机器人最大净重量不得超过 2 kg。",sum2Tag:"机械",sum2Title:"轮子与零件限制",sum2a:"最多 2 个动力轮 + 1 个辅助轮，动力轮不能使用全向轮。",sum2b:"车轮直径不超过 70 mm。",sum2c:"自制零件单个不超过 5 × 5 × 5 cm，总数不超过 15 个。",sum3Tag:"动力",sum3Title:"电机与舵机数量",sum3a:"电机和舵机总数量最多 5 个。",sum3b:"只能使用规则表允许的电机和舵机。",sum3c:"禁止更改电机或舵机内部机械结构和电气布局。",sum4Tag:"得分",sum4Title:"加密环与计分方式",sum4a:"正式得分道具只有“加密环”，150 秒单阶段统一计分。",sum4b:"10 分 / 个：转运到对应颜色信标塔所在投递区。",sum4c:"50 分 / 个：完整套在对应颜色信标塔上。",panelIntro:"建议继续加入以下内容：",item1:"任务目标与教学切入点",item2:"基础得分路径与节奏安排",item3:"课堂组织与演示步骤"},en:{pageTitle:"Inspire Detail",backLink:"Back to Competition Planning",eyebrow:"Inspire Detail",title:"MakeX Inspire Detail Page",subtitle:"Used to present planning priorities for Inspire",description:"This page can be used to expand Inspire task understanding, basic scoring logic, classroom organization, and phase planning.",summaryTitle:"Inspire Rule Summary",sum1Tag:"Limits",sum1Title:"Robot Size and Weight",sum1a:"Maximum expanded size is 250 mm × 250 mm × 300 mm, measured in the max expanded state.",sum1b:"Maximum net robot weight is 2 kg.",sum2Tag:"Mechanics",sum2Title:"Wheel and Part Limits",sum2a:"Up to 2 drive wheels + 1 support wheel; no omni wheels for drive wheels.",sum2b:"Wheel diameter must be 70 mm or less.",sum2c:"Each handmade part must be no larger than 5 × 5 × 5 cm; total handmade parts must not exceed 15.",sum3Tag:"Power",sum3Title:"Motor and Servo Count",sum3a:"The total number of motors and servos must not exceed 5.",sum3b:"Only motors and servos allowed by the rules table may be used.",sum3c:"Do not modify internal mechanical structures or electrical layouts of motors or servos.",sum4Tag:"Scoring",sum4Title:"Encrypted Rings and Scoring",sum4a:"The only official scoring object is the encrypted ring, and scoring is unified across the 150-second match.",sum4b:"10 pts each: move the ring into the delivery zone of the matching-color beacon tower.",sum4c:"50 pts each: fully place the ring onto the matching-color beacon tower.",panelIntro:"Suggested content to continue adding:",item1:"Task goals and teaching entry points",item2:"Basic scoring paths and pacing",item3:"Classroom organization and demo steps"},ko:{pageTitle:"Inspire 세부 페이지",backLink:"경기 계획으로 돌아가기",eyebrow:"Inspire Detail",title:"MakeX Inspire 세부 페이지",subtitle:"Inspire 종목의 기획 핵심을 보여주는 페이지",description:"이 페이지는 Inspire 종목의 과제 이해, 기초 득점 로직, 수업 운영 방식, 단계별 배치 내용을 보완하는 데 사용할 수 있습니다.",panelIntro:"다음 내용을 계속 추가할 수 있습니다:",item1:"과제 목표와 수업 도입 포인트",item2:"기초 득점 경로와 진행 리듬",item3:"수업 운영과 시연 단계"},th:{pageTitle:"หน้ารายละเอียด Inspire",backLink:"กลับไปหน้าวางแผนการแข่งขัน",eyebrow:"Inspire Detail",title:"หน้ารายละเอียด MakeX Inspire",subtitle:"ใช้สำหรับแสดงประเด็นสำคัญของการวางแผนในรายการ Inspire",description:"หน้านี้ใช้สำหรับเพิ่มเติมความเข้าใจภารกิจของ Inspire แนวคิดการทำคะแนนพื้นฐาน การจัดการในชั้นเรียน และการวางแผนตามช่วงเวลา",panelIntro:"เนื้อหาที่แนะนำให้เพิ่มต่อ:",item1:"เป้าหมายภารกิจและจุดเริ่มต้นการสอน",item2:"เส้นทางทำคะแนนพื้นฐานและจังหวะการดำเนินงาน",item3:"การจัดชั้นเรียนและขั้นตอนการสาธิต"},ms:{pageTitle:"Halaman Perincian Inspire",backLink:"Kembali ke Perancangan Pertandingan",eyebrow:"Inspire Detail",title:"Halaman Perincian MakeX Inspire",subtitle:"Digunakan untuk menunjukkan fokus perancangan bagi Inspire",description:"Halaman ini boleh digunakan untuk mengembangkan pemahaman tugasan Inspire, logik skor asas, organisasi kelas, dan perancangan fasa.",panelIntro:"Cadangan kandungan untuk ditambah:",item1:"Matlamat tugasan dan titik masuk pengajaran",item2:"Laluan skor asas dan rentak pelaksanaan",item3:"Organisasi kelas dan langkah demonstrasi"}};
+    const translations={zh:{pageTitle:"Inspire 娆＄骇椤甸潰",backLink:"杩斿洖姣旇禌瑙勫垝",eyebrow:"Inspire Detail",title:"MakeX Inspire 娆＄骇椤甸潰",subtitle:"鐢ㄤ簬灞曠ず Inspire 璧涢」鐨勮鍒掗噸鐐?,description:"杩欎釜椤甸潰鍙敤浜庤ˉ鍏?Inspire 鐨勪换鍔＄悊瑙ｃ€佸熀纭€寰楀垎閫昏緫銆佽鍫傜粍缁囨柟寮忓拰闃舵瀹夋帓鍐呭銆?,summaryTitle:"Inspire 瑙勫垯鎽樿",sum1Tag:"闄愬埗",sum1Title:"鏈哄櫒浜哄昂瀵镐笌閲嶉噺",sum1a:"鏈€澶у睍寮€灏哄涓?250 mm 脳 250 mm 脳 300 mm锛屾褰曟寜鏈€澶у睍寮€鐘舵€佹祴閲忋€?,sum1b:"鏈哄櫒浜烘渶澶у噣閲嶉噺涓嶅緱瓒呰繃 2 kg銆?,sum2Tag:"鏈烘",sum2Title:"杞瓙涓庨浂浠堕檺鍒?,sum2a:"鏈€澶?2 涓姩鍔涜疆 + 1 涓緟鍔╄疆锛屽姩鍔涜疆涓嶈兘浣跨敤鍏ㄥ悜杞€?,sum2b:"杞﹁疆鐩村緞涓嶈秴杩?70 mm銆?,sum2c:"鑷埗闆朵欢鍗曚釜涓嶈秴杩?5 脳 5 脳 5 cm锛屾€绘暟涓嶈秴杩?15 涓€?,sum3Tag:"鍔ㄥ姏",sum3Title:"鐢垫満涓庤埖鏈烘暟閲?,sum3a:"鐢垫満鍜岃埖鏈烘€绘暟閲忔渶澶?5 涓€?,sum3b:"鍙兘浣跨敤瑙勫垯琛ㄥ厑璁哥殑鐢垫満鍜岃埖鏈恒€?,sum3c:"绂佹鏇存敼鐢垫満鎴栬埖鏈哄唴閮ㄦ満姊扮粨鏋勫拰鐢垫皵甯冨眬銆?,sum4Tag:"寰楀垎",sum4Title:"鍔犲瘑鐜笌璁″垎鏂瑰紡",sum4a:"姝ｅ紡寰楀垎閬撳叿鍙湁鈥滃姞瀵嗙幆鈥濓紝150 绉掑崟闃舵缁熶竴璁″垎銆?,sum4b:"10 鍒?/ 涓細杞繍鍒板搴旈鑹蹭俊鏍囧鎵€鍦ㄦ姇閫掑尯銆?,sum4c:"50 鍒?/ 涓細瀹屾暣濂楀湪瀵瑰簲棰滆壊淇℃爣濉斾笂銆?,panelIntro:"寤鸿缁х画鍔犲叆浠ヤ笅鍐呭锛?,item1:"浠诲姟鐩爣涓庢暀瀛﹀垏鍏ョ偣",item2:"鍩虹寰楀垎璺緞涓庤妭濂忓畨鎺?,item3:"璇惧爞缁勭粐涓庢紨绀烘楠?},en:{pageTitle:"Inspire Detail",backLink:"Back to Competition Planning",eyebrow:"Inspire Detail",title:"MakeX Inspire Detail Page",subtitle:"Used to present planning priorities for Inspire",description:"This page can be used to expand Inspire task understanding, basic scoring logic, classroom organization, and phase planning.",summaryTitle:"Inspire Rule Summary",sum1Tag:"Limits",sum1Title:"Robot Size and Weight",sum1a:"Maximum expanded size is 250 mm 脳 250 mm 脳 300 mm, measured in the max expanded state.",sum1b:"Maximum net robot weight is 2 kg.",sum2Tag:"Mechanics",sum2Title:"Wheel and Part Limits",sum2a:"Up to 2 drive wheels + 1 support wheel; no omni wheels for drive wheels.",sum2b:"Wheel diameter must be 70 mm or less.",sum2c:"Each handmade part must be no larger than 5 脳 5 脳 5 cm; total handmade parts must not exceed 15.",sum3Tag:"Power",sum3Title:"Motor and Servo Count",sum3a:"The total number of motors and servos must not exceed 5.",sum3b:"Only motors and servos allowed by the rules table may be used.",sum3c:"Do not modify internal mechanical structures or electrical layouts of motors or servos.",sum4Tag:"Scoring",sum4Title:"Encrypted Rings and Scoring",sum4a:"The only official scoring object is the encrypted ring, and scoring is unified across the 150-second match.",sum4b:"10 pts each: move the ring into the delivery zone of the matching-color beacon tower.",sum4c:"50 pts each: fully place the ring onto the matching-color beacon tower.",panelIntro:"Suggested content to continue adding:",item1:"Task goals and teaching entry points",item2:"Basic scoring paths and pacing",item3:"Classroom organization and demo steps"},ko:{pageTitle:"Inspire 靹鸽秬 韼橃澊歆€",backLink:"瓴疥赴 瓿勴殟鞙茧 霃岇晞臧€旮?,eyebrow:"Inspire Detail",title:"MakeX Inspire 靹鸽秬 韼橃澊歆€",subtitle:"Inspire 膦呺鞚?旮绊殟 頃奠嫭鞚?氤挫棳欤茧姅 韼橃澊歆€",description:"鞚?韼橃澊歆€電?Inspire 膦呺鞚?瓿检牅 鞚错暣, 旮办磮 霌濎爯 搿滌, 靾橃梾 鞖挫榿 氚╈嫕, 雼硠氤?氚办箻 雮挫毄鞚?氤挫檮頃橂姅 雿?靷毄頃?靾?鞛堨姷雼堧嫟.",panelIntro:"雼れ潓 雮挫毄鞚?瓿勳啀 於旉皜頃?靾?鞛堨姷雼堧嫟:",item1:"瓿检牅 氇╉憸鞕€ 靾橃梾 霃勳瀰 韽澑韸?,item2:"旮办磮 霌濎爯 瓴诫鞕€ 歆勴枆 毽摤",item3:"靾橃梾 鞖挫榿瓿?鞁滌棸 雼硠"},th:{pageTitle:"喔笝喙夃覆喔｀覆喔⑧弗喔班箑喔傅喔⑧笖 Inspire",backLink:"喔佮弗喔编笟喙勦笡喔笝喙夃覆喔о覆喔囙箒喔溹笝喔佮覆喔｀箒喔傕箞喔囙競喔编笝",eyebrow:"Inspire Detail",title:"喔笝喙夃覆喔｀覆喔⑧弗喔班箑喔傅喔⑧笖 MakeX Inspire",subtitle:"喙冟笂喙夃釜喔赤斧喔｀副喔氞箒喔笖喔囙笡喔｀赴喙€喔斷箛喔權釜喔赤竸喔编笉喔傕腑喔囙竵喔侧福喔о覆喔囙箒喔溹笝喙冟笝喔｀覆喔⑧竵喔侧福 Inspire",description:"喔笝喙夃覆喔權傅喙夃箖喔娻箟喔赋喔福喔编笟喙€喔炧复喙堗浮喙€喔曕复喔∴竸喔о覆喔∴箑喔傕箟喔侧箖喔堗笭喔侧福喔佮复喔堗競喔竾 Inspire 喙佮笝喔о竸喔脆笖喔佮覆喔｀笚喔赤竸喔班箒喔權笝喔炧阜喙夃笝喔愢覆喔?喔佮覆喔｀笀喔编笖喔佮覆喔｀箖喔權笂喔编箟喔權箑喔｀傅喔⑧笝 喙佮弗喔班竵喔侧福喔о覆喔囙箒喔溹笝喔曕覆喔∴笂喙堗抚喔囙箑喔о弗喔?,panelIntro:"喙€喔權阜喙夃腑喔覆喔椸傅喙堗箒喔權赴喔權赋喙冟斧喙夃箑喔炧复喙堗浮喔曕箞喔?",item1:"喙€喔涏箟喔侧斧喔∴覆喔⑧笭喔侧福喔佮复喔堗箒喔ム赴喔堗父喔斷箑喔｀复喙堗浮喔曕箟喔權竵喔侧福喔腑喔?,item2:"喙€喔箟喔權笚喔侧竾喔椸赋喔勦赴喙佮笝喔權笧喔粪箟喔權笎喔侧笝喙佮弗喔班笀喔编竾喔抚喔班竵喔侧福喔斷赋喙€喔權复喔權竾喔侧笝",item3:"喔佮覆喔｀笀喔编笖喔娻副喙夃笝喙€喔｀傅喔⑧笝喙佮弗喔班競喔编箟喔權笗喔笝喔佮覆喔｀釜喔侧笜喔脆笗"},ms:{pageTitle:"Halaman Perincian Inspire",backLink:"Kembali ke Perancangan Pertandingan",eyebrow:"Inspire Detail",title:"Halaman Perincian MakeX Inspire",subtitle:"Digunakan untuk menunjukkan fokus perancangan bagi Inspire",description:"Halaman ini boleh digunakan untuk mengembangkan pemahaman tugasan Inspire, logik skor asas, organisasi kelas, dan perancangan fasa.",panelIntro:"Cadangan kandungan untuk ditambah:",item1:"Matlamat tugasan dan titik masuk pengajaran",item2:"Laluan skor asas dan rentak pelaksanaan",item3:"Organisasi kelas dan langkah demonstrasi"}};
     
     function buildBilingualContent() {
       const escapeHtml = (value) => String(value)
@@ -141,6 +142,7 @@ const languageSelect=document.getElementById("languageSelect"); const backLink=d
   <script defer src="assets/no-copy.js"></script>
 </body>
 </html>
+
 
 
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -7,58 +7,59 @@
   <style>
     :root{--surface:rgba(255,250,242,.88);--text:#1f2430;--muted:#5d6472;--line:rgba(31,36,48,.1);--accent:#cc5a2f;--accent-deep:#8d3010;--shadow:0 24px 60px rgba(64,43,26,.12)}*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);background:radial-gradient(circle at top left, rgba(204,90,47,.18), transparent 32%),radial-gradient(circle at right center, rgba(93,145,111,.18), transparent 28%),linear-gradient(180deg,#f7f1e7 0%,#f2ece3 100%);min-height:100vh}.page{width:min(1120px,calc(100% - 32px));margin:0 auto;padding:32px 0 72px}.toolbar{display:flex;justify-content:flex-end;margin-bottom:18px}.language-box{display:inline-flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid rgba(255,255,255,.6);border-radius:18px;background:rgba(255,250,242,.82);box-shadow:0 10px 30px rgba(60,42,27,.08)}.language-box label{font-size:14px;font-weight:700;color:var(--accent-deep)}.language-box select{padding:10px 14px;border:1px solid rgba(31,36,48,.12);border-radius:12px;background:#fffdfa;color:var(--text);font-size:14px;cursor:pointer}.hero{position:relative;overflow:hidden;padding:56px;border:1px solid rgba(255,255,255,.55);border-radius:32px;background:linear-gradient(135deg, rgba(255,250,242,.96), rgba(246,234,220,.82));box-shadow:var(--shadow)}.hero::after{content:"";position:absolute;inset:auto -120px -120px auto;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle, rgba(204,90,47,.18), transparent 68%)}.hero-copy{position:relative;z-index:1;max-width:700px}.hero-art{position:absolute;right:6px;bottom:0;z-index:0;width:min(378px,36vw);height:min(270px,28vw);min-height:240px;opacity:.92;pointer-events:none}.hero-art::before{content:"";position:absolute;inset:28% 8% 5% 8%;border-radius:30px;background:linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,250,242,.06));box-shadow:inset 0 0 0 1px rgba(255,255,255,.26)}.hero-art::after{content:"";position:absolute;left:50%;bottom:14px;transform:translateX(-50%);width:78%;height:10px;border-radius:999px;background:linear-gradient(90deg, rgba(204,90,47,.24), rgba(93,145,111,.22), rgba(204,90,47,.24));filter:blur(2px)}.hero-art img{position:absolute;display:block;max-width:none;height:auto;filter:drop-shadow(0 18px 28px rgba(16,20,31,.16))}.hero-art .hero-robot-blue{left:-2px;bottom:18px;width:144px;transform:rotate(-12deg)}.hero-art .hero-robot-red{right:0;bottom:2px;width:160px;transform:rotate(6deg)}.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(204,90,47,.1);color:var(--accent-deep);font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}h1{margin:20px 0 14px;max-width:760px;font-size:clamp(36px,5vw,62px);line-height:1.08;letter-spacing:-.03em}.hero p{max-width:760px;margin:0;font-size:18px;line-height:1.7;color:var(--muted)}.hero-actions{display:flex;justify-content:flex-start;margin-top:22px;position:relative;z-index:1}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:44px 0 20px}.section-head h2{margin:0;font-size:clamp(26px,4vw,38px);letter-spacing:-.02em}.section-head span{color:var(--muted);font-size:15px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.card{display:flex;flex-direction:column;min-height:100%;padding:28px;border:1px solid var(--line);border-radius:26px;background:var(--surface);box-shadow:0 14px 34px rgba(60,42,27,.08)}.number{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-deep));color:#fff;font-size:20px;font-weight:800}.card h3{margin:18px 0 10px;font-size:24px;line-height:1.25}.card .sub-title{margin:0 0 18px;color:var(--accent-deep);font-size:16px;line-height:1.6;font-weight:600}.card p{margin:0 0 20px;color:var(--muted);line-height:1.75;font-size:15px}.focus-list{margin:0 0 20px;padding-left:20px;color:var(--text)}.focus-list li{margin-bottom:10px;line-height:1.7;font-size:15px}.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}.tag{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:rgba(204,90,47,.09);color:var(--accent-deep);font-size:13px;font-weight:700}.card-link{display:inline-flex;align-items:center;justify-content:center;margin-top:4px;margin-bottom:20px;padding:12px 18px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-deep));color:#fff;text-decoration:none;font-size:14px;font-weight:700;width:fit-content}@media (max-width:900px){.grid{grid-template-columns:1fr}.hero{padding:34px 24px}.section-head{flex-direction:column;align-items:start}.toolbar{justify-content:stretch}.language-box{width:100%;justify-content:space-between}.hero-art{display:none}}
   </style>
+  <script src="assets/access-gate.js"></script>
 </head>
 <body>
   <main class="page">
-    <div class="toolbar"><div class="language-box"><label for="languageSelect" data-i18n="languageLabel">语言 / Language</label><select id="languageSelect" aria-label="Language selector"><option value="zh">中文</option><option value="en">English</option></select></div></div>
+    <div class="toolbar"><div class="language-box"><label for="languageSelect" data-i18n="languageLabel">璇█ / Language</label><select id="languageSelect" aria-label="Language selector"><option value="zh">涓枃</option><option value="en">English</option></select></div></div>
     <section class="hero">
       <div class="hero-copy">
-        <div class="eyebrow" data-i18n="eyebrow">MakeX 分享内容</div>
-        <h1 data-i18n-html="heroTitle">分享内容总览<br>Sharing Modules Overview</h1>
+        <div class="eyebrow" data-i18n="eyebrow">MakeX 鍒嗕韩鍐呭</div>
+        <h1 data-i18n-html="heroTitle">鍒嗕韩鍐呭鎬昏<br>Sharing Modules Overview</h1>
       </div>
     </section>
-    <section><div class="section-head"><h2 data-i18n="sectionTitle">三大分享模块</h2><span data-i18n="sectionSubtitle">Three Focus Areas for Your Session</span></div><div class="grid">
-      <article class="card"><div class="number">01</div><h3 data-i18n="module1Title">Technical Sharing: New Season Products Introduction and Strategic Insights for the New Season</h3><p class="sub-title" data-i18n="module1Subtitle">技术分享：MakeX 新赛季产品解析与教学及赛事策略洞察</p><p data-i18n="module1Description">聚焦 AI Camera 的实际使用案例，以及 AI 工具在 MakeX 机器人比赛中的应用方式，核心主旨是 2026 年比赛要善用 AI 辅助。</p><ul class="focus-list"><li data-i18n="module1Point1">AI Camera 实际使用案例</li><li data-i18n="module1Point2">AI 工具与 MakeX 机器人比赛</li></ul><a class="card-link" id="module1Link" href="module1-detail.html" data-i18n="module1Link">查看模块详情</a><div class="tags"><span class="tag" data-i18n="module1Tag1">AI Camera</span><span class="tag" data-i18n="module1Tag2">AI Tools</span><span class="tag" data-i18n="module1Tag3">2026 Strategy</span></div></article>
-      <article class="card"><div class="number">02</div><h3 data-i18n="module2Title">Technical Demonstration: Robot Design Concepts and Strategy Sharing Using Sample Robots</h3><p class="sub-title" data-i18n="module2Subtitle">技术演示：基于示范机器人的设计思路与竞赛策略分享</p><p data-i18n="module2Description">展示机器人设计、参数寻找演示，以及 Inspire、Starter、Explorer、Challenge 四个赛项的比赛规划入口。</p><ul class="focus-list"><li data-i18n="module2Point1">Top-Down 设计思路</li><li data-i18n="module2Point2">参数寻找演示</li><li data-i18n="module2Point3">分赛项比赛规划</li></ul><a class="card-link" id="module2Link" href="module2-overview.html" data-i18n="module2Link">查看模块详情</a><div class="tags"><span class="tag">Robot Design</span><span class="tag">Planning</span><span class="tag">Strategy</span></div></article>
-      <article class="card"><div class="number">03</div><h3 data-i18n="module3Title">Coaching Experience Sharing: Best Practices in Team Mentorship</h3><p class="sub-title" data-i18n="module3Subtitle">教练经验分享：学生团队培养与指导的最佳实践</p><p data-i18n="module3Description">聚焦教练培养体系中的 3 个关键部分：知识、技术和个人能力，培训课程体系的建立，以及训练机制。</p><ul class="focus-list"><li data-i18n="module3Point1">知识、技术和个人能力</li><li data-i18n="module3Point2">培训课程体系的建立</li><li data-i18n="module3Point3">训练机制</li></ul><a class="card-link" id="module3Link" href="module3-detail.html" data-i18n="module3Link">查看模块详情</a><div class="tags"><span class="tag" data-i18n="module3Tag1">教练培养</span><span class="tag" data-i18n="module3Tag2">课程体系</span><span class="tag" data-i18n="module3Tag3">训练机制</span></div></article>
+    <section><div class="section-head"><h2 data-i18n="sectionTitle">涓夊ぇ鍒嗕韩妯″潡</h2><span data-i18n="sectionSubtitle">Three Focus Areas for Your Session</span></div><div class="grid">
+      <article class="card"><div class="number">01</div><h3 data-i18n="module1Title">Technical Sharing: New Season Products Introduction and Strategic Insights for the New Season</h3><p class="sub-title" data-i18n="module1Subtitle">鎶€鏈垎浜細MakeX 鏂拌禌瀛ｄ骇鍝佽В鏋愪笌鏁欏鍙婅禌浜嬬瓥鐣ユ礊瀵?/p><p data-i18n="module1Description">鑱氱劍 AI Camera 鐨勫疄闄呬娇鐢ㄦ渚嬶紝浠ュ強 AI 宸ュ叿鍦?MakeX 鏈哄櫒浜烘瘮璧涗腑鐨勫簲鐢ㄦ柟寮忥紝鏍稿績涓绘棬鏄?2026 骞存瘮璧涜鍠勭敤 AI 杈呭姪銆?/p><ul class="focus-list"><li data-i18n="module1Point1">AI Camera 瀹為檯浣跨敤妗堜緥</li><li data-i18n="module1Point2">AI 宸ュ叿涓?MakeX 鏈哄櫒浜烘瘮璧?/li></ul><a class="card-link" id="module1Link" href="module1-detail.html" data-i18n="module1Link">鏌ョ湅妯″潡璇︽儏</a><div class="tags"><span class="tag" data-i18n="module1Tag1">AI Camera</span><span class="tag" data-i18n="module1Tag2">AI Tools</span><span class="tag" data-i18n="module1Tag3">2026 Strategy</span></div></article>
+      <article class="card"><div class="number">02</div><h3 data-i18n="module2Title">Technical Demonstration: Robot Design Concepts and Strategy Sharing Using Sample Robots</h3><p class="sub-title" data-i18n="module2Subtitle">鎶€鏈紨绀猴細鍩轰簬绀鸿寖鏈哄櫒浜虹殑璁捐鎬濊矾涓庣珵璧涚瓥鐣ュ垎浜?/p><p data-i18n="module2Description">灞曠ず鏈哄櫒浜鸿璁°€佸弬鏁板鎵炬紨绀猴紝浠ュ強 Inspire銆丼tarter銆丒xplorer銆丆hallenge 鍥涗釜璧涢」鐨勬瘮璧涜鍒掑叆鍙ｃ€?/p><ul class="focus-list"><li data-i18n="module2Point1">Top-Down 璁捐鎬濊矾</li><li data-i18n="module2Point2">鍙傛暟瀵绘壘婕旂ず</li><li data-i18n="module2Point3">鍒嗚禌椤规瘮璧涜鍒?/li></ul><a class="card-link" id="module2Link" href="module2-overview.html" data-i18n="module2Link">鏌ョ湅妯″潡璇︽儏</a><div class="tags"><span class="tag">Robot Design</span><span class="tag">Planning</span><span class="tag">Strategy</span></div></article>
+      <article class="card"><div class="number">03</div><h3 data-i18n="module3Title">Coaching Experience Sharing: Best Practices in Team Mentorship</h3><p class="sub-title" data-i18n="module3Subtitle">鏁欑粌缁忛獙鍒嗕韩锛氬鐢熷洟闃熷煿鍏讳笌鎸囧鐨勬渶浣冲疄璺?/p><p data-i18n="module3Description">鑱氱劍鏁欑粌鍩瑰吇浣撶郴涓殑 3 涓叧閿儴鍒嗭細鐭ヨ瘑銆佹妧鏈拰涓汉鑳藉姏锛屽煿璁绋嬩綋绯荤殑寤虹珛锛屼互鍙婅缁冩満鍒躲€?/p><ul class="focus-list"><li data-i18n="module3Point1">鐭ヨ瘑銆佹妧鏈拰涓汉鑳藉姏</li><li data-i18n="module3Point2">鍩硅璇剧▼浣撶郴鐨勫缓绔?/li><li data-i18n="module3Point3">璁粌鏈哄埗</li></ul><a class="card-link" id="module3Link" href="module3-detail.html" data-i18n="module3Link">鏌ョ湅妯″潡璇︽儏</a><div class="tags"><span class="tag" data-i18n="module3Tag1">鏁欑粌鍩瑰吇</span><span class="tag" data-i18n="module3Tag2">璇剧▼浣撶郴</span><span class="tag" data-i18n="module3Tag3">璁粌鏈哄埗</span></div></article>
     </div></section>
   </main>
   <script>
     const translations = {
       zh: {
-        pageTitle: "MakeX 分享总览",
-        languageLabel: "语言",
-        eyebrow: "MakeX 分享内容",
-        heroTitle: "分享内容总览",
-        sectionTitle: "三大分享模块",
-        sectionSubtitle: "三个核心分享方向",
-        module1Title: "技术分享：新赛季产品解析与策略洞察",
-        module1Subtitle: "技术分享：MakeX 新赛季产品解析与教学及赛事策略洞察",
-        module1Description: "聚焦 AI Camera 的实际使用案例，以及 AI 工具在 MakeX 机器人比赛中的应用方式，核心主旨是 2026 年比赛要善用 AI 辅助。",
-        module1Point1: "AI Camera 实际使用案例",
-        module1Point2: "AI 工具与 MakeX 机器人比赛",
-        module1Link: "查看模块详情",
+        pageTitle: "MakeX 鍒嗕韩鎬昏",
+        languageLabel: "璇█",
+        eyebrow: "MakeX 鍒嗕韩鍐呭",
+        heroTitle: "鍒嗕韩鍐呭鎬昏",
+        sectionTitle: "涓夊ぇ鍒嗕韩妯″潡",
+        sectionSubtitle: "涓変釜鏍稿績鍒嗕韩鏂瑰悜",
+        module1Title: "鎶€鏈垎浜細鏂拌禌瀛ｄ骇鍝佽В鏋愪笌绛栫暐娲炲療",
+        module1Subtitle: "鎶€鏈垎浜細MakeX 鏂拌禌瀛ｄ骇鍝佽В鏋愪笌鏁欏鍙婅禌浜嬬瓥鐣ユ礊瀵?,
+        module1Description: "鑱氱劍 AI Camera 鐨勫疄闄呬娇鐢ㄦ渚嬶紝浠ュ強 AI 宸ュ叿鍦?MakeX 鏈哄櫒浜烘瘮璧涗腑鐨勫簲鐢ㄦ柟寮忥紝鏍稿績涓绘棬鏄?2026 骞存瘮璧涜鍠勭敤 AI 杈呭姪銆?,
+        module1Point1: "AI Camera 瀹為檯浣跨敤妗堜緥",
+        module1Point2: "AI 宸ュ叿涓?MakeX 鏈哄櫒浜烘瘮璧?,
+        module1Link: "鏌ョ湅妯″潡璇︽儏",
         module1Tag1: "AI Camera",
-        module1Tag2: "AI 工具",
-        module1Tag3: "2026 赛季策略",
-        module2Title: "技术演示：示范机器人设计思路与竞赛策略",
-        module2Subtitle: "技术演示：基于示范机器人的设计思路与竞赛策略分享",
-        module2Description: "展示机器人设计、参数寻找演示，以及 Inspire、Starter、Explorer、Challenge 四个赛项的比赛规划入口。",
-        module2Point1: "Top-Down 设计思路",
-        module2Point2: "参数寻找演示",
-        module2Point3: "分赛项比赛规划",
-        module2Link: "查看模块详情",
-        module3Title: "教练经验分享：学生团队培养与指导最佳实践",
-        module3Subtitle: "教练经验分享：学生团队培养与指导的最佳实践",
-        module3Description: "聚焦教练培养体系中的 3 个关键部分：知识、技术和个人能力，培训课程体系的建立，以及训练机制。",
-        module3Point1: "知识、技术和个人能力",
-        module3Point2: "培训课程体系的建立",
-        module3Point3: "训练机制",
-        module3Point4: "训练机制",
-        module3Link: "查看模块详情",
-        module3Tag1: "教练培养",
-        module3Tag2: "课程体系",
-        module3Tag3: "训练机制",
+        module1Tag2: "AI 宸ュ叿",
+        module1Tag3: "2026 璧涘绛栫暐",
+        module2Title: "鎶€鏈紨绀猴細绀鸿寖鏈哄櫒浜鸿璁℃€濊矾涓庣珵璧涚瓥鐣?,
+        module2Subtitle: "鎶€鏈紨绀猴細鍩轰簬绀鸿寖鏈哄櫒浜虹殑璁捐鎬濊矾涓庣珵璧涚瓥鐣ュ垎浜?,
+        module2Description: "灞曠ず鏈哄櫒浜鸿璁°€佸弬鏁板鎵炬紨绀猴紝浠ュ強 Inspire銆丼tarter銆丒xplorer銆丆hallenge 鍥涗釜璧涢」鐨勬瘮璧涜鍒掑叆鍙ｃ€?,
+        module2Point1: "Top-Down 璁捐鎬濊矾",
+        module2Point2: "鍙傛暟瀵绘壘婕旂ず",
+        module2Point3: "鍒嗚禌椤规瘮璧涜鍒?,
+        module2Link: "鏌ョ湅妯″潡璇︽儏",
+        module3Title: "鏁欑粌缁忛獙鍒嗕韩锛氬鐢熷洟闃熷煿鍏讳笌鎸囧鏈€浣冲疄璺?,
+        module3Subtitle: "鏁欑粌缁忛獙鍒嗕韩锛氬鐢熷洟闃熷煿鍏讳笌鎸囧鐨勬渶浣冲疄璺?,
+        module3Description: "鑱氱劍鏁欑粌鍩瑰吇浣撶郴涓殑 3 涓叧閿儴鍒嗭細鐭ヨ瘑銆佹妧鏈拰涓汉鑳藉姏锛屽煿璁绋嬩綋绯荤殑寤虹珛锛屼互鍙婅缁冩満鍒躲€?,
+        module3Point1: "鐭ヨ瘑銆佹妧鏈拰涓汉鑳藉姏",
+        module3Point2: "鍩硅璇剧▼浣撶郴鐨勫缓绔?,
+        module3Point3: "璁粌鏈哄埗",
+        module3Point4: "璁粌鏈哄埗",
+        module3Link: "鏌ョ湅妯″潡璇︽儏",
+        module3Tag1: "鏁欑粌鍩瑰吇",
+        module3Tag2: "璇剧▼浣撶郴",
+        module3Tag3: "璁粌鏈哄埗",
       },
       en: {
         pageTitle: "MakeX Sharing Overview",
@@ -159,6 +160,7 @@
   <script defer src="assets/no-copy.js"></script>
 </body>
 </html>
+
 
 
 
