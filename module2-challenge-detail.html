@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -39,6 +39,7 @@
     @media (max-width:900px) { .topbar,.toolbar-right{flex-direction:column;align-items:stretch;} .hero,.panel{padding:24px 20px;} .grid-2,.grid-3,.timeline,.image-grid{grid-template-columns:1fr;} }
   </style>
   <script src="assets/access-gate.js"></script>
+  <script src="assets/i18n-extra-locales.js?v=20260421a"></script>
 </head>
 <body>
   <main class="page">
@@ -47,6 +48,8 @@
       <div class="toolbar-right">
         <select class="language-select" id="languageSelect" aria-label="Language selector">
           <option value="zh">中文</option><option value="en">English</option>
+          <option value="ko">한국어</option>
+          <option value="id">Bahasa Indonesia</option>
         </select>
       </div>
     </div>
@@ -154,6 +157,10 @@
   </main>
   <script>
     const translations={zh:{pageTitle:"MakeX Challenge 备赛重点",backLink:"返回比赛规划",eyebrow:"Challenge Detail",title:"MakeX Challenge 备赛重点版",subtitle:"尺寸与技术限制、得分结构、阶段任务与策略流程一页讲清",desc:"这一页把 Challenge 的核心规则整理成可直接用于分享的重点版本。",s1:"1. 机器人尺寸、重量限制",s1a:"强化改装前",m1:"最大尺寸 500mm × 500mm × 700mm",s1a1:"地面垂直投影不得超出 500mm × 500mm。",s1a2:"检录时需要展示机器人最大延展尺寸状态。",s1a3:"重量上限为 10kg，包含电池和所有安装件，不含队旗。",s1b:"强化改装后",m2:"最大尺寸 500mm × 500mm",m3:"高度不限",s1b1:"地面垂直投影仍不得超出 500mm × 500mm。",s1b2:"终局机构可向上发展，但底盘 footprint 不能突破限制。",s1b3:"挂旗或终局模块建议提前预留重心与安装位置。",s2:"2. 电机和舵机数量限制",s2a:"电子技术规范",s2a1:"电机总数量 ≤ 13 个",s2a2:"舵机数量 ≤ 6 个",s2a3:"无刷电机数量 ≤ 2 个",s2a4:"每台机器人最多 1 块电池",s2b:"附加限制",s2b1:"激光瞄准器最多 1 个",s2b2:"激光功率 ≤ 5mW",s2b3:"所有设备都要通过检录和安全要求",s2c:"设计启示",s2c1:"最好从一开始就明确走投射型还是搬运 / 挂旗型，否则很容易把电机和舵机配额吃满。",s3:"3. 各阶段任务与得分重点",s3a:"阶段任务",s3a1:"自动 30 秒：字母方块、球瓶、锥桶、X 对决、精准投掷、权益争锋。",s3a2:"手动 100 秒：字母方块、球瓶、精准投掷、锥桶、X 对决。",s3a3:"改装 60 秒：只改装，不直接得分。",s3a4:"全力一搏 90 秒：增加队旗任务并锁定终局高分。",s3b:"关键得分提醒",s3b1:"弹丸 10 分 / 个。",s3b2:"字母方块 30 分 / 个，MAKE 排列 50 分 / 组。",s3b3:"球瓶 30 / 20 / 10 分，X 标志 30 分，队旗 50 分 / 面。",s3b4:"增益方块不直接得分，但能兑换额外弹丸。",s3band:"最终计分以比赛结束后的静止状态为准。",s4:"4. 得分策略流程",t1:"先抢资源差",t1d:"优先做权益争锋，因为增益方块只在自动阶段有效。",t1f:"核心目标：先拿额外弹丸资源。",t2:"主输出阶段",t2d:"投球连续拿分，同时穿插高价值静态道具。",t2f:"核心目标：稳定拿连续分。",t3:"切换终局模块",t3d:"优先准备挂旗或终局整理能力。",t3f:"核心目标：为最后 90 秒做结构切换。",t4:"锁定终局高分",t4d:"优先队旗，再补 MAKE、球瓶、X 标志。",t4f:"核心目标：先拿确定性高分。",summary:"推荐讲法：自动先抢资源差，手动打主输出，改装换终局模块，最后锁定终局高分。"},en:{pageTitle:"MakeX Challenge Key Points",backLink:"Back to Competition Planning",eyebrow:"Challenge Detail",title:"MakeX Challenge Key Version",subtitle:"Size limits, technical limits, scoring structure, phase tasks, and strategy flow on one page",desc:"This page reorganizes the core Challenge rules into a version that can be used directly for sharing.",s1:"1. Robot Size and Weight Limits",s1a:"Before Upgrade",m1:"Maximum size 500mm × 500mm × 700mm",s1a1:"The vertical ground projection must not exceed 500mm × 500mm.",s1a2:"The robot must be shown in its maximum extension state during inspection.",s1a3:"The weight limit is 10kg including battery and installed parts, excluding the team flag.",s1b:"After Upgrade",m2:"Maximum size 500mm × 500mm",m3:"Height unlimited",s1b1:"The vertical ground projection must still stay within 500mm × 500mm.",s1b2:"Endgame mechanisms may grow upward, but the chassis footprint cannot exceed the limit.",s1b3:"Reserve center-of-gravity and mounting space for flags or endgame modules early.",s2:"2. Motor and Servo Limits",s2a:"Electronic Rules",s2a1:"Total motors ≤ 13",s2a2:"Servos ≤ 6",s2a3:"Brushless motors ≤ 2",s2a4:"At most 1 battery per robot",s2b:"Additional Limits",s2b1:"At most 1 laser aimer",s2b2:"Laser power ≤ 5mW",s2b3:"All devices must pass inspection and safety requirements",s2c:"Design Insight",s2c1:"Decide early whether the robot is shooting-focused or transport / flag-focused, or the actuator quota will be used up quickly.",s3:"3. Phase Tasks and Scoring Focus",s3a:"Phase Tasks",s3a1:"Auto 30s: letter blocks, bowling pins, cones, X duel, precision shooting, bonus exchange.",s3a2:"Manual 100s: letter blocks, bowling pins, precision shooting, cones, X duel.",s3a3:"Upgrade 60s: upgrade only, no direct scoring.",s3a4:"Final push 90s: add flags and lock in endgame points.",s3b:"Key Scoring Notes",s3b1:"Projectiles: 10 pts each.",s3b2:"Letter blocks: 30 pts each, MAKE arrangement: 50 pts per set.",s3b3:"Bowling pins: 30 / 20 / 10 pts, X marker: 30 pts, team flag: 50 pts each.",s3b4:"Bonus blocks do not score directly but can be exchanged for extra projectiles.",s3band:"Final scoring is based on the still state at the end of the match.",s4:"4. Scoring Strategy Flow",t1:"Secure Resource Gap First",t1d:"Prioritize bonus exchange because bonus blocks only work in autonomous.",t1f:"Core goal: get extra projectile resources first.",t2:"Main Output Phase",t2d:"Score continuously by shooting while inserting high-value static tasks.",t2f:"Core goal: secure stable continuous scoring.",t3:"Switch Endgame Module",t3d:"Prepare flag hanging or endgame cleanup first.",t3f:"Core goal: switch structure for the last 90 seconds.",t4:"Lock Endgame Points",t4d:"Prioritize flags, then MAKE, bowling pins, and X markers.",t4f:"Core goal: secure the most certain high-value points first.",summary:"Suggested speaking line: secure the resource gap in auto, focus on main output in manual, switch the endgame module during upgrade, and lock high-value endgame points in the final push."}};
+    const makexI18n = window.MAKEX_I18N;
+    if (makexI18n) {
+      makexI18n.mergePageTranslations('module2-challenge-detail.html', translations);
+    }
     translations.ko={...translations.en,pageTitle:"MakeX Challenge 핵심 정리",backLink:"경기 계획으로 돌아가기",title:"MakeX Challenge 핵심 버전",subtitle:"크기 제한, 기술 제한, 득점 구조, 단계별 작업, 전략 흐름을 한 페이지에 정리",desc:"이 페이지는 Challenge 핵심 규칙을 공유용 핵심 버전으로 정리한 것입니다。"};
     translations.th={...translations.en,pageTitle:"สาระสำคัญ MakeX Challenge",backLink:"กลับไปหน้าวางแผนการแข่งขัน",title:"MakeX Challenge ฉบับสรุปสำคัญ",subtitle:"สรุปข้อจำกัดขนาด ข้อจำกัดทางเทคนิค โครงสร้างคะแนน ภารกิจแต่ละช่วง และลำดับกลยุทธ์ในหน้าเดียว",desc:"หน้านี้สรุปกฎหลักของ Challenge ให้อยู่ในรูปแบบที่ใช้สำหรับการนำเสนอได้ทันที"};
     translations.ms={...translations.en,pageTitle:"Fokus Utama MakeX Challenge",backLink:"Kembali ke Perancangan Pertandingan",title:"MakeX Challenge Versi Utama",subtitle:"Had saiz, had teknikal, struktur skor, tugasan fasa dan aliran strategi dalam satu halaman",desc:"Halaman ini menyusun semula peraturan teras Challenge kepada versi yang boleh terus digunakan untuk perkongsian."};
@@ -162,12 +169,15 @@
       return translations.en;
     }
 const languageSelect=document.getElementById("languageSelect"); const backLink=document.getElementById("backLink");
-    function applyLanguage(lang){const safeLang=["zh","en"].includes(lang)?lang:"zh";const c=translations[safeLang]||translations.zh;document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module2-competition-planning-v2.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});}
+    function applyLanguage(lang){const safeLang=makexI18n ? makexI18n.getSafeLang(lang) : (["zh", "en"].includes(lang) ? lang : "zh");const c=translations[safeLang]||translations.zh;document.documentElement.lang = makexI18n ? makexI18n.getHtmlLang(safeLang) : (safeLang === "zh" ? "zh-CN" : "en");document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module2-competition-planning-v2.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});}
     languageSelect.addEventListener("change",e=>applyLanguage(e.target.value)); const params=new URLSearchParams(window.location.search); const rawLang=params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh";applyLanguage(rawLang);
   </script>
   <script defer src="assets/no-copy.js?v=20260421c"></script>
 </body>
 </html>
+
+
+
 
 
 

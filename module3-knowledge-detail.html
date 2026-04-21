@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -51,6 +51,7 @@
     @media(max-width:980px){.topbar,.toolbar-right{flex-direction:column;align-items:stretch}.hero,.panel{padding:24px 20px}.intro-grid,.event-grid,.summary-grid,.progress-grid{grid-template-columns:1fr}}
   </style>
   <script src="assets/access-gate.js"></script>
+  <script src="assets/i18n-extra-locales.js?v=20260421a"></script>
 </head>
 <body>
   <main class="page">
@@ -60,6 +61,8 @@
         <select class="language-select" id="languageSelect">
           <option value="zh">中文</option>
           <option value="en">English</option>
+          <option value="ko">한국어</option>
+          <option value="id">Bahasa Indonesia</option>
         </select>
       </div>
     </div>
@@ -192,6 +195,10 @@
       en:{
         pageTitle:"Module 3 - Knowledge, Technical and Personal Capability",backLink:"Back to Module 3",eyebrow:"Capability",title:"Knowledge, Technical and Personal Capability",subtitle:"Build a complete capability model from knowledge structure to personal growth",description:"This page integrates subject knowledge, 21st-century core abilities, and growth positioning across the four MakeX events, helping the team understand the progression between age groups and event levels.",imageCaption:"This model works well for explaining the loop between knowledge, programming, and personal abilities, helping the team place what to learn, how to execute, and where growth should lead inside one shared framework.",frameworkTitle:"Capability Framework Overview",c1:"Knowledge Structure",b1:"Build a systematic framework around mathematics, science, engineering principles, competition rules, and strategy understanding.",c2:"Technical Capability",b2:"Includes building, debugging, programming control, structure optimization, troubleshooting, and on-site execution.",c3:"Personal Capability",b3:"Strengthen communication, collaboration, responsibility, time management, review habits, and decision-making so students grow more steadily.",eventTitle:"MakeX Events × Subject Content × 21st-Century Core Abilities",level1:"Lower Primary",level2:"Upper Primary",level3:"Lower Secondary",level4:"Middle / Upper Secondary",mathScience:"Math and Science Content",mathPhysics:"Math and Science / Physics Content",coreAbility:"21st-Century Core Abilities",i_desc:"Focused on cognition building and interest-driven learning, integrating basic mathematics, observation, and simple science experience into project-based activity.",s_desc:"Focused on execution ability and foundational engineering thinking, helping students move from ‘can do’ to ‘can do reliably.’",e_desc:"Focused on engineering analysis and optimization, helping students shift from result-oriented work to system analysis and strategic choice.",ch_desc:"Focused on systems engineering and competition decision-making, helping students grow from technical executors into competitive decision-makers.",focus1:"Core Positioning: Cognition Building + Interest Driven Learning",focus2:"Core Positioning: Execution Ability + Foundational Engineering Thinking",focus3:"Core Positioning: Engineering Analysis + Optimization Ability",focus4:"Core Positioning: Systems Engineering + Competition Decision-Making",progressTitle:"Overall Progression Logic",routeTitle:"Inspire → Starter → Explorer → Challenge",routeDesc:"The four events are not parallel tracks, but a growth path with gradually increasing capability requirements.",knowledgeTitle:"Knowledge",knowledgeProgress:"From perception → understanding → application → modeling",skillsTitle:"Skills",skillsProgress:"From execution → control → optimization → integration",abilitiesTitle:"Abilities",abilitiesProgress:"From curiosity → logic → analysis → decision-making",quote:"Inspire builds interest and cognition. Starter strengthens execution and logic. Explorer develops analysis and optimization. Challenge completes the loop of decision-making and systems capability.",mappingTitle:"Direct Implications for Training Design",p1t:"Course Design",p1b:"Courses should not be organized only by robot functions, but also by age stage and capability level.",p2t:"Training Focus",p2b:"Lower age groups should emphasize interest, expression, and habits, while older groups gradually shift toward analysis, optimization, and decision-making.",p3t:"Talent Development",p3b:"The higher the event level, the more important it is to place knowledge, technical skills, and personal abilities into one unified development loop.",note:"This page works best in training as a capability-development map, helping coaches understand the educational goals behind different events instead of focusing only on competition results."}
     };
+    const makexI18n = window.MAKEX_I18N;
+    if (makexI18n) {
+      makexI18n.mergePageTranslations('module3-knowledge-detail.html', translations);
+    }
     const chipTranslations={
       zh:{
         "i-ms":["计数","比较","长度与时间","方向","基础图形","观察","材料特性","简单力与运动"],
@@ -214,6 +221,9 @@
         "ch-ca":["Decision Making","Leadership","Strategic Thinking","Resilience"]
       }
     };
+    if (makexI18n) {
+      makexI18n.mergeChipTranslations('module3-knowledge-detail.html', chipTranslations);
+    }
     
     function buildBilingualContent() {
       return translations.en;
@@ -226,7 +236,7 @@ const languageSelect=document.getElementById("languageSelect"),backLink=document
         group.innerHTML=items.map(item=>`<span class="chip">${item}</span>`).join("");
       });
     }
-    function applyLanguage(lang){const safeLang=["zh","en"].includes(lang)?lang:"zh";const c=translations[safeLang]||translations.zh;document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module3-detail.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});applyChipLanguage(safeLang);}
+    function applyLanguage(lang){const safeLang=makexI18n ? makexI18n.getSafeLang(lang) : (["zh", "en"].includes(lang) ? lang : "zh");const c=translations[safeLang]||translations.zh;document.documentElement.lang = makexI18n ? makexI18n.getHtmlLang(safeLang) : (safeLang === "zh" ? "zh-CN" : "en");document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module3-detail.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});applyChipLanguage(safeLang);}
     languageSelect.addEventListener("change",e=>applyLanguage(e.target.value));
     const params=new URLSearchParams(window.location.search);
     applyLanguage(params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh");
@@ -234,6 +244,9 @@ const languageSelect=document.getElementById("languageSelect"),backLink=document
   <script defer src="assets/no-copy.js?v=20260421c"></script>
 </body>
 </html>
+
+
+
 
 
 

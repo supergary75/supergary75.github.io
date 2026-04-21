@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -22,27 +22,37 @@
     @media (max-width:900px) { .topbar,.toolbar-right{flex-direction:column;align-items:stretch;} .hero,.panel{padding:24px 20px;} .flow-grid,.metric-grid{grid-template-columns:1fr;} }
   </style>
   <script src="assets/access-gate.js"></script>
+  <script src="assets/i18n-extra-locales.js?v=20260421a"></script>
 </head>
 <body>
   <main class="page">
-    <div class="topbar"><a class="back-link" id="backLink" href="module2-overview.html" data-i18n="backLink">返回第二模块</a><div class="toolbar-right"><select class="language-select" id="languageSelect" aria-label="Language selector"><option value="zh">中文</option><option value="en">English</option></select></div></div>
+    <div class="topbar"><a class="back-link" id="backLink" href="module2-overview.html" data-i18n="backLink">返回第二模块</a><div class="toolbar-right"><select class="language-select" id="languageSelect" aria-label="Language selector"><option value="zh">中文</option><option value="en">English</option>
+          <option value="ko">한국어</option>
+          <option value="id">Bahasa Indonesia</option></select></div></div>
     <section class="hero"><div class="eyebrow" data-i18n="eyebrow">模块 02 - Part 02</div><h1 data-i18n="title">机器人设计参数寻找演示</h1><p class="subtitle" data-i18n="subtitle">展示如何从任务需求一步步推导关键设计参数</p><p data-i18n="description">这一页不再只是参数清单，而是一个完整演示：从任务目标出发，推导机构需要的进入深度、取球宽度、行程、速度和稳定性要求，再通过验证决定最终设计。</p><div class="example-box"><h2 data-i18n="exampleTitle">演示案例</h2><p data-i18n="exampleBody">以“机器人需要从场地中央区域获取 70mm 直径的小球，并在限定时间内稳定完成输送或后续处理”为例，演示参数如何被逐步反推出，而不是凭经验随意决定。</p></div></section>
     <section class="panel"><h2 data-i18n="flowTitle">参数推导演示流程</h2><div class="flow-grid"><article class="step-card"><div class="step-index">01</div><h2 data-i18n="s1t">任务目标</h2><p data-i18n="s1b">先明确机器人要完成什么动作、面对什么场地约束、要在多长时间内完成。</p></article><article class="step-card"><div class="step-index">02</div><h2 data-i18n="s2t">关键参数</h2><p data-i18n="s2b">列出必须确认的进入深度、开口宽度、导向角度、速度、载荷和稳定性要求。</p></article><article class="step-card"><div class="step-index">03</div><h2 data-i18n="s3t">参数来源</h2><p data-i18n="s3b">从规则尺寸、场地图、中央区域位置、小球直径和时间限制中反推参数区间。</p></article><article class="step-card"><div class="step-index">04</div><h2 data-i18n="s4t">验证方式</h2><p data-i18n="s4b">用样机测试、纸面计算、结构草图和简单试验验证这些参数是否可行。</p></article><article class="step-card"><div class="step-index">05</div><h2 data-i18n="s5t">设计决策</h2><p data-i18n="s5b">根据验证结果决定取球机构形式、导向方式和优先级，避免后期大幅返工。</p></article></div></section>
     <section class="panel"><h2 data-i18n="metricTitle">建议在现场重点演示的参数</h2><div class="metric-grid"><article class="metric-card"><h2 data-i18n="m1t">尺寸与空间参数</h2><ul><li data-i18n="m1a">整机长宽高与收纳尺寸</li><li data-i18n="m1b">机构伸入中央区域后的最大边界</li><li data-i18n="m1c">与小球、场地边界、周边机构之间的安全间隙</li></ul></article><article class="metric-card"><h2 data-i18n="m2t">动作与性能参数</h2><ul><li data-i18n="m2a">入球宽度、导向角度、输送速度、加速度</li><li data-i18n="m2b">小球直径 70mm 带来的滚动、夹持和导向要求</li><li data-i18n="m2c">任务节奏要求下的单次取球和输送耗时</li></ul></article></div><div class="bridge" data-i18n="bridge">当关键参数被确定以后，机器人设计才真正具备落地基础。下一步就应该进入不同赛项的规则拆解与比赛规划，而不是继续停留在抽象设计层面。</div></section>
   </main>
   <script>
     const translations={zh:{pageTitle:"第二模块 - 参数寻找演示",backLink:"返回第二模块",eyebrow:"模块 02 - Part 02",title:"机器人设计参数寻找演示",subtitle:"展示如何从任务需求一步步推导关键设计参数",description:"这一页不再只是参数清单，而是一个完整演示：从任务目标出发，推导机构需要的进入深度、取球宽度、行程、速度和稳定性要求，再通过验证决定最终设计。",exampleTitle:"演示案例",exampleBody:"以“机器人需要从场地中央区域获取 70mm 直径的小球，并在限定时间内稳定完成输送或后续处理”为例，演示参数如何被逐步反推出，而不是凭经验随意决定。",flowTitle:"参数推导演示流程",s1t:"任务目标",s1b:"先明确机器人要完成什么动作、面对什么场地约束、要在多长时间内完成。",s2t:"关键参数",s2b:"列出必须确认的进入深度、开口宽度、导向角度、速度、载荷和稳定性要求。",s3t:"参数来源",s3b:"从规则尺寸、场地图、中央区域位置、小球直径和时间限制中反推参数区间。",s4t:"验证方式",s4b:"用样机测试、纸面计算、结构草图和简单试验验证这些参数是否可行。",s5t:"设计决策",s5b:"根据验证结果决定取球机构形式、导向方式和优先级，避免后期大幅返工。",metricTitle:"建议在现场重点演示的参数",m1t:"尺寸与空间参数",m1a:"整机长宽高与收纳尺寸",m1b:"机构伸入中央区域后的最大边界",m1c:"与小球、场地边界、周边机构之间的安全间隙",m2t:"动作与性能参数",m2a:"入球宽度、导向角度、输送速度、加速度",m2b:"小球直径 70mm 带来的滚动、夹持和导向要求",m2c:"任务节奏要求下的单次取球和输送耗时",bridge:"当关键参数被确定以后，机器人设计才真正具备落地基础。下一步就应该进入不同赛项的规则拆解与比赛规划，而不是继续停留在抽象设计层面。"},en:{pageTitle:"Module 2 - Parameter Demo",backLink:"Back to Module 2",eyebrow:"Module 02 - Part 02",title:"Robot Design Parameter Demo",subtitle:"Show how key design parameters are derived step by step from task needs",description:"This page is no longer just a parameter list. It is a full demonstration: start from the task goal, derive entry depth, ball-intake width, travel, speed, and stability requirements, then validate them before making the final design choice.",exampleTitle:"Demo Example",exampleBody:"Use a case where the robot must collect 70 mm diameter balls from the central field area and complete stable transfer or follow-up handling within limited time, showing how parameters are derived instead of guessed.",flowTitle:"Parameter Reasoning Flow",s1t:"Task Goal",s1b:"Clarify what the robot must do, what field constraints exist, and how quickly the action must be completed.",s2t:"Key Parameters",s2b:"List the required entry depth, intake opening width, guide angle, speed, load, and stability conditions.",s3t:"Where Parameters Come From",s3b:"Derive parameter ranges from rule dimensions, field layout, central-area position, ball diameter, and timing limits.",s4t:"How to Validate",s4b:"Use prototype tests, simple calculations, layout sketches, and quick experiments to verify feasibility.",s5t:"Design Decision",s5b:"Use the validation result to decide intake mechanism type, guiding method, and priority so later redesign is reduced.",metricTitle:"Parameters Worth Demonstrating On Stage",m1t:"Size and Space Parameters",m1a:"Overall robot size and stowed dimensions",m1b:"Maximum envelope after entering the central area",m1c:"Safe clearance to balls, field boundaries, and nearby mechanisms",m2t:"Motion and Performance Parameters",m2a:"Intake width, guide angle, transfer speed, and acceleration",m2b:"Rolling, holding, and guiding requirements caused by the 70 mm ball diameter",m2c:"Single pickup and transfer time under match pacing requirements",bridge:"Once the key parameters are fixed, the robot design finally has a solid foundation. The next step should be competition planning by event, not staying at an abstract design level."}};
+    const makexI18n = window.MAKEX_I18N;
+    if (makexI18n) {
+      makexI18n.mergePageTranslations('module2-parameter-demo.html', translations);
+    }
     
     function buildBilingualContent() {
       return translations.en;
     }
 const languageSelect=document.getElementById("languageSelect"); const backLink=document.getElementById("backLink");
-    function applyLanguage(lang){const safeLang=["zh","en"].includes(lang)?lang:"zh";const c=translations[safeLang]||translations.zh;document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module2-overview.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});}
+    function applyLanguage(lang){const safeLang=makexI18n ? makexI18n.getSafeLang(lang) : (["zh", "en"].includes(lang) ? lang : "zh");const c=translations[safeLang]||translations.zh;document.documentElement.lang = makexI18n ? makexI18n.getHtmlLang(safeLang) : (safeLang === "zh" ? "zh-CN" : "en");document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module2-overview.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});}
     languageSelect.addEventListener("change",e=>applyLanguage(e.target.value)); const params=new URLSearchParams(window.location.search); applyLanguage(params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh");
   </script>
   <script defer src="assets/no-copy.js?v=20260421c"></script>
 </body>
 </html>
+
+
+
 
 
 

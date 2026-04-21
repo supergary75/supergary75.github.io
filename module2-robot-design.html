@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -315,6 +315,7 @@
     }
   </style>
   <script src="assets/access-gate.js"></script>
+  <script src="assets/i18n-extra-locales.js?v=20260421a"></script>
 </head>
 <body>
   <main class="page">
@@ -324,6 +325,8 @@
         <select class="language-select" id="languageSelect" aria-label="Language selector">
           <option value="zh">中文</option>
           <option value="en">English</option>
+          <option value="ko">한국어</option>
+          <option value="id">Bahasa Indonesia</option>
         </select>
       </div>
     </div>
@@ -578,6 +581,10 @@
         bridge: "Once the main layout is fixed, the next step is not making the drawing more complex. It is turning those key actions into real parameters. That is exactly what Part 2 should demonstrate."
       }
     };
+    const makexI18n = window.MAKEX_I18N;
+    if (makexI18n) {
+      makexI18n.mergePageTranslations('module2-robot-design.html', translations);
+    }
 
     function buildBilingualContent() {
       const content = {};
@@ -612,9 +619,9 @@
     }
 
     function applyLanguage(lang) {
-      const safeLang = ["zh", "en"].includes(lang) ? lang : "zh";
+      const safeLang = makexI18n ? makexI18n.getSafeLang(lang) : (["zh", "en"].includes(lang) ? lang : "zh");
       const content = translations[safeLang] || translations.zh;
-      document.documentElement.lang = safeLang === "zh" ? "zh-CN" : "en";
+      document.documentElement.lang = makexI18n ? makexI18n.getHtmlLang(safeLang) : (safeLang === "zh" ? "zh-CN" : "en");
       document.title = content.pageTitle;
       languageSelect.value = safeLang;
       try {
@@ -656,4 +663,7 @@
   <script defer src="assets/no-copy.js?v=20260421c"></script>
 </body>
 </html>
+
+
+
 

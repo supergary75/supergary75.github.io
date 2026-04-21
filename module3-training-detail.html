@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -43,6 +43,7 @@
     @media(max-width:900px){.topbar,.toolbar-right{flex-direction:column;align-items:stretch}.hero,.panel{padding:24px 20px}.summary-grid,.card-grid,.flow-grid{grid-template-columns:1fr}.hero-art{display:none}}
   </style>
   <script src="assets/access-gate.js"></script>
+  <script src="assets/i18n-extra-locales.js?v=20260421a"></script>
 </head>
 <body>
   <main class="page">
@@ -52,6 +53,8 @@
         <select class="language-select" id="languageSelect">
           <option value="zh">中文</option>
           <option value="en">English</option>
+          <option value="ko">한국어</option>
+          <option value="id">Bahasa Indonesia</option>
         </select>
       </div>
     </div>
@@ -217,6 +220,10 @@
         flowTitle:"Standard Training Flow Recommendations",f1t:"Each Session",f1a:"Before training: confirm goals, inspect equipment, confirm software, and prepare records.",f1b:"During training: focused breakthroughs, match simulation, data logging, and small-step iteration.",f1c:"After training: review, classify issues, assign owners, and confirm the next task.",f2t:"Each Week",f2a:"Define the weekly goal and push focused drills during the week.",f2b:"Run a full mock match and a systematic weekly review at the end of the week.",f2c:"Hold one external-team analysis session and turn it into next-week tasks.",f3t:"Each Phase",f3a:"Set the phase goal and break down key problems.",f3b:"Execute focused breakthroughs and run a phase test.",f3c:"Decide whether the team is ready for the next phase and freeze or upgrade strategy accordingly.",note:"The core of training is not doing more. It is turning training behavior into match performance through a stable rhythm."
       }
     };
+    const makexI18n = window.MAKEX_I18N;
+    if (makexI18n) {
+      makexI18n.mergePageTranslations('module3-training-detail.html', translations);
+    }
     
     function buildBilingualContent() {
       return translations.en;
@@ -224,9 +231,9 @@
 const languageSelect=document.getElementById("languageSelect");
     const backLink=document.getElementById("backLink");
     function applyLanguage(lang){
-      const safeLang=["zh","en"].includes(lang)?lang:"zh";
+      const safeLang=makexI18n ? makexI18n.getSafeLang(lang) : (["zh", "en"].includes(lang) ? lang : "zh");
       const c=translations[safeLang]||translations.zh;
-      document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";
+      document.documentElement.lang = makexI18n ? makexI18n.getHtmlLang(safeLang) : (safeLang === "zh" ? "zh-CN" : "en");
       document.title=c.pageTitle;
       languageSelect.value=safeLang;
       localStorage.setItem("makexTrainingLang",safeLang);
@@ -240,6 +247,9 @@ const languageSelect=document.getElementById("languageSelect");
   <script defer src="assets/no-copy.js?v=20260421c"></script>
 </body>
 </html>
+
+
+
 
 
 

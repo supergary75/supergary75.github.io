@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -39,13 +39,16 @@
     @media (max-width:900px) { .topbar,.toolbar-right,.pdf-head { flex-direction:column; align-items:stretch; } .hero,.panel { padding:24px 20px; } .case-grid { grid-template-columns:1fr; } .pdf-wrap { height:72vh; } }
   </style>
   <script src="assets/access-gate.js"></script>
+  <script src="assets/i18n-extra-locales.js?v=20260421a"></script>
 </head>
 <body>
   <main class="page">
     <div class="topbar">
       <a class="back-link" id="backLink" href="module1-detail.html" data-i18n="backLink">返回第一模块</a>
       <div class="toolbar-right">
-        <select class="language-select" id="languageSelect" aria-label="Language selector"><option value="zh">中文</option><option value="en">English</option></select>
+        <select class="language-select" id="languageSelect" aria-label="Language selector"><option value="zh">中文</option><option value="en">English</option>
+          <option value="ko">한국어</option>
+          <option value="id">Bahasa Indonesia</option></select>
       </div>
     </div>
 
@@ -104,13 +107,17 @@
       zh:{pageTitle:"AI Tools 子页面",backLink:"返回第一模块",eyebrow:"Part 2",title:"AI Tools 辅助编程子页面",subtitle:"你可以继续往这里补充 AI 工具、Request、API 信息和示例内容",description:"这个子页面先把入口搭好，方便你后续补充更具体的内容。你可以把这一页继续整理成 Request 示例、API 资料、代码演示、调试流程或讲师备注。",leadBox:"这里先用两个案例卡把结构搭起来，后面再补截图、讲解要点和训练步骤。",caseTitle:"案例卡片",case1Tag:"案例一",case1Title:"生成基础训练用代码",case1Desc:"适合展示 AI 如何先生成一版最基础、最容易讲解的训练用代码，便于后续课堂演示和二次修改。",case1Image:"后续放图位置\n16:9 图像占位",case1a:"基础结构清晰",case1b:"便于课堂讲解",case1c:"适合先跑通流程",case2Tag:"案例二",case2Title:"生成进阶训练用代码",case2Desc:"适合展示 AI 在已有基础代码上继续补全逻辑、优化结构或加入调试建议的过程。",case2Image:"后续放图位置\n16:9 图像占位",case2a:"更完整的流程",case2b:"适合做对比演示",case2c:"便于讲优化思路",placeholder:"这里就是你后面继续添加内容的位置，当前先保留为结构框架。",pdfTitle:"内容预览",pdfDescription:"这里保留一个预览区，方便你后续放入资料、截图或 PDF。"},
       en:{pageTitle:"AI Tools Subpage",backLink:"Back to Module 1",eyebrow:"Part 2",title:"AI Tools Assisted Programming Subpage",subtitle:"You can continue adding AI tools, Requests, API info, and examples here",description:"This subpage is set up as an entry point so you can add more detailed content later. You can continue organizing it into Request examples, API materials, code demos, debugging flow, or speaker notes.",leadBox:"Two case cards are used here first to build the structure, and screenshots, speaking points, and training steps can be added later.",caseTitle:"Case Cards",case1Tag:"Case 1",case1Title:"Generate Basic Training Code",case1Desc:"Good for showing how AI first generates a simple, easy-to-explain training code example that can be used for classroom demonstration and later revision.",case1Image:"Image placeholder for later\n16:9 layout",case1a:"Clear basic structure",case1b:"Easy to explain in class",case1c:"Good for running the first flow",case2Tag:"Case 2",case2Title:"Generate Advanced Training Code",case2Desc:"Good for showing how AI continues to extend logic, improve structure, or add debugging suggestions on top of an existing basic code base.",case2Image:"Image placeholder for later\n16:9 layout",case2a:"More complete workflow",case2b:"Good for comparison demos",case2c:"Helps explain optimization ideas",placeholder:"This is the place where you can continue adding content later; it is currently kept as a structure framework.",pdfTitle:"Content Preview",pdfDescription:"A preview area is kept here so you can add materials, screenshots, or a PDF later."}
     };
+    const makexI18n = window.MAKEX_I18N;
+    if (makexI18n) {
+      makexI18n.mergePageTranslations('module1-ai-tools-detail.html', translations);
+    }
     
     function buildBilingualContent() {
       return translations.en;
     }
 const languageSelect=document.getElementById("languageSelect");
     const backLink=document.getElementById("backLink");
-    function applyLanguage(lang){const safeLang=["zh","en"].includes(lang)?lang:"zh";const c=translations[safeLang]||translations.zh;document.documentElement.lang=safeLang==="zh"?"zh-CN":"en";document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module1-detail.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});}
+    function applyLanguage(lang){const safeLang=makexI18n ? makexI18n.getSafeLang(lang) : (["zh", "en"].includes(lang) ? lang : "zh");const c=translations[safeLang]||translations.zh;document.documentElement.lang = makexI18n ? makexI18n.getHtmlLang(safeLang) : (safeLang === "zh" ? "zh-CN" : "en");document.title=c.pageTitle;languageSelect.value=safeLang;localStorage.setItem("makexTrainingLang",safeLang);backLink.href=`module1-detail.html?lang=${safeLang}`;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.getAttribute("data-i18n");if(c[k])n.innerHTML=c[k];});}
     languageSelect.addEventListener("change",e=>applyLanguage(e.target.value));
     const params=new URLSearchParams(window.location.search);
     applyLanguage(params.get("lang")||localStorage.getItem("makexTrainingLang")||"zh");
@@ -118,5 +125,8 @@ const languageSelect=document.getElementById("languageSelect");
   <script defer src="assets/no-copy.js?v=20260421c"></script>
 </body>
 </html>
+
+
+
 
 
