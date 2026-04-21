@@ -5,7 +5,7 @@
 
   window.__makexAccessGateEnabled = true;
 
-  const ACCESS_HASH = "7ad4658d59ed5203545296b0f9b5f5c8642082b4837bf8e23ce375cd79af00b7";
+  const ACCESS_HASH = "f2aefe4adab749eb43e8d6d00e682d9cae99a85cd6a42a04db2d6492f547f960";
   const STORAGE_KEY = "makexAccessGrant";
   const ACCESS_TTL_MS = 12 * 60 * 60 * 1000;
   const LOCK_CLASS = "makex-access-locked";
