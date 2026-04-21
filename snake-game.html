@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>璐铔?Snake Game</title>
+  <title>贪食蛇 Snake Game</title>
   <style>
     :root {
       --bg0: #06101d;
@@ -373,22 +373,22 @@
 <body>
   <main class="page">
     <section class="hero">
-      <div class="eyebrow">Arcade / 璐铔?/div>
-      <h1>璐铔囨父鎴?/h1>
-      <p class="lead">鐢ㄩ敭鐩樻柟鍚戦敭銆乄ASD 鎴栧睆骞曟寜閽帶鍒跺皬铔囷紝鍚冨埌椋熺墿灏变細鍙橀暱銆傛敮鎸佹殏鍋溿€侀噸寮€銆佽Е灞忔粦鍔ㄥ拰鏈€楂樺垎璁板綍锛屾墦寮€灏辫兘鐩存帴鐜┿€?/p>
+      <div class="eyebrow">Arcade / 贪食蛇</div>
+      <h1>贪食蛇游戏</h1>
+      <p class="lead">用键盘方向键、WASD 或屏幕按钮控制小蛇，吃到食物就会变长。支持暂停、重开、触屏滑动和最高分记录，打开就能直接玩。</p>
 
-      <div class="hero-stats" aria-label="娓告垙缁熻">
+      <div class="hero-stats" aria-label="游戏统计">
         <div class="stat">
-          <span class="stat-label">褰撳墠鍒嗘暟</span>
+          <span class="stat-label">当前分数</span>
           <div class="stat-value" id="score">0</div>
         </div>
         <div class="stat">
-          <span class="stat-label">鏈€楂樺垎</span>
+          <span class="stat-label">最高分</span>
           <div class="stat-value" id="bestScore">0</div>
         </div>
         <div class="stat">
-          <span class="stat-label">鐘舵€?/span>
-          <div class="stat-value" id="gameState">寰呭紑濮?/div>
+          <span class="stat-label">状态</span>
+          <div class="stat-value" id="gameState">待开始</div>
         </div>
       </div>
     </section>
@@ -397,24 +397,24 @@
       <div class="board-shell">
         <div class="board-head">
           <div>
-            <h2>娓告垙闈㈡澘</h2>
-            <div class="status" id="statusText">鎸変笅寮€濮嬶紝鎴栬€呯洿鎺ユ寜鏂瑰悜閿氨浼氳嚜鍔ㄥ惎鍔ㄣ€?/div>
+            <h2>游戏面板</h2>
+            <div class="status" id="statusText">按下开始，或者直接按方向键就会自动启动。</div>
           </div>
           <div class="actions">
-            <button class="btn" id="toggleBtn" type="button">寮€濮?/button>
-            <button class="btn secondary" id="restartBtn" type="button">閲嶆柊寮€濮?/button>
+            <button class="btn" id="toggleBtn" type="button">开始</button>
+            <button class="btn secondary" id="restartBtn" type="button">重新开始</button>
           </div>
         </div>
 
         <div class="canvas-wrap">
-          <canvas id="gameCanvas" width="640" height="640" aria-label="璐铔囨父鎴忕敾甯?></canvas>
+          <canvas id="gameCanvas" width="640" height="640" aria-label="贪食蛇游戏画布"></canvas>
           <div class="overlay" id="overlay" aria-hidden="true">
             <div class="overlay-card">
-              <h3 id="overlayTitle">娓告垙缁撴潫</h3>
-              <p id="overlayText">鍐嶆潵涓€灞€鍚с€傜偣鍑婚噸鏂板紑濮嬶紝鎴栬€呯敤鎸夐挳鐩存帴鍥炲埌妫嬬洏銆?/p>
+              <h3 id="overlayTitle">游戏结束</h3>
+              <p id="overlayText">再来一局吧。点击重新开始，或者用按钮直接回到棋盘。</p>
               <div class="actions">
-                <button class="btn" id="overlayRestartBtn" type="button">鍐嶆潵涓€灞€</button>
-                <button class="btn secondary" id="overlayResumeBtn" type="button">杩斿洖娓告垙</button>
+                <button class="btn" id="overlayRestartBtn" type="button">再来一局</button>
+                <button class="btn secondary" id="overlayResumeBtn" type="button">返回游戏</button>
               </div>
             </div>
           </div>
@@ -423,43 +423,43 @@
 
       <aside class="side-panel">
         <div class="section">
-          <h2>闅惧害</h2>
+          <h2>难度</h2>
           <div class="meta-grid">
             <div class="meta-row">
-              <span>鍩虹閫熷害</span>
-              <strong id="speedLabel">涓瓑</strong>
+              <span>基础速度</span>
+              <strong id="speedLabel">中等</strong>
             </div>
           </div>
-          <input class="speed" id="speedSlider" type="range" min="1" max="10" step="1" value="5" aria-label="鍩虹閫熷害璋冭妭">
+          <input class="speed" id="speedSlider" type="range" min="1" max="10" step="1" value="5" aria-label="基础速度调节">
         </div>
 
         <div class="section">
-          <h2>瑙﹀睆鎺у埗</h2>
-          <div class="control-pad" aria-label="鏂瑰悜鎺у埗鎸夐挳">
+          <h2>触屏控制</h2>
+          <div class="control-pad" aria-label="方向控制按钮">
             <div></div>
-            <button class="pad-btn" data-dir="up" type="button">鈫?/button>
+            <button class="pad-btn" data-dir="up" type="button">↑</button>
             <div></div>
-            <button class="pad-btn" data-dir="left" type="button">鈫?/button>
-            <button class="pad-btn primary" data-dir="pause" type="button">鈴?/button>
-            <button class="pad-btn" data-dir="right" type="button">鈫?/button>
+            <button class="pad-btn" data-dir="left" type="button">←</button>
+            <button class="pad-btn primary" data-dir="pause" type="button">⏯</button>
+            <button class="pad-btn" data-dir="right" type="button">→</button>
             <div></div>
-            <button class="pad-btn" data-dir="down" type="button">鈫?/button>
+            <button class="pad-btn" data-dir="down" type="button">↓</button>
             <div></div>
-            <button class="pad-btn wide" data-dir="restart" type="button">閲嶅紑涓€灞€</button>
+            <button class="pad-btn wide" data-dir="restart" type="button">重开一局</button>
           </div>
         </div>
 
         <div class="section">
-          <h2>鐜╂硶鎻愮ず</h2>
+          <h2>玩法提示</h2>
           <ul class="tips">
-            <li>鏂瑰悜閿垨 WASD 鎺у埗绉诲姩锛岀┖鏍奸敭鏆傚仠 / 缁х画銆?/li>
-            <li>涓嶈鎾炲锛屼篃涓嶈鍜埌鑷繁鐨勮韩浣撱€?/li>
-            <li>姣忓悆鍒颁竴涓鐗╋紝铔囦細鍙橀暱锛岄€熷害涔熶細閫愭笎鎻愬崌銆?/li>
-            <li>绉诲姩绔彲浠ョ洿鎺ョ偣鍑绘寜閽紝鎴栬€呭湪妫嬬洏涓婃粦鍔ㄣ€?/li>
+            <li>方向键或 WASD 控制移动，空格键暂停 / 继续。</li>
+            <li>不要撞墙，也不要咬到自己的身体。</li>
+            <li>每吃到一个食物，蛇会变长，速度也会逐渐提升。</li>
+            <li>移动端可以直接点击按钮，或者在棋盘上滑动。</li>
           </ul>
         </div>
 
-        <div class="footer-note">杩欎釜鐗堟湰鏄崟椤靛疄鐜扮殑锛屼繚瀛樺悗鐩存帴鐢ㄦ祻瑙堝櫒鎵撳紑 `snake-game.html` 灏辫兘杩愯銆?/div>
+        <div class="footer-note">这个版本是单页实现的，保存后直接用浏览器打开 `snake-game.html` 就能运行。</div>
       </aside>
     </section>
   </main>
@@ -489,16 +489,16 @@
     };
 
     const SPEED_NAMES = {
-      1: "鎱㈤€?,
-      2: "杈冩參",
-      3: "鍋忔參",
-      4: "鍧囪　",
-      5: "涓瓑",
-      6: "绋嶅揩",
-      7: "蹇€?,
-      8: "鏇村揩",
-      9: "鏋侀€?,
-      10: "鎸戞垬",
+      1: "慢速",
+      2: "较慢",
+      3: "偏慢",
+      4: "均衡",
+      5: "中等",
+      6: "稍快",
+      7: "快速",
+      8: "更快",
+      9: "极速",
+      10: "挑战",
     };
 
     let boardSize = 640;
@@ -518,7 +518,7 @@
     let accumulator = 0;
 
     function updateSpeedLabel() {
-      speedLabel.textContent = SPEED_NAMES[baseSpeed] || "涓瓑";
+      speedLabel.textContent = SPEED_NAMES[baseSpeed] || "中等";
     }
 
     function updateDelay() {
@@ -528,15 +528,15 @@
     function setStateUI() {
       scoreEl.textContent = score;
       bestScoreEl.textContent = bestScore;
-      gameStateEl.textContent = gameOver ? "澶辫触" : running ? "杩涜涓? : started ? "鏆傚仠" : "寰呭紑濮?;
-      toggleBtn.textContent = running ? "鏆傚仠" : gameOver ? "寮€濮? : started ? "缁х画" : "寮€濮?;
+      gameStateEl.textContent = gameOver ? "失败" : running ? "进行中" : started ? "暂停" : "待开始";
+      toggleBtn.textContent = running ? "暂停" : gameOver ? "开始" : started ? "继续" : "开始";
       statusTextEl.textContent = gameOver
-        ? "浣犳挒涓婁簡杈圭晫鎴栬€呰嚜宸辩殑韬綋銆傜偣鍑婚噸鏂板紑濮嬪啀鎴樹竴灞€銆?
+        ? "你撞上了边界或者自己的身体。点击重新开始再战一局。"
         : running
-          ? "灏忚泧姝ｅ湪鍓嶈繘锛岀户缁悆鎺夐鐗╂潵鎻愰珮鍒嗘暟銆?
+          ? "小蛇正在前进，继续吃掉食物来提高分数。"
           : started
-            ? "娓告垙宸茬粡鏆傚仠锛岀偣鍑荤户缁垨鎸夌┖鏍兼仮澶嶃€?
-            : "鎸変笅寮€濮嬶紝鎴栬€呯洿鎺ユ寜鏂瑰悜閿氨浼氳嚜鍔ㄥ惎鍔ㄣ€?;
+            ? "游戏已经暂停，点击继续或按空格恢复。"
+            : "按下开始，或者直接按方向键就会自动启动。";
       overlay.classList.toggle("show", gameOver);
       overlay.setAttribute("aria-hidden", String(!gameOver));
     }
@@ -877,4 +877,3 @@
   <script defer src="assets/no-copy.js"></script>
 </body>
 </html>
-
