@@ -99,29 +99,7 @@
     };
 
     function buildBilingualContent() {
-      const escapeHtml = (value) => String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-      const bilingual = {};
-      Object.keys(translations.zh).forEach((key) => {
-        const zhValue = translations.zh[key];
-        const enValue = translations.en[key];
-        if (key === "pageTitle" && typeof zhValue === "string" && typeof enValue === "string") {
-          bilingual[key] = `${escapeHtml(zhValue)} / ${escapeHtml(enValue)}`;
-          return;
-        }
-        if (typeof zhValue === "string" && typeof enValue === "string") {
-          bilingual[key] = key === "heroTitle"
-            ? `<span style="display:block;color:var(--muted);font-size:.62em;font-weight:500;opacity:.72;line-height:1.08">${escapeHtml(zhValue)}</span><span style="display:block;color:var(--text);font-size:1em;font-weight:900;line-height:1.05">${escapeHtml(enValue)}</span>`
-            : `<span style="color:var(--muted);font-weight:500;opacity:.65">${escapeHtml(zhValue)}</span><span style="opacity:.3"> / </span><span style="color:var(--text);font-weight:900">${escapeHtml(enValue)}</span>`;
-        } else {
-          bilingual[key] = escapeHtml(enValue ?? zhValue);
-        }
-      });
-      return bilingual;
+      return translations.en;
     }
 
     const languageSelect = document.getElementById("languageSelect");
@@ -131,7 +109,7 @@
 
     function applyLanguage(lang) {
       const safeLang = ["zh", "en"].includes(lang) ? lang : "zh";
-      const content = safeLang === "en" ? buildBilingualContent() : translations.zh;
+      const content = translations[safeLang] || translations.zh;
       document.documentElement.lang = safeLang === "zh" ? "zh-CN" : "en";
       document.title = content.pageTitle;
       languageSelect.value = safeLang;

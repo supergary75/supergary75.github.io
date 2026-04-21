@@ -613,7 +613,7 @@
 
     function applyLanguage(lang) {
       const safeLang = ["zh", "en"].includes(lang) ? lang : "zh";
-      const content = safeLang === "en" ? buildBilingualContent() : translations.zh;
+      const content = translations[safeLang] || translations.zh;
       document.documentElement.lang = safeLang === "zh" ? "zh-CN" : "en";
       document.title = content.pageTitle;
       languageSelect.value = safeLang;
