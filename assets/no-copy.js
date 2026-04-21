@@ -29,7 +29,7 @@
           font-weight="700"
           letter-spacing="6"
         >
-          GARY MAKEX
+          MakeX
         </text>
       </g>
     </svg>
